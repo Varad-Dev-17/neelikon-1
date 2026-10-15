@@ -1,7 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
+import { motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { ArrowDown, ArrowLeft, ArrowRight } from "lucide-react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Lenis from "lenis";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 import hero from "@/assets/hero-pigment.jpg";
 import lab from "@/assets/lab.png";
 import globe from "@/assets/globe.png";
@@ -26,6 +33,63 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
+  const reduce = useReducedMotion();
+
+  useEffect(() => {
+    if (typeof window === "undefined" || reduce) return;
+
+    // Slow, luxurious, cinematic smooth scroll for the home page storytelling experience
+    const lenis = new Lenis({
+      duration: 2.2, // Extended duration creates a slow, graceful glide
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Smooth exponential deceleration
+      orientation: "vertical",
+      gestureOrientation: "vertical",
+      smoothWheel: true,
+      wheelMultiplier: 0.65, // Slower wheel response for a deliberate, slow, cinematic feel
+      touchMultiplier: 1.4,
+      infinite: false,
+    });
+
+    (window as unknown as { __lenis?: Lenis }).__lenis = lenis;
+
+    // Connect Lenis scroll events to GSAP ScrollTrigger
+    lenis.on("scroll", ScrollTrigger.update);
+
+    // Sync Lenis RAF with GSAP's ticker to ensure zero jitter with pinned elements
+    const updateTicker = (time: number) => {
+      lenis.raf(time * 1000);
+    };
+
+    gsap.ticker.add(updateTicker);
+    gsap.ticker.lagSmoothing(0);
+
+    // Ensure ScrollTrigger measures heights and offsets accurately with Lenis
+    ScrollTrigger.refresh();
+
+    // Intercept in-page hash anchor clicks (e.g. href="#film") to scroll gently via Lenis
+    const handleAnchorClick = (e: MouseEvent) => {
+      const target = (e.target as HTMLElement).closest("a");
+      if (!target) return;
+      const href = target.getAttribute("href");
+      if (href && href.startsWith("#") && href.length > 1) {
+        const el = document.querySelector(href);
+        if (el) {
+          e.preventDefault();
+          lenis.scrollTo(el as HTMLElement, { offset: -20, duration: 2.2 });
+        }
+      }
+    };
+    document.addEventListener("click", handleAnchorClick);
+
+    return () => {
+      document.removeEventListener("click", handleAnchorClick);
+      delete (window as unknown as { __lenis?: Lenis }).__lenis;
+      gsap.ticker.remove(updateTicker);
+      lenis.destroy();
+      ScrollTrigger.refresh();
+    };
+  }, [reduce]);
+
   return (
     <main>
       <Hero />
@@ -122,32 +186,482 @@ function Everywhere() {
   );
 }
 
-const INDUSTRIES = [
-  { t: "Food & Beverages", d: "Colour solutions developed for food applications, with a focus on quality, consistency, and application requirements.", slug: "natural-food", img: "https://neelikon.com/wp-content/uploads/2025/09/Natural-Food-Colourants.png", tone: "text-leaf" },
-  { t: "Pharmaceuticals", d: "Specialised colourants supported by analytical testing and quality-focused processes.", slug: "pharma", img: "https://neelikon.com/wp-content/uploads/2025/09/Pharmaceutical-Colourants.png", tone: "text-sky" },
-  { t: "Cosmetics & Personal Care", d: "Colour technologies for cosmetic and personal-care formulations.", slug: "cosmetic", img: "https://neelikon.com/wp-content/uploads/2025/09/Cosmetic-Pigments.png", tone: "text-flame" },
-  { t: "Specialty & Industrial", d: "Specialty fluorescent dyes and colourants for diverse industrial applications.", slug: "fluorescent", img: "https://neelikon.com/wp-content/uploads/2025/09/Fluorescent-and-Solvent-Dyes.png", tone: "text-navy" },
+const APPLICATION_CATEGORIES = [
+  {
+    num: "01",
+    shortName: "Food & Beverage",
+    title: "Food & Beverage",
+    description: "Colour solutions for food and beverage applications.",
+    slug: "natural-food",
+    img: "https://neelikon.com/wp-content/uploads/2025/09/Natural-Food-Colourants.png",
+  },
+  {
+    num: "02",
+    shortName: "Pharmaceuticals",
+    title: "Pharmaceutical Colourants",
+    description: "Colourants for pharmaceutical applications, including capsules and tablets.",
+    slug: "pharma",
+    img: "https://neelikon.com/wp-content/uploads/2025/09/Pharmaceutical-Colourants.png",
+  },
+  {
+    num: "03",
+    shortName: "Cosmetics",
+    title: "Cosmetics & Personal Care",
+    description: "Colour solutions for cosmetics and personal care products.",
+    slug: "cosmetic",
+    img: "https://neelikon.com/wp-content/uploads/2025/09/Cosmetic-Pigments.png",
+  },
+  {
+    num: "04",
+    shortName: "Specialty Dyes",
+    title: "Specialty & Industrial Dyes",
+    description: "Specialty colour solutions for industrial applications.",
+    slug: "fluorescent",
+    img: "https://neelikon.com/wp-content/uploads/2025/09/Fluorescent-and-Solvent-Dyes.png",
+  },
 ];
 
 function Industries() {
+  const reduce = useReducedMotion();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const pinRef = useRef<HTMLDivElement>(null);
+  const progressBarRef = useRef<HTMLDivElement>(null);
+  const textPanelsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const imageLayersRef = useRef<(HTMLDivElement | null)[]>([]);
+  const imageInnersRef = useRef<(HTMLDivElement | null)[]>([]);
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || reduce) return;
+
+    // Preload all 4 images
+    APPLICATION_CATEGORIES.forEach((cat) => {
+      const img = new Image();
+      img.src = cat.img;
+    });
+
+    const ctx = gsap.context(() => {
+      const pinEl = pinRef.current;
+      if (!pinEl) return;
+
+      const textPanels = textPanelsRef.current;
+      const imageLayers = imageLayersRef.current;
+      const imageInners = imageInnersRef.current;
+
+      const p0 = textPanels[0];
+      const p1 = textPanels[1];
+      const p2 = textPanels[2];
+      const p3 = textPanels[3];
+
+      const l1 = imageLayers[1];
+      const l2 = imageLayers[2];
+      const l3 = imageLayers[3];
+
+      const i0 = imageInners[0];
+      const i1 = imageInners[1];
+      const i2 = imageInners[2];
+      const i3 = imageInners[3];
+
+      if (!p0 || !p1 || !p2 || !p3 || !l1 || !l2 || !l3 || !i0 || !i1 || !i2 || !i3) {
+        return;
+      }
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: pinEl,
+          start: "top top",
+          end: "+=5600",
+          pin: true,
+          scrub: 1.4,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            const p = self.progress;
+            let currentIdx = 0;
+            if (p < 0.23) currentIdx = 0;
+            else if (p < 0.50) currentIdx = 1;
+            else if (p < 0.77) currentIdx = 2;
+            else currentIdx = 3;
+            setActive(currentIdx);
+          },
+        },
+      });
+
+      // Continuous subtle green progress line
+      if (progressBarRef.current) {
+        tl.to(
+          progressBarRef.current,
+          { scaleX: 1, ease: "none", duration: 7.8 },
+          0
+        );
+      }
+
+      // Initial restful dwell period for Category 0 (Food & Beverage)
+      // Transition 0 -> 1 begins at time 1.2 and completes at 2.2
+      tl.to(
+        p0,
+        { opacity: 0, y: -24, pointerEvents: "none", ease: "power2.inOut", duration: 0.8 },
+        1.2
+      );
+      tl.fromTo(
+        p1,
+        { opacity: 0, y: 30, pointerEvents: "none" },
+        { opacity: 1, y: 0, pointerEvents: "auto", ease: "power2.out", duration: 0.8 },
+        1.35
+      );
+      tl.fromTo(
+        l1,
+        { clipPath: "inset(100% 0% 0% 0%)" },
+        { clipPath: "inset(0% 0% 0% 0%)", ease: "power2.inOut", duration: 1.0 },
+        1.2
+      );
+      tl.to(
+        i0,
+        { scale: 0.96, opacity: 0.3, ease: "power2.inOut", duration: 1.0 },
+        1.2
+      );
+      tl.fromTo(
+        i1,
+        { scale: 1.06, yPercent: 4 },
+        { scale: 1.0, yPercent: 0, ease: "power2.out", duration: 1.0 },
+        1.2
+      );
+
+      // Category 1 dwells at rest from 2.2 to 3.4
+      // Transition 1 -> 2 begins at time 3.4 and completes at 4.4
+      tl.to(
+        p1,
+        { opacity: 0, y: -24, pointerEvents: "none", ease: "power2.inOut", duration: 0.8 },
+        3.4
+      );
+      tl.fromTo(
+        p2,
+        { opacity: 0, y: 30, pointerEvents: "none" },
+        { opacity: 1, y: 0, pointerEvents: "auto", ease: "power2.out", duration: 0.8 },
+        3.55
+      );
+      tl.fromTo(
+        l2,
+        { clipPath: "inset(100% 0% 0% 0%)" },
+        { clipPath: "inset(0% 0% 0% 0%)", ease: "power2.inOut", duration: 1.0 },
+        3.4
+      );
+      tl.to(
+        i1,
+        { scale: 0.96, opacity: 0.3, ease: "power2.inOut", duration: 1.0 },
+        3.4
+      );
+      tl.fromTo(
+        i2,
+        { scale: 1.06, yPercent: 4 },
+        { scale: 1.0, yPercent: 0, ease: "power2.out", duration: 1.0 },
+        3.4
+      );
+
+      // Category 2 dwells at rest from 4.4 to 5.6
+      // Transition 2 -> 3 begins at time 5.6 and completes at 6.6
+      tl.to(
+        p2,
+        { opacity: 0, y: -24, pointerEvents: "none", ease: "power2.inOut", duration: 0.8 },
+        5.6
+      );
+      tl.fromTo(
+        p3,
+        { opacity: 0, y: 30, pointerEvents: "none" },
+        { opacity: 1, y: 0, pointerEvents: "auto", ease: "power2.out", duration: 0.8 },
+        5.75
+      );
+      tl.fromTo(
+        l3,
+        { clipPath: "inset(100% 0% 0% 0%)" },
+        { clipPath: "inset(0% 0% 0% 0%)", ease: "power2.inOut", duration: 1.0 },
+        5.6
+      );
+      tl.to(
+        i2,
+        { scale: 0.96, opacity: 0.3, ease: "power2.inOut", duration: 1.0 },
+        5.6
+      );
+      tl.fromTo(
+        i3,
+        { scale: 1.06, yPercent: 4 },
+        { scale: 1.0, yPercent: 0, ease: "power2.out", duration: 1.0 },
+        5.6
+      );
+
+      // Final restful dwell period so category 4 stays comfortably viewable before unpinning
+      tl.to({}, { duration: 1.2 }, 6.6);
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, [reduce]);
+
+  const scrollToCategory = (index: number) => {
+    const triggers = ScrollTrigger.getAll();
+    const currentST = triggers.find((t) => t.trigger === pinRef.current);
+    if (!currentST) return;
+    const progressMap = [0.08, 0.36, 0.64, 0.92];
+    const targetProgress = progressMap[index] ?? 0;
+    const targetScroll = currentST.start + targetProgress * (currentST.end - currentST.start);
+    const win = window as unknown as { __lenis?: Lenis };
+    if (win.__lenis) {
+      win.__lenis.scrollTo(targetScroll, { duration: 2.2 });
+    } else {
+      window.scrollTo({ top: targetScroll, behavior: "smooth" });
+    }
+  };
+
   return (
-    <section id="industries" className="scroll-mt-20 bg-card section-y">
-      <div className="container-x">
-        <Reveal><p className="eyebrow text-navy">Industries</p><h2 className="display mt-4 max-w-4xl fs-section">Four worlds. One standard.</h2></Reveal>
-        <div className="mt-20 space-y-24">
-          {INDUSTRIES.map((x, i) => (
-            <article key={x.t} className={`grid items-center gap-10 md:grid-cols-12 ${i % 2 ? "md:[&>*:first-child]:order-2" : ""}`}>
-              <MaskImage src={x.img} alt={x.t} imgClassName="h-[170%]! object-top" className={`bg-background ${i % 2 ? "aspect-square md:col-span-5" : "aspect-[16/10] md:col-span-7"}`} />
-              <Reveal className={i % 2 ? "md:col-span-6 md:col-start-1" : "md:col-span-4 md:col-start-9"}>
-                <p className={`font-mono text-sm ${x.tone}`}>0{i + 1}</p>
-                <h3 className="display mt-3 fs-sub">{x.t}</h3>
-                <p className="mt-5 text-lg text-muted-foreground">{x.d}</p>
-                <Link to="/products/$slug" params={{ slug: x.slug }} className="mt-6 inline-flex items-center gap-2 font-bold hover:text-navy">See products <ArrowRight className="h-4 w-4" /></Link>
-              </Reveal>
+    <section id="industries" ref={containerRef} className="scroll-mt-20 bg-white text-[#17231F]">
+      {/* Mobile & Reduced Motion Fallback: Natural Vertical Flow */}
+      <div className={`${reduce ? "block" : "block md:hidden"} container-x py-16 sm:py-20`}>
+        <div>
+          <div className="mb-3 h-[2px] w-8 bg-[#17664F]" />
+          <p className="eyebrow text-[#17664F] font-semibold tracking-[2px]">
+            APPLICATIONS / COLOUR SCIENCE
+          </p>
+          <h2
+            className="mt-3 text-3xl sm:text-4xl font-normal tracking-tight text-[#17231F]"
+            style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
+          >
+            Four worlds. <span className="italic text-[#17664F]">One standard.</span>
+          </h2>
+          <p className="mt-3 text-sm text-[#66756F] leading-relaxed max-w-lg">
+            Colour science designed for the products people use every day.
+          </p>
+        </div>
+
+        <div className="mt-12 space-y-16">
+          {APPLICATION_CATEGORIES.map((cat) => (
+            <article key={cat.title} className="flex flex-col">
+              <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl border border-[#D7E2DC] bg-[#F8FAF9] shadow-xs">
+                <SafeImg
+                  src={cat.img}
+                  alt={cat.title}
+                  className="h-full w-full object-cover"
+                />
+                <div className="absolute bottom-4 left-4 rounded-md bg-white/95 px-3 py-1 font-mono text-[10px] font-semibold tracking-wider text-[#17231F] uppercase shadow-xs">
+                  {cat.num} — {cat.title}
+                </div>
+              </div>
+
+              <div className="mt-6">
+                <div className="flex items-center gap-3">
+                  <span className="text-xs font-mono font-bold text-[#17664F]">
+                    {cat.num}
+                  </span>
+                  <div className="h-px w-8 bg-[#D7E2DC]" />
+                  <span className="text-[11px] font-mono font-semibold uppercase tracking-wider text-[#66756F]">
+                    Category
+                  </span>
+                </div>
+                <h3
+                  className="mt-2 text-2xl font-serif text-[#17231F]"
+                  style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
+                >
+                  {cat.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-[#66756F]">
+                  {cat.description}
+                </p>
+                <Link
+                  to="/products/$slug"
+                  params={{ slug: cat.slug }}
+                  className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[#17664F] hover:underline"
+                >
+                  <span>See products</span>
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
             </article>
           ))}
         </div>
       </div>
+
+      {/* Desktop Pinned Scroll-Driven Cinematic Showcase */}
+      {!reduce && (
+        <div ref={pinRef} className="relative hidden md:block">
+          <div className="h-[100dvh] flex flex-col justify-between py-6 lg:py-8 overflow-hidden bg-white">
+            <div className="container-x flex-1 flex flex-col justify-between">
+              {/* Header Bar */}
+              <div className="flex items-center justify-between border-b border-[#E5EBE8] pb-5">
+                <div>
+                  <div className="flex items-center gap-3">
+                    <p className="eyebrow text-[#17664F] font-semibold tracking-[2px]">
+                      APPLICATIONS / COLOUR SCIENCE
+                    </p>
+                    <div className="h-px w-10 bg-[#D7E2DC]" />
+                  </div>
+                  <h2
+                    className="mt-1 text-2xl lg:text-3xl font-normal tracking-tight text-[#17231F]"
+                    style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
+                  >
+                    Four worlds. <span className="italic text-[#17664F]">One standard.</span>
+                  </h2>
+                </div>
+
+                <div className="flex items-center gap-6">
+                  <p className="hidden xl:block text-xs text-[#66756F] max-w-xs text-right leading-relaxed">
+                    Colour science designed for the products people use every day.
+                  </p>
+
+                  {/* 4 Interactive Category Step Pills */}
+                  <div className="flex items-center gap-2">
+                    {APPLICATION_CATEGORIES.map((cat, i) => (
+                      <button
+                        key={cat.title}
+                        type="button"
+                        onClick={() => scrollToCategory(i)}
+                        className={`cursor-pointer px-3.5 py-1.5 rounded-full text-xs font-mono transition-all duration-300 ${
+                          i === active
+                            ? "bg-[#17664F] text-white font-semibold shadow-xs scale-102"
+                            : "bg-[#F4F7F5] text-[#66756F] hover:text-[#17231F] hover:bg-[#E5EBE8]"
+                        }`}
+                      >
+                        {cat.num} {cat.shortName}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Main Showcase Grid: Left Stacked Details + Right Cinematic Image Stage */}
+              <div className="grid grid-cols-12 gap-8 lg:gap-14 items-center my-auto py-4">
+                {/* Left Column: 4 Synchronized Content Panels */}
+                <div className="col-span-5 relative pr-4 lg:pr-8 min-h-[320px] flex flex-col justify-center">
+                  {APPLICATION_CATEGORIES.map((cat, i) => (
+                    <div
+                      key={cat.title}
+                      ref={(el) => {
+                        textPanelsRef.current[i] = el;
+                      }}
+                      className={`w-full will-change-transform ${
+                        i === 0 ? "relative" : "absolute inset-0 pointer-events-none"
+                      }`}
+                      style={{
+                        opacity: i === 0 ? 1 : 0,
+                        transform: i === 0 ? "translateY(0px)" : "translateY(30px)",
+                      }}
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className="text-base font-mono font-bold text-[#17664F]">
+                          {cat.num}
+                        </span>
+                        <div className="h-px w-12 bg-[#D7E2DC]" />
+                        <span className="text-xs font-mono font-semibold uppercase tracking-wider text-[#66756F]">
+                          APPLICATION {i + 1} OF 4
+                        </span>
+                      </div>
+
+                      {/* Clipped Headline Reveal */}
+                      <div className="overflow-hidden mt-5">
+                        <h3
+                          className="text-4xl lg:text-[52px] font-normal leading-[1.06] tracking-tight text-[#17231F]"
+                          style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
+                        >
+                          {cat.title}
+                        </h3>
+                      </div>
+
+                      <p
+                        className="mt-5 text-[16px] lg:text-[18px] leading-relaxed text-[#66756F] max-w-md"
+                        style={{ fontFamily: "'DM Sans', sans-serif" }}
+                      >
+                        {cat.description}
+                      </p>
+
+                      <div className="mt-8 flex items-center gap-4">
+                        <Link
+                          to="/products/$slug"
+                          params={{ slug: cat.slug }}
+                          className="inline-flex items-center gap-2.5 rounded-full bg-[#17664F] px-6 py-3 text-[13px] font-semibold text-white transition-all hover:bg-[#12523F] active:scale-98 shadow-sm"
+                        >
+                          <span>Explore {cat.shortName}</span>
+                          <ArrowRight className="h-4 w-4" />
+                        </Link>
+                      </div>
+                    </div>
+                  ))}
+
+                  {/* Understated Segmented Progress Bar */}
+                  <div className="mt-12 pt-6 border-t border-[#E5EBE8] flex items-center gap-3">
+                    {APPLICATION_CATEGORIES.map((_, i) => (
+                      <div
+                        key={i}
+                        className="h-1 flex-1 rounded-full bg-[#E5EBE8] overflow-hidden transition-colors"
+                      >
+                        <div
+                          className={`h-full bg-[#17664F] transition-all duration-300 ${
+                            i === active
+                              ? "w-full"
+                              : i < active
+                              ? "w-full opacity-60"
+                              : "w-0"
+                          }`}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Right Column: Stacked Photographic Stage with Clip-Path Reveal */}
+                <div className="col-span-7">
+                  <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden border border-[#D7E2DC]/80 shadow-md bg-[#F8FAF9]">
+                    {APPLICATION_CATEGORIES.map((cat, i) => (
+                      <div
+                        key={cat.title}
+                        ref={(el) => {
+                          imageLayersRef.current[i] = el;
+                        }}
+                        className="absolute inset-0 overflow-hidden will-change-[clip-path]"
+                        style={{
+                          zIndex: i + 1,
+                          clipPath: i === 0 ? "inset(0% 0% 0% 0%)" : "inset(100% 0% 0% 0%)",
+                        }}
+                      >
+                        <div
+                          ref={(el) => {
+                            imageInnersRef.current[i] = el;
+                          }}
+                          className="relative h-full w-full will-change-transform"
+                          style={{
+                            transform: i === 0 ? "scale(1)" : "scale(1.06)",
+                          }}
+                        >
+                          <SafeImg
+                            src={cat.img}
+                            alt={cat.title}
+                            className="h-full w-full object-cover"
+                          />
+                          <div className="absolute bottom-5 left-5 rounded-md bg-white/95 px-3.5 py-1.5 font-mono text-[11px] font-semibold tracking-wider text-[#17231F] uppercase shadow-xs backdrop-blur-xs">
+                            {cat.num} — {cat.title}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Bottom Subtle Bar with Scroll Progress Line */}
+              <div className="relative flex items-center justify-between text-xs font-mono text-[#66756F] border-t border-[#E5EBE8] pt-3">
+                {/* Thin dynamic green accent line responding continuously to scroll progress */}
+                <div className="absolute top-0 left-0 right-0 h-[2px] bg-[#E5EBE8] overflow-hidden">
+                  <div
+                    ref={progressBarRef}
+                    className="h-full bg-[#17664F] origin-left scale-x-0"
+                  />
+                </div>
+
+                <span className="tracking-wider uppercase">Scroll to explore colour science</span>
+                <span className="font-semibold text-[#17664F] tabular-nums">
+                  0{active + 1} — 04
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
@@ -266,28 +780,130 @@ function Global() {
 }
 
 function Quality() {
+  const pillsRow1 = ["ISO 9001", "ISO 14001", "ISO 45001", "FSSC 22000", "GMP", "REACH", "Halal"];
+  const pillsRow2 = ["Kosher", "Sedex", "EcoVadis", "US-FDA", "NABL"];
+
+  const certCards = [
+    { num: "01", name: "ISO 9001", logo: CERT_LOGOS[0] ?? "" },
+    { num: "02", name: "ISO 14001", logo: CERT_LOGOS[1] ?? "" },
+    { num: "03", name: "ISO 45001", logo: CERT_LOGOS[2] ?? "" },
+    { num: "04", name: "NABL", logo: CERT_LOGOS[3] ?? "" },
+    { num: "05", name: "EcoVadis", logo: CERT_LOGOS[4] ?? "" },
+    { num: "06", name: "US-FDA", logo: CERT_LOGOS[5] ?? "" },
+  ];
+
   return (
-    <section id="quality" className="scroll-mt-20 bg-background section-y">
-      <div className="container-x grid gap-12 md:grid-cols-12">
-        <Reveal className="md:col-span-5">
-          <p className="eyebrow text-navy">Quality credentials</p>
-          <h2 className="display mt-4 fs-section">Quality has a standard.</h2>
-          <p className="mt-6 text-muted-foreground">Certifications and memberships as published by Neelikon.</p>
-        </Reveal>
-        <div className="md:col-span-7">
-          <ul className="flex flex-wrap gap-2">
-            {CERT_LABELS.map((c, i) => (
-              <motion.li key={c} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.04, ease: EASE }}
-                className="rounded-full border btn min-h-11 px-5 text-sm">{c}</motion.li>
-            ))}
-          </ul>
-          <ul className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3">
-            {CERT_LOGOS.map((l, i) => (
-              <li key={l} className="flex h-24 items-center justify-center border bg-paper p-4">
-                <SafeImg src={l} alt={`Neelikon certification logo ${i + 1}`} className="max-h-full w-auto object-contain" />
-              </li>
-            ))}
-          </ul>
+    <section id="quality" className="scroll-mt-20 bg-white text-[#17231F] py-20 lg:py-28">
+      <div className="container-x">
+        {/* Top-Right Header: TRUSTED GLOBALLY ──── 01 */}
+        <div className="flex items-center justify-end gap-4 mb-10">
+          <span className="text-[11px] sm:text-[13px] font-mono font-bold tracking-[2.5px] text-[#17664F] uppercase">
+            TRUSTED GLOBALLY
+          </span>
+          <div className="h-px w-16 bg-[#D7E2DC]" />
+          <span className="text-[14px] sm:text-[15px] font-mono font-bold text-[#17231F]">
+            01
+          </span>
+        </div>
+
+        <div className="grid gap-12 lg:grid-cols-12 lg:gap-16 items-start">
+          {/* Left Column: Vertical Index Line + Heading & Copy */}
+          <Reveal className="lg:col-span-5">
+            <div className="flex items-start gap-6 sm:gap-7">
+              {/* Far Left 01 + Vertical Line */}
+              <div className="flex flex-col items-center shrink-0 pt-1">
+                <span className="text-[13px] font-mono font-bold text-[#17664F] mb-3">
+                  01
+                </span>
+                <div className="w-px h-64 sm:h-80 bg-[#D7E2DC]" />
+              </div>
+
+              {/* Title & Copy */}
+              <div className="flex-1">
+                <div className="flex items-center gap-3.5">
+                  <p className="eyebrow text-[#17664F] font-bold tracking-[2.5px] text-[11px] sm:text-[12px]">
+                    Quality credentials
+                  </p>
+                  <div className="h-px w-16 bg-[#D7E2DC]" />
+                </div>
+
+                <h2
+                  className="mt-5 text-[44px] sm:text-[56px] md:text-[66px] lg:text-[76px] xl:text-[84px] font-normal leading-[1.04] tracking-tight text-[#17231F]"
+                  style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
+                >
+                  Quality, verified.
+                  <br />
+                  <span className="italic text-[#17664F]">
+                    At every stage.
+                  </span>
+                </h2>
+
+                <p
+                  className="mt-7 max-w-md text-[16px] sm:text-[18px] leading-relaxed text-[#66756F]"
+                  style={{ fontFamily: "'DM Sans', sans-serif" }}
+                >
+                  Certifications and memberships as published by Neelikon.
+                </p>
+              </div>
+            </div>
+          </Reveal>
+
+          {/* Right Column: Pills & 6 Certification Cards */}
+          <div className="lg:col-span-7">
+            {/* Pills Rows */}
+            <div className="space-y-3">
+              <div className="flex flex-wrap gap-2.5 sm:gap-3">
+                {pillsRow1.map((c) => (
+                  <span
+                    key={c}
+                    className="rounded-full border border-[#D7E2DC] bg-white px-5 py-2 text-[13px] sm:text-[15px] font-medium text-[#17231F] shadow-2xs transition-all hover:border-[#17664F] hover:text-[#17664F]"
+                  >
+                    {c}
+                  </span>
+                ))}
+              </div>
+              <div className="flex flex-wrap gap-2.5 sm:gap-3">
+                {pillsRow2.map((c) => (
+                  <span
+                    key={c}
+                    className="rounded-full border border-[#D7E2DC] bg-white px-5 py-2 text-[13px] sm:text-[15px] font-medium text-[#17231F] shadow-2xs transition-all hover:border-[#17664F] hover:text-[#17664F]"
+                  >
+                    {c}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* 6 Certification Cards Grid */}
+            <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {certCards.map((card) => (
+                <div
+                  key={card.num}
+                  className="flex flex-col justify-between rounded-none border border-[#D7E2DC] bg-white p-5 min-h-[165px] sm:min-h-[175px] transition-all duration-200 hover:border-[#17664F]/60 hover:shadow-xs"
+                >
+                  {/* Card Header */}
+                  <div className="flex items-center gap-3">
+                    <span className="text-[13px] sm:text-[14px] font-semibold text-[#17664F]">
+                      {card.num}
+                    </span>
+                    <div className="h-3.5 w-px bg-[#D7E2DC]" />
+                    <span className="text-[12px] sm:text-[13px] font-semibold uppercase tracking-wider text-[#17231F]">
+                      {card.name}
+                    </span>
+                  </div>
+
+                  {/* Logo Centered */}
+                  <div className="my-auto flex h-16 sm:h-20 items-center justify-center pt-3">
+                    <SafeImg
+                      src={card.logo}
+                      alt={`${card.name} certification logo`}
+                      className="max-h-full w-auto object-contain"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
