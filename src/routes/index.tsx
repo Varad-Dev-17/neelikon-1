@@ -1,16 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
-import { ArrowDown, ArrowLeft, ArrowRight, Mail, MapPin, Phone } from "lucide-react";
-import { useRef } from "react";
+import { ArrowDown, ArrowLeft, ArrowRight } from "lucide-react";
+import { useRef, useState } from "react";
 import hero from "@/assets/hero-pigment.jpg";
 import lab from "@/assets/lab.png";
 import globe from "@/assets/globe.png";
-import { ABOUT_IMG, CERT_LABELS, CERT_LOGOS, CONTACT, NEWS } from "@/lib/content";
+import { ABOUT_IMG, CERT_LABELS, CERT_LOGOS, NEWS } from "@/lib/content";
 import { EASE, MaskImage, Reveal, SafeImg } from "@/components/site/Reveal";
 import { ScrollFilm } from "@/components/site/ScrollFilm";
 import { ProductUniverse } from "@/components/site/ProductUniverse";
 import { SpectrumDivider } from "@/components/site/SpectrumDivider";
-import { EnquiryForm } from "@/components/site/EnquiryForm";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -38,10 +37,9 @@ function Home() {
       <Science />
       <Global />
       <Quality />
-      <Testimonial />
       <div className="bg-card"><SpectrumDivider /></div>
       <Insights />
-      <Contact />
+      <Testimonial />
     </main>
   );
 }
@@ -217,32 +215,38 @@ function Science() {
 
 function Global() {
   return (
-    <section className="relative overflow-hidden bg-[#07130F] text-white">
+    <section className="relative overflow-hidden bg-white text-[#17231F]">
       <SafeImg
         src={globe}
-        alt="Earth at night with connection lines radiating from India"
-        className="absolute inset-0 h-full w-full object-cover opacity-80"
+        alt="Earth with connection lines radiating from India"
+        className="absolute inset-0 h-full w-full object-cover"
       />
-      {/* High-contrast gradient backdrops ensuring crystal clear readability */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#07130F]/90 via-[#07130F]/60 to-transparent pointer-events-none" />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#07130F]/95 via-[#07130F]/40 to-transparent pointer-events-none" />
+      {/* Subtle soft daylight vignette on the left to ensure crisp text readability */}
+      <div className="absolute inset-y-0 left-0 w-full md:w-3/5 bg-gradient-to-r from-white/70 via-white/30 to-transparent pointer-events-none" />
 
-
-      <div className="container-x relative flex min-h-[85vh] flex-col justify-end section-y">
+      <div className="container-x relative flex min-h-[70vh] lg:min-h-[82vh] flex-col justify-center py-20 sm:py-28">
         <Reveal>
-          <p className="eyebrow text-[#5EEAD4] font-semibold tracking-[2px]">
+          <div className="mb-4 h-[2px] w-8 bg-[#17664F]" />
+          <p className="eyebrow text-[#17664F] font-semibold tracking-[2px]">
             Global reach · Headquartered in Mumbai
           </p>
 
           <h2
-            className="display mt-4 max-w-4xl fs-section text-white"
-            style={{ color: "#FFFFFF", fontFamily: "'Manrope', sans-serif" }}
+            className="display mt-4 max-w-2xl text-[36px] sm:text-[46px] lg:text-[54px] font-medium leading-[1.12] text-[#17231F]"
+            style={{ fontFamily: "'Manrope', sans-serif" }}
           >
-            Rooted in India. <span className="serif-accent text-[#5EEAD4]">Connected to the world.</span>
+            Rooted in India.
+            <br />
+            <span
+              className="serif-accent text-[#17664F] font-normal italic"
+              style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
+            >
+              Connected to the world.
+            </span>
           </h2>
 
           <p
-            className="mt-6 max-w-xl text-[16px] md:text-[18px] leading-relaxed text-white/90"
+            className="mt-6 max-w-xl text-[16px] md:text-[18px] leading-relaxed text-[#2E3D37]"
             style={{ fontFamily: "'DM Sans', sans-serif" }}
           >
             Serving customers across 100+ countries, supported by international business and distribution partnerships.
@@ -250,10 +254,10 @@ function Global() {
 
           <a
             href="/contact"
-            className="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-7 py-3 text-[13px] font-semibold text-[#17231F] transition-all hover:bg-[#DFF0E5] active:scale-98 shadow-lg"
+            className="mt-8 inline-flex items-center gap-2 rounded-full bg-[#17664F] px-7 py-3 text-[14px] font-semibold text-white transition-all hover:bg-[#12523F] active:scale-98 shadow-sm"
           >
             <span>Let's Work Together</span>
-            <ArrowRight className="h-4 w-4 text-[#17231F]" />
+            <ArrowRight className="h-4 w-4 text-white" />
           </a>
         </Reveal>
       </div>
@@ -290,6 +294,191 @@ function Quality() {
   );
 }
 
+function Insights() {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const newsItems = [
+    {
+      num: "01",
+      title: "Export Award Recognition",
+      description: "Honoured at the CHEMEXCIL Presentation of Export Awards.",
+      img: NEWS[0] ?? "",
+      accent: "left",
+    },
+    {
+      num: "02",
+      title: "Exporters' Excellence",
+      description: "Recognised for outstanding performance in international trade.",
+      img: NEWS[1] ?? "",
+      accent: "right",
+    },
+    {
+      num: "03",
+      title: "Community Initiative",
+      description: "Supporting education and child development for a brighter future.",
+      img: NEWS[2] ?? "",
+      accent: "none",
+    },
+    {
+      num: "04",
+      title: "Industry Collaboration",
+      description: "Participation in key industry events and knowledge initiatives.",
+      img: NEWS[3] ?? "",
+      accent: "right",
+    },
+  ];
+
+  return (
+    <section id="insights" className="scroll-mt-20 bg-white section-y relative overflow-hidden">
+      <div className="container-x">
+        {/* Top Header */}
+        <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+          <Reveal>
+            <div className="mb-3 h-[2px] w-8 bg-[#17664F]" />
+            <p className="eyebrow text-[#17664F] font-semibold tracking-[2px]">News & events</p>
+            <h2
+              className="mt-3 text-[36px] sm:text-[46px] lg:text-[54px] font-normal tracking-tight text-[#17231F]"
+              style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
+            >
+              Moments from <span className="italic text-[#17664F]">Neelikon.</span>
+            </h2>
+          </Reveal>
+
+          <Reveal delay={0.1}>
+            <div className="flex flex-col sm:flex-row sm:items-center gap-6 lg:gap-8">
+              <p
+                className="max-w-[280px] text-[14px] leading-relaxed text-[#66756F]"
+                style={{ fontFamily: "'DM Sans', sans-serif" }}
+              >
+                Events, recognitions and initiatives that reflect our journey, our people and our purpose.
+              </p>
+              <a
+                href="https://neelikon.com/"
+                target="_blank"
+                rel="noreferrer"
+                className="group inline-flex items-center gap-3 shrink-0"
+              >
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#17664F] text-white transition-all group-hover:scale-105 group-hover:bg-[#12523F] shadow-xs">
+                  <ArrowRight className="h-4 w-4" />
+                </div>
+                <span className="text-[13px] sm:text-[14px] font-medium text-[#17231F] group-hover:text-[#17664F] transition-colors">
+                  All news on neelikon.com
+                </span>
+              </a>
+            </div>
+          </Reveal>
+        </div>
+
+        {/* Cards Row with Decorative Line */}
+        <div className="relative mt-14 sm:mt-16">
+          {/* Delicate decorative connecting line with green node */}
+          <svg
+            className="pointer-events-none absolute -top-8 left-1/4 right-8 h-28 w-3/4 text-[#17664F]/25 hidden lg:block"
+            fill="none"
+            viewBox="0 0 900 120"
+            preserveAspectRatio="none"
+          >
+            <path d="M 0,90 Q 260,-20 540,65 T 900,20" stroke="currentColor" strokeWidth="1" fill="none" />
+            <circle cx="230" cy="28" r="4.5" fill="#17664F" />
+          </svg>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-7">
+            {newsItems.map((item, i) => (
+              <div key={item.num} className="relative group flex flex-col">
+                {/* Offset graphic green backdrop shape */}
+                {item.accent === "left" && (
+                  <div className="absolute -left-2.5 -top-2.5 h-full w-full rounded-2xl bg-[#17664F] -z-10 transition-transform duration-300 group-hover:-translate-x-1" />
+                )}
+                {item.accent === "right" && (
+                  <div className="absolute -right-2.5 -top-2.5 h-full w-full rounded-2xl bg-[#17664F] -z-10 transition-transform duration-300 group-hover:translate-x-1" />
+                )}
+
+                {/* Main Photo Card */}
+                <div className="relative overflow-hidden rounded-xl bg-white border border-[#D7E2DC]/50 shadow-xs">
+                  <SafeImg
+                    src={item.img}
+                    alt={item.title}
+                    className="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+
+                {/* Details below photo */}
+                <div className="mt-5 flex items-start gap-3.5">
+                  <span className="text-[13px] font-semibold text-[#17664F] pt-0.5 min-w-[20px]">
+                    {item.num}
+                  </span>
+                  <div className="h-4 w-px bg-[#D7E2DC] shrink-0 mt-1" />
+                  <div className="flex-1">
+                    <h3
+                      className="text-[17px] sm:text-[18px] font-serif text-[#17231F] leading-snug"
+                      style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
+                    >
+                      {item.title}
+                    </h3>
+                    <p
+                      className="mt-1.5 text-[12px] sm:text-[13px] leading-relaxed text-[#66756F]"
+                      style={{ fontFamily: "'DM Sans', sans-serif" }}
+                    >
+                      {item.description}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Bottom Slider & Timeline Navigation (commented out for now) */}
+        {/*
+        <div className="mt-14 pt-6 flex items-center justify-between border-t border-[#E5EBE8]">
+          <div className="flex items-center gap-2.5 shrink-0">
+            <button
+              type="button"
+              onClick={() => setActiveIndex((prev) => (prev > 0 ? prev - 1 : newsItems.length - 1))}
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-[#E8ECE9] text-[#17231F] transition-all hover:bg-[#D7E2DC] active:scale-95 cursor-pointer"
+              aria-label="Previous slide"
+            >
+              <ArrowLeft className="h-4 w-4" />
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveIndex((prev) => (prev < newsItems.length - 1 ? prev + 1 : 0))}
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-[#17664F] text-white transition-all hover:bg-[#12523F] active:scale-95 cursor-pointer shadow-xs"
+              aria-label="Next slide"
+            >
+              <ArrowRight className="h-4 w-4" />
+            </button>
+          </div>
+
+          <div className="relative mx-8 hidden sm:flex flex-1 items-center">
+            <div className="h-px w-full bg-[#D7E2DC]" />
+            <div className="absolute inset-x-0 flex items-center justify-between px-2">
+              {newsItems.map((_, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => setActiveIndex(i)}
+                  className={`transition-all cursor-pointer ${
+                    i === activeIndex
+                      ? "h-3.5 w-3.5 rounded-full bg-[#17664F] ring-4 ring-[#E8ECE9]"
+                      : "h-2.5 w-2.5 rounded-full border border-[#B8C8C0] bg-white hover:border-[#17664F]"
+                  }`}
+                  aria-label={`Go to slide ${i + 1}`}
+                />
+              ))}
+            </div>
+          </div>
+
+          <div className="shrink-0 text-xs font-mono font-medium tracking-widest text-[#66756F]">
+            {String(activeIndex + 1).padStart(2, "0")} — {String(newsItems.length).padStart(2, "0")}
+          </div>
+        </div>
+        */}
+      </div>
+    </section>
+  );
+}
+
 function Testimonial() {
   return (
     <section className="bg-card section-y">
@@ -301,113 +490,6 @@ function Testimonial() {
           </blockquote>
           <p className="eyebrow mt-10 text-muted-foreground">Distributor – Food – India</p>
         </Reveal>
-      </div>
-    </section>
-  );
-}
-
-function Insights() {
-  return (
-    <section id="insights" className="scroll-mt-20 bg-background section-y">
-      <div className="container-x">
-        <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-          <Reveal><p className="eyebrow text-navy">News & events</p><h2 className="display mt-4 fs-section">Moments from Neelikon.</h2></Reveal>
-          <a href="https://neelikon.com/" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 font-bold hover:text-navy">All news on neelikon.com <ArrowRight className="h-4 w-4" /></a>
-        </div>
-        <ul className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {NEWS.map((n, i) => (
-            <li key={n} className={i % 2 ? "lg:mt-16" : ""}>
-              <MaskImage src={n} alt={`Neelikon news and event ${i + 1}`} className="aspect-[3/4] bg-card" />
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-  );
-}
-
-function Contact() {
-  return (
-    <section id="contact" className="scroll-mt-16 bg-white py-16 md:py-24 text-[#17231F]">
-      <div className="container-x">
-        <Link
-          to="/"
-          className="inline-flex items-center gap-2 text-[12px] font-medium text-[#66756F] transition-colors hover:text-[#17231F]"
-        >
-          <ArrowLeft className="h-3.5 w-3.5" />
-          <span>Back to home</span>
-        </Link>
-
-        <p className="mt-8 text-[10px] font-bold uppercase tracking-[2px] text-[#17664F]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-          CONTACT US
-        </p>
-
-        <h2
-          className="mt-4 text-[36px] sm:text-[46px] lg:text-[54px] font-medium leading-[1.12] tracking-tight text-[#17231F]"
-          style={{ fontFamily: "'Manrope', sans-serif" }}
-        >
-          Great possibilities begin with a<br />conversation.
-        </h2>
-
-        <p className="mt-4 max-w-2xl text-[14px] sm:text-[15px] leading-relaxed text-[#66756F]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-          Tell us what you have in mind. Our team can help you find the right colour solution for your application.
-        </p>
-
-        <div className="mt-14 grid gap-12 lg:grid-cols-12 lg:gap-16">
-          <div className="lg:col-span-5">
-            <h3 className="text-[22px] font-medium text-[#17231F]" style={{ fontFamily: "'Manrope', sans-serif" }}>
-              Connect with Neelikon
-            </h3>
-
-            <div className="mt-8 space-y-0">
-              <div className="flex items-start gap-3.5">
-                <Mail className="h-5 w-5 shrink-0 text-[#17664F] mt-0.5" />
-                <div>
-                  <p className="text-[13px] font-semibold text-[#17231F]">General enquiries</p>
-                  <a href={`mailto:${CONTACT.email}`} className="mt-1 block text-sm text-[#66756F] transition-colors hover:text-[#17664F]">
-                    {CONTACT.email}
-                  </a>
-                </div>
-              </div>
-
-              <div className="my-6 border-b border-[#E5EBE8]" />
-
-              <div className="flex items-start gap-3.5">
-                <Phone className="h-5 w-5 shrink-0 text-[#17664F] mt-0.5" />
-                <div>
-                  <p className="text-[13px] font-semibold text-[#17231F]">Call our team</p>
-                  <a href="tel:+912246221415" className="mt-1 block text-sm text-[#66756F] transition-colors hover:text-[#17664F]">
-                    +91 22 4622 1415
-                  </a>
-                  <p className="mt-1 text-sm text-[#66756F]">
-                    Export sales: +91 22 6662 6874
-                  </p>
-                </div>
-              </div>
-
-              <div className="my-6 border-b border-[#E5EBE8]" />
-
-              <div className="flex items-start gap-3.5">
-                <MapPin className="h-5 w-5 shrink-0 text-[#17664F] mt-0.5" />
-                <div>
-                  <p className="text-[13px] font-semibold text-[#17231F]">Head office</p>
-                  <address className="mt-1 text-sm not-italic leading-relaxed text-[#66756F]">
-                    D-08, Everest Building, 5th Floor,<br />
-                    Pt. Madan Mohan Malaviya Marg,<br />
-                    Tardeo Circle, Mumbai 400034,<br />
-                    Maharashtra, India.
-                  </address>
-                </div>
-              </div>
-
-              <div className="mt-6 border-b border-[#E5EBE8]" />
-            </div>
-          </div>
-
-          <div className="lg:col-span-7">
-            <EnquiryForm />
-          </div>
-        </div>
       </div>
     </section>
   );
