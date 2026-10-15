@@ -6,11 +6,11 @@ import { LOGO, PRODUCTS } from "@/lib/content";
 import { EASE } from "./Reveal";
 
 const NAV = [
+  { label: "About Us", href: "/about" },
   { label: "Products", href: "/products" },
   { label: "Formulation", href: "/formulation" },
   { label: "Infrastructure", href: "/infrastructure" },
   { label: "Innovation", href: "/innovation" },
-  { label: "About Us", href: "/about" },
   { label: "Quality", href: "/quality" },
 ];
 
@@ -90,9 +90,7 @@ export function Header() {
         >
           <ul className="flex items-center gap-[34px]">
             {NAV.map((n) => {
-              const isHome = pathname === "/" || pathname === "";
               const isActive =
-                (isHome && n.href === "/products") ||
                 pathname === n.href ||
                 (n.href !== "/" && pathname.startsWith(n.href)) ||
                 (n.label === "Infrastructure" && (pathname.startsWith("/infrastructure") || pathname.startsWith("/industries")));
@@ -201,9 +199,7 @@ export function Header() {
             <div className="container-x py-6 w-full">
               <ul className="flex flex-col divide-y divide-black/[0.06]">
                 {NAV.map((n, i) => {
-                  const isHome = pathname === "/" || pathname === "";
                   const isActive =
-                    (isHome && n.href === "/products") ||
                     pathname === n.href ||
                     (n.href !== "/" && pathname.startsWith(n.href)) ||
                     (n.label === "Infrastructure" && (pathname.startsWith("/infrastructure") || pathname.startsWith("/industries")));
