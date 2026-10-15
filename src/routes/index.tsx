@@ -3,7 +3,7 @@ import { motion, useReducedMotion, useScroll, useTransform } from "motion/react"
 import { ArrowDown, ArrowLeft, ArrowRight, Mail, MapPin, Phone } from "lucide-react";
 import { useRef } from "react";
 import hero from "@/assets/hero-pigment.jpg";
-import lab from "@/assets/lab.jpg";
+import lab from "@/assets/lab.png";
 import globe from "@/assets/globe.png";
 import { ABOUT_IMG, CERT_LABELS, CERT_LOGOS, CONTACT, NEWS } from "@/lib/content";
 import { EASE, MaskImage, Reveal, SafeImg } from "@/components/site/Reveal";
@@ -155,31 +155,61 @@ function Industries() {
 }
 
 function Science() {
-  const caps = ["Research & development", "HPLC — High-performance liquid chromatography", "Ion chromatography", "Gas chromatography", "ICP-OES analytical instrumentation", "Product quality & testing processes"];
+  const caps = [
+    { num: "01", title: "Research & development" },
+    { num: "02", title: "HPLC – High-performance liquid chromatography" },
+    { num: "03", title: "Ion chromatography" },
+    { num: "04", title: "Gas chromatography" },
+    { num: "05", title: "ICP-OES analytical instrumentation" },
+    { num: "06", title: "Product quality & testing processes" },
+  ];
   return (
-    <section id="innovation" className="scroll-mt-20 bg-ink section-y text-paper">
+    <section id="innovation" className="scroll-mt-20 bg-white section-y text-[#17231F]">
       <div className="container-x">
         <div className="grid gap-10 md:grid-cols-12">
           <Reveal className="md:col-span-6">
-            <p className="eyebrow text-sky">Science meets precision</p>
-            <h2 className="display mt-4 fs-section">Beautiful colour. <span className="serif-accent text-flame">Serious science.</span></h2>
+            <p className="eyebrow text-primary">Science meets precision</p>
+            <h2 className="display mt-4 fs-section text-[#17231F]">
+              Beautiful colour. <span className="serif-accent text-primary">Serious science.</span>
+            </h2>
           </Reveal>
           <Reveal className="md:col-span-5 md:col-start-8 md:self-end" delay={0.1}>
-            <p className="text-lg text-paper/70">Behind every colourant is a commitment to analytical rigour, product consistency, and continuous improvement.</p>
+            <p className="text-lg text-[#66756F]">
+              Behind every colourant is a commitment to analytical rigour, product consistency, and continuous improvement.
+            </p>
           </Reveal>
         </div>
-        <div className="relative mt-16">
-          <MaskImage src={lab} alt="Analytical laboratory with HPLC instrument and coloured dye vials" className="aspect-[16/9]" />
-                    <span className="eyebrow absolute bottom-6 left-6 hidden bg-ink/70 px-3 py-2 text-paper md:block">In-house analytical laboratory</span>
+        <div className="relative mt-12 sm:mt-16 overflow-hidden">
+          <MaskImage
+            src={lab}
+            alt="In-house analytical laboratory with HPLC instrument and coloured dye vials"
+            className="aspect-[2048/768] w-full"
+          />
+          <span className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 rounded-md border border-[#D7E2DC]/80 bg-white/95 px-3.5 py-1.5 font-mono text-[10px] sm:text-[11px] font-semibold tracking-wider text-[#17231F] uppercase shadow-xs backdrop-blur-xs">
+            In-house analytical laboratory
+          </span>
         </div>
-        <ol className="mt-16 grid gap-px bg-paper/15 sm:grid-cols-2 lg:grid-cols-3">
-          {caps.map((c, i) => (
-            <li key={c} className="bg-ink p-8">
-              <span className="font-mono text-xs text-sky">R&D / {String(i + 1).padStart(2, "0")}</span>
-              <p className="mt-4 text-xl font-bold">{c}</p>
-            </li>
+        <div className="mt-12 sm:mt-16 grid grid-cols-1 md:grid-cols-2 gap-x-12 lg:gap-x-16">
+          {caps.map((c) => (
+            <div
+              key={c.num}
+              className="flex items-center py-5 sm:py-6 border-b border-[#D7E2DC] first:border-t md:[&:nth-child(2)]:border-t transition-colors duration-150 hover:bg-[#F8FAF9]/50"
+            >
+              <div className="flex items-center gap-5 sm:gap-7 shrink-0">
+                <span className="w-8 sm:w-10 text-center text-[15px] sm:text-base font-medium text-[#17664F]">
+                  {c.num}
+                </span>
+                <div className="h-5 w-px bg-[#D7E2DC] shrink-0" />
+              </div>
+              <p
+                className="pl-5 sm:pl-7 text-[20px] sm:text-[22px] lg:text-[23px] text-[#17231F] leading-snug"
+                style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
+              >
+                {c.title}
+              </p>
+            </div>
           ))}
-        </ol>
+        </div>
       </div>
     </section>
   );
@@ -187,21 +217,44 @@ function Science() {
 
 function Global() {
   return (
-    <section className="relative overflow-hidden bg-ink text-paper">
-      <SafeImg src={globe} alt="Earth at night with connection lines radiating from India" className="absolute inset-0 h-full w-full object-cover opacity-70" />
-      <div className="film-shade absolute inset-0" />
-      <svg aria-hidden viewBox="0 0 1000 400" className="absolute inset-0 h-full w-full" preserveAspectRatio="none">
-        {([[160, 120], [820, 140], [700, 340], [250, 320]] as const).map(([x, yy], i) => (
-          <motion.path key={i} d={`M580 200 Q ${(580 + x) / 2} ${Math.min(yy, 200) - 120} ${x} ${yy}`} stroke="var(--flame)" strokeWidth="1.2" fill="none"
-            initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }} transition={{ duration: 2, delay: i * 0.25, ease: EASE }} />
-        ))}
-      </svg>
+    <section className="relative overflow-hidden bg-[#07130F] text-white">
+      <SafeImg
+        src={globe}
+        alt="Earth at night with connection lines radiating from India"
+        className="absolute inset-0 h-full w-full object-cover opacity-80"
+      />
+      {/* High-contrast gradient backdrops ensuring crystal clear readability */}
+      <div className="absolute inset-0 bg-gradient-to-r from-[#07130F]/90 via-[#07130F]/60 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#07130F]/95 via-[#07130F]/40 to-transparent pointer-events-none" />
+
+
       <div className="container-x relative flex min-h-[85vh] flex-col justify-end section-y">
         <Reveal>
-          <p className="eyebrow text-sky">Global reach · Headquartered in Mumbai</p>
-          <h2 className="display mt-4 max-w-4xl fs-section">Rooted in India. <span className="serif-accent">Connected to the world.</span></h2>
-          <p className="mt-6 max-w-xl text-lg text-paper/75">Serving customers across 100+ countries, supported by international business and distribution partnerships.</p>
-          <a href="#contact" className="mt-8 inline-flex items-center gap-2 rounded-full bg-paper btn text-ink">Let's Work Together <ArrowRight className="h-4 w-4" /></a>
+          <p className="eyebrow text-[#5EEAD4] font-semibold tracking-[2px]">
+            Global reach · Headquartered in Mumbai
+          </p>
+
+          <h2
+            className="display mt-4 max-w-4xl fs-section text-white"
+            style={{ color: "#FFFFFF", fontFamily: "'Manrope', sans-serif" }}
+          >
+            Rooted in India. <span className="serif-accent text-[#5EEAD4]">Connected to the world.</span>
+          </h2>
+
+          <p
+            className="mt-6 max-w-xl text-[16px] md:text-[18px] leading-relaxed text-white/90"
+            style={{ fontFamily: "'DM Sans', sans-serif" }}
+          >
+            Serving customers across 100+ countries, supported by international business and distribution partnerships.
+          </p>
+
+          <a
+            href="/contact"
+            className="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-7 py-3 text-[13px] font-semibold text-[#17231F] transition-all hover:bg-[#DFF0E5] active:scale-98 shadow-lg"
+          >
+            <span>Let's Work Together</span>
+            <ArrowRight className="h-4 w-4 text-[#17231F]" />
+          </a>
         </Reveal>
       </div>
     </section>

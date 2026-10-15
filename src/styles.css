@@ -138,6 +138,20 @@
     font-family: var(--font-display);
     color: var(--heading);
   }
+  .bg-ink h1,
+  .bg-ink h2,
+  .bg-ink h3,
+  .bg-ink h4,
+  .bg-ink h5,
+  .bg-ink h6,
+  .text-white h1,
+  .text-white h2,
+  .text-white h3,
+  .text-white h4,
+  .text-white h5,
+  .text-white h6 {
+    color: #FFFFFF;
+  }
   h1 {
     font-size: clamp(40px, 6vw, 77px);
     font-weight: 500;

@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, ArrowUpRight, Beaker, CheckCircle2, Cpu, Eye, Microscope, ShieldCheck, Sparkles } from "lucide-react";
-import lab from "@/assets/lab.jpg";
+import lab from "@/assets/lab.png";
 import { INFRA } from "@/lib/content";
 import { MaskImage, Reveal, SafeImg } from "@/components/site/Reveal";
 
