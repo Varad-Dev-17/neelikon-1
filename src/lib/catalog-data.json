@@ -1,0 +1,1660 @@
+{
+"one-world-one-quality": [
+{
+"tab": "Food",
+"groups": [
+{
+"title": "Water Soluble Food Colours",
+"items": [
+{
+"name": "FD&C Yellow 5",
+"ci": "19140"
+},
+{
+"name": "FD&C Yellow 6",
+"ci": "15985"
+},
+{
+"name": "Sunset Yellow Ca stable",
+"ci": "15985"
+},
+{
+"name": "Carmoisine",
+"ci": "14720"
+},
+{
+"name": "FD&C Red 40",
+"ci": "16035"
+},
+{
+"name": "FD&C Blue 1",
+"ci": "42090"
+},
+{
+"name": "Patent Blue V",
+"ci": "42051"
+},
+{
+"name": "Brown HT",
+"ci": "20285"
+},
+{
+"name": "Black PN",
+"ci": "28440"
+}
+]
+},
+{
+"title": "Aluminium Lakes for Food Colours",
+"items": [
+{
+"name": "FD&C Yellow 5 Lake",
+"ci": "19140:1"
+},
+{
+"name": "Quinoline Yellow Lake",
+"ci": "47005:1"
+},
+{
+"name": "FD&C Yellow 6 Lake",
+"ci": "15985:1"
+},
+{
+"name": "Ponceau 4R Lake",
+"ci": "16255:1"
+},
+{
+"name": "Carmoisine Lake",
+"ci": "14720:1"
+},
+{
+"name": "Amaranth Lake",
+"ci": "16185:1"
+},
+{
+"name": "FD&C Red 40 Lake",
+"ci": "16035:1"
+},
+{
+"name": "Erythrosine Lake",
+"ci": "45430:1"
+},
+{
+"name": "FD&C Blue 2 Lake",
+"ci": "73015:1"
+},
+{
+"name": "FD&C Blue 1 Lake",
+"ci": "42090:2"
+},
+{
+"name": "Patent Blue V lake",
+"ci": "42051:1"
+},
+{
+"name": "Brown HT Lake",
+"ci": "20285:1"
+},
+{
+"name": "Black PN Lake",
+"ci": "28440:1"
+}
+]
+},
+{
+"title": "Inorganic Pigments for Food Colours",
+"items": [
+{
+"name": "Red Iron Oxide",
+"ci": "77491"
+},
+{
+"name": "Yellow Iron Oxide",
+"ci": "77492"
+},
+{
+"name": "Black Iron Oxide",
+"ci": "77499"
+},
+{
+"name": "Titanium Dioxide",
+"ci": "77891"
+}
+]
+}
+]
+},
+{
+"tab": "Pharma",
+"groups": [
+{
+"title": "Water Soluble Colours",
+"items": [
+{
+"name": "D&C Green 5",
+"ci": "61570"
+},
+{
+"name": "FD&C Yellow 5",
+"ci": "19140"
+},
+{
+"name": "D&C Yellow 10",
+"ci": "47005"
+},
+{
+"name": "FD&C Yellow 6",
+"ci": "15985"
+},
+{
+"name": "FD&C Red 4",
+"ci": "14700"
+},
+{
+"name": "D&C Red 22",
+"ci": "45380"
+},
+{
+"name": "D&C Red 28",
+"ci": "45410"
+},
+{
+"name": "D&C Red 33",
+"ci": "17200"
+},
+{
+"name": "FD&C Red 40",
+"ci": "16035"
+},
+{
+"name": "Carmoisine",
+"ci": "14720"
+},
+{
+"name": "FD&C Blue 1",
+"ci": "42090"
+},
+{
+"name": "Patent Blue V",
+"ci": "42051"
+},
+{
+"name": "D&C Yellow 8",
+"ci": "45350"
+},
+{
+"name": "D&C Green 8",
+"ci": "59040"
+},
+{
+"name": "D&C Orange 4",
+"ci": "15510"
+},
+{
+"name": "Black PN",
+"ci": "28440"
+}
+]
+},
+{
+"title": "Solvent Soluble Colours",
+"items": [
+{
+"name": "D&C Green 6",
+"ci": "61565"
+},
+{
+"name": "D&C Orange 5",
+"ci": "45370:1"
+},
+{
+"name": "D&C Red 17",
+"ci": "26100"
+},
+{
+"name": "D&C Red 27",
+"ci": "45410:1"
+},
+{
+"name": "D&C Violet 2",
+"ci": "60725"
+},
+{
+"name": "D&C Yellow 11",
+"ci": "47000"
+}
+]
+},
+{
+"title": "Aluminium Lakes",
+"items": [
+{
+"name": "FD&C Yellow 5 Lake",
+"ci": "19140:1"
+},
+{
+"name": "D&C Yellow 10 Lake",
+"ci": "47005:1"
+},
+{
+"name": "Quinoline Yellow Lake",
+"ci": "47005:1"
+},
+{
+"name": "FD&C Yellow 6 Lake",
+"ci": "15985:1"
+},
+{
+"name": "Erythrosine Lake",
+"ci": "45430:1"
+},
+{
+"name": "D&C Red 21 Lake",
+"ci": "45380:3"
+},
+{
+"name": "D&C Red 27 Lake",
+"ci": "45410:2"
+},
+{
+"name": "FD&C Red 40 Lake",
+"ci": "16035:1"
+},
+{
+"name": "Ponceau 4R Lake",
+"ci": "16255:1"
+},
+{
+"name": "Carmoisine Lake",
+"ci": "14720:1"
+},
+{
+"name": "Amaranth Lake",
+"ci": "16185:1"
+},
+{
+"name": "FD&C Blue 1 Lake",
+"ci": "42090:2"
+},
+{
+"name": "Patent Blue V Lake",
+"ci": "42051:1"
+}
+]
+},
+{
+"title": "Inorganic Pigments",
+"items": [
+{
+"name": "Red Iron Oxide",
+"ci": "77491"
+},
+{
+"name": "Yellow Iron Oxide",
+"ci": "77492"
+},
+{
+"name": "Black Iron Oxide",
+"ci": "77499"
+},
+{
+"name": "Titanium Dioxide",
+"ci": "77891"
+}
+]
+}
+]
+},
+{
+"tab": "Cosmetic",
+"groups": [
+{
+"title": "Organic Pigments",
+"items": [
+{
+"name": "D&C Red 6",
+"ci": "15850"
+},
+{
+"name": "D&C Red 7",
+"ci": "15850:1"
+},
+{
+"name": "D&C Red 30",
+"ci": "73360"
+},
+{
+"name": "D&C Red 34",
+"ci": "15880:1"
+},
+{
+"name": "D&C Red 36",
+"ci": "12085"
+}
+]
+},
+{
+"title": "Lakes & Salts",
+"items": [
+{
+"name": "D&C Red 6 Ba Lake",
+"ci": "15850:2"
+},
+{
+"name": "D&C Red 6 Na Salt",
+"ci": "15850"
+},
+{
+"name": "D&C Red 7 Ca Lake",
+"ci": "15850:1"
+},
+{
+"name": "D&C Red 7 Ca Lake(Non-Rosinated)",
+"ci": "15850:1"
+},
+{
+"name": "D&C Red 7 Ca Salt",
+"ci": "15850:1"
+},
+{
+"name": "D&C Red 21 Al Lake",
+"ci": "45380:3"
+},
+{
+"name": "D&C Red 22 Al Lake",
+"ci": "45380:3"
+},
+{
+"name": "D&C Red 27",
+"ci": "45410:1"
+},
+{
+"name": "D&C Red 27 Al Lake",
+"ci": "45410:2"
+},
+{
+"name": "D&C Red 28 Al Lake",
+"ci": "45410:2"
+},
+{
+"name": "D&C Red 30",
+"ci": "73360"
+},
+{
+"name": "D&C Red 30 Al Lake",
+"ci": "73360:1"
+},
+{
+"name": "D&C Red 30 Talc Lake",
+"ci": "73360:1"
+},
+{
+"name": "D&C Red 33 Al Lake",
+"ci": "17200:1"
+},
+{
+"name": "D&C Red 34 Ca Salt",
+"ci": "15880:1"
+},
+{
+"name": "D&C Red 34 Ca Lake",
+"ci": "15880:1"
+},
+{
+"name": "D&C Red 36",
+"ci": "12085"
+},
+{
+"name": "FD&C Red 40 Al Lake",
+"ci": "16035:1"
+},
+{
+"name": "FD&C Yellow 5 Al Lake",
+"ci": "19140:1"
+},
+{
+"name": "FD&C Yellow 6 Al Lake",
+"ci": "15985:1"
+},
+{
+"name": "D&C Yellow 10 Al Lake",
+"ci": "47005:1"
+},
+{
+"name": "FD&C Blue 1 Al Lake",
+"ci": "42090:2"
+}
+]
+},
+{
+"title": "Other Lakes",
+"items": [
+{
+"name": "Quinoline Yellow Lake",
+"ci": "47005:1"
+},
+{
+"name": "Black PN Lake",
+"ci": "28440:1"
+},
+{
+"name": "Patent Blue V Lake",
+"ci": "42051:1"
+},
+{
+"name": "Erythrosine Lake",
+"ci": "45430:1"
+}
+]
+},
+{
+"title": "Inorganic Pigments",
+"items": [
+{
+"name": "Red Iron Oxide",
+"ci": "77491"
+},
+{
+"name": "Yellow Iron Oxide",
+"ci": "77492"
+},
+{
+"name": "Black Iron Oxide",
+"ci": "77499"
+},
+{
+"name": "Brown Iron Oxide",
+"ci": "77491, 77492, 77499"
+},
+{
+"name": "Ultramarine Blue",
+"ci": "77007"
+},
+{
+"name": "Ultramarine Pink",
+"ci": "77007"
+},
+{
+"name": "Ultramarine Violet",
+"ci": "77007"
+},
+{
+"name": "Titanium Dioxide",
+"ci": "77891"
+},
+{
+"name": "D&C Black 2",
+"ci": "77266"
+}
+]
+}
+]
+},
+{
+"tab": "Personal Care",
+"groups": [
+{
+"title": "Water Soluble Dyes",
+"items": [
+{
+"name": "FD&C Yellow 5",
+"ci": "19140"
+},
+{
+"name": "Ext. D&C Yellow 7",
+"ci": "10316"
+},
+{
+"name": "D&C Yellow 8",
+"ci": "45350"
+},
+{
+"name": "D&C Yellow 10",
+"ci": "47005"
+},
+{
+"name": "FD&C Yellow 6",
+"ci": "15985"
+},
+{
+"name": "D&C Orange 4",
+"ci": "15510"
+},
+{
+"name": "Carmoisine",
+"ci": "14720"
+},
+{
+"name": "FD&C Red 4",
+"ci": "14700"
+},
+{
+"name": "FD&C Red 40",
+"ci": "16035"
+},
+{
+"name": "D&C Red 22",
+"ci": "45380"
+},
+{
+"name": "D&C Red 28",
+"ci": "45410"
+},
+{
+"name": "D&C Red 33",
+"ci": "17200"
+},
+{
+"name": "Acid Red 52",
+"ci": "45100"
+},
+{
+"name": "Black PN",
+"ci": "28440"
+},
+{
+"name": "Ext. D&C Violet 2",
+"ci": "60730"
+},
+{
+"name": "D&C Green 5",
+"ci": "61570"
+},
+{
+"name": "D&C Green 8",
+"ci": "59040"
+},
+{
+"name": "FD&C Blue 1",
+"ci": "42090"
+},
+{
+"name": "Patent Blue V",
+"ci": "42051"
+}
+]
+},
+{
+"title": "Solvent Soluble Dyes",
+"items": [
+{
+"name": "D&C Yellow 11",
+"ci": "47000"
+},
+{
+"name": "D&C Red 17",
+"ci": "26100"
+},
+{
+"name": "D&C Red 27",
+"ci": "45410:1"
+},
+{
+"name": "D&C Violet 2",
+"ci": "60725"
+},
+{
+"name": "D&C Green 6",
+"ci": "61565"
+}
+]
+},
+{
+"title": "Organic Pigments",
+"items": [
+{
+"name": "D&C Red 6",
+"ci": "15850"
+},
+{
+"name": "D&C Red 36",
+"ci": "12085"
+},
+{
+"name": "D&C Red 7",
+"ci": "15850:1"
+},
+{
+"name": "D&C Red 30",
+"ci": "73360"
+},
+{
+"name": "D&C Red 34",
+"ci": "15880:1"
+},
+{
+"name": "D&C Red 7 Ca Salt",
+"ci": "15850:1"
+},
+{
+"name": "D&C Red 34 Ca Salt",
+"ci": "15880:1"
+}
+]
+}
+]
+}
+],
+"synthetic-food": [
+{
+"tab": "Food",
+"groups": [
+{
+"title": "Water Soluble Food Colours",
+"items": [
+{
+"name": "Tartrazine",
+"ci": "19140"
+},
+{
+"name": "Quinoline Yellow WS",
+"ci": "47005"
+},
+{
+"name": "Sunset Yellow FCF",
+"ci": "15985"
+},
+{
+"name": "Allura Red",
+"ci": "16035"
+},
+{
+"name": "Ponceau 4R",
+"ci": "16255"
+},
+{
+"name": "Carmoisine",
+"ci": "14720"
+},
+{
+"name": "Erythrosine",
+"ci": "45430"
+},
+{
+"name": "Amaranth",
+"ci": "16185"
+},
+{
+"name": "Brown HT",
+"ci": "20285"
+},
+{
+"name": "Brilliant Blue FCF",
+"ci": "42090"
+},
+{
+"name": "Patent Blue V",
+"ci": "42051"
+},
+{
+"name": "Indigo Carmine",
+"ci": "73015"
+},
+{
+"name": "Fast Green FCF",
+"ci": "42053"
+},
+{
+"name": "Black PN",
+"ci": "28440"
+}
+]
+},
+{
+"title": "Blended Food Colours",
+"items": [
+{
+"name": "Egg Yellow",
+"ci": "19140 + 15985"
+},
+{
+"name": "Kesari B",
+"ci": "19140 + 15985"
+},
+{
+"name": "Apple Green",
+"ci": "19140 + 42090"
+},
+{
+"name": "Pea Green",
+"ci": "19140 + 42090"
+},
+{
+"name": "Raspberry Red",
+"ci": "14720 + 15985"
+},
+{
+"name": "Strawberry Red",
+"ci": "14720 + 16255"
+},
+{
+"name": "Chocolate Brown Y",
+"ci": "14720 + 15985 + 19140 + 42090 + 42053"
+},
+{
+"name": "Chocolate Brown K1",
+"ci": "15985 + 42090 + 14720 + 19140"
+},
+{
+"name": "Chocolate Brown FCF",
+"ci": "15985 + 16255 + 42090"
+},
+{
+"name": "Black CTB",
+"ci": "14720 + 19140 + 42090"
+},
+{
+"name": "Black NCTB",
+"ci": "14720 + 19140 + 42090"
+},
+{
+"name": "Black 1011",
+"ci": "15985 + 14720 + 42090"
+}
+]
+},
+{
+"title": "Aluminium Lakes",
+"items": [
+{
+"name": "Quinoline Yellow Lake",
+"ci": "47005:1"
+},
+{
+"name": "Tartrazine Lake",
+"ci": "19140:1"
+},
+{
+"name": "Sunset Yellow FCF Lake",
+"ci": "15985:1"
+},
+{
+"name": "Ponceau 4R Lake",
+"ci": "16255:1"
+},
+{
+"name": "Carmoisine Lake",
+"ci": "14720:1"
+},
+{
+"name": "Amaranth Lake",
+"ci": "16185:1"
+},
+{
+"name": "Allura Red Lake",
+"ci": "16035:1"
+},
+{
+"name": "Erythrosine Lake",
+"ci": "45430:1"
+},
+{
+"name": "Patent Blue V Lake",
+"ci": "42051:1"
+},
+{
+"name": "Brilliant Blue FCF Lake",
+"ci": "42090:2"
+},
+{
+"name": "Indigo Carmine Lake",
+"ci": "73015:1"
+},
+{
+"name": "Black PN Lake",
+"ci": "28440:1"
+},
+{
+"name": "Brown HT Lake",
+"ci": "20285:1"
+}
+]
+},
+{
+"title": "FD&C Colours",
+"items": [
+{
+"name": "FD&C Yellow No. 5",
+"ci": "19140"
+},
+{
+"name": "FD&C Yellow No. 6",
+"ci": "15985"
+},
+{
+"name": "FD&C Blue No. 1",
+"ci": "42090"
+},
+{
+"name": "FD&C Blue No. 2",
+"ci": "73015"
+},
+{
+"name": "FD&C Red No. 3",
+"ci": "45430"
+},
+{
+"name": "FD&C Red No. 40",
+"ci": "16035"
+},
+{
+"name": "FD&C Green No. 3",
+"ci": "42053"
+}
+]
+},
+{
+"title": "FD&C Lakes",
+"items": [
+{
+"name": "FD&C Yellow 5 Lake",
+"ci": "19140:1"
+},
+{
+"name": "FD&C Yellow 6 Lake",
+"ci": "15985:1"
+},
+{
+"name": "FD&C Blue 1 Lake",
+"ci": "42090:2"
+},
+{
+"name": "FD&C Blue 2 Lake",
+"ci": "73015:1"
+},
+{
+"name": "FD&C Red 40 Lake",
+"ci": "16035:1"
+}
+]
+},
+{
+"title": "Granular Colours",
+"items": [
+{
+"name": "Tartrazine Granular",
+"ci": "19140"
+},
+{
+"name": "Quinoline Yellow WS Granular",
+"ci": "47005"
+},
+{
+"name": "Sunset Yellow FCF Granular",
+"ci": "15985"
+},
+{
+"name": "Carmoisine Granular",
+"ci": "14720"
+},
+{
+"name": "Amaranth Granular",
+"ci": "16185"
+},
+{
+"name": "Ponceau 4R Granular",
+"ci": "16255"
+},
+{
+"name": "Allura Red Granular",
+"ci": "16035"
+},
+{
+"name": "Brown HT Granular",
+"ci": "20285"
+},
+{
+"name": "Brilliant Blue FCF Granular",
+"ci": "42090"
+},
+{
+"name": "Patent Blue V Granular",
+"ci": "42051"
+},
+{
+"name": "Indigo Carmine Granular",
+"ci": "73015"
+},
+{
+"name": "Black PN Granular",
+"ci": "28440"
+},
+{
+"name": "FD&C Yellow 5 Granular",
+"ci": "19140"
+},
+{
+"name": "FD&C Yellow 6 Granular",
+"ci": "15985"
+},
+{
+"name": "FD&C Blue 1 Granular",
+"ci": "42090"
+},
+{
+"name": "FD&C Blue 2 Granular",
+"ci": "73015"
+},
+{
+"name": "FD&C Red 40 Granular",
+"ci": "16035"
+}
+]
+},
+{
+"title": "Inorganic Pigments",
+"items": [
+{
+"name": "Red Iron Oxide",
+"ci": "77491"
+},
+{
+"name": "Yellow Iron Oxide",
+"ci": "77492"
+},
+{
+"name": "Black Iron Oxide",
+"ci": "77499"
+},
+{
+"name": "Titanium Dioxide",
+"ci": "77891"
+}
+]
+}
+]
+}
+],
+"cosmetic": [
+{
+"tab": "Cosmetic",
+"groups": [
+{
+"title": "Organic Lakes & Salts",
+"items": [
+{
+"name": "D&C Red 6 Ba Lake",
+"ci": "15850:2"
+},
+{
+"name": "D&C Red 6 Na Salt",
+"ci": "15850"
+},
+{
+"name": "D&C Red 7 Ca Lake",
+"ci": "15850:1"
+},
+{
+"name": "D&C Red 7 Ca Lake(Non-Rosinated)",
+"ci": "15850:1"
+},
+{
+"name": "D&C Red 7 Ca Salt",
+"ci": "15850:1"
+},
+{
+"name": "D&C Red 21 Al Lake",
+"ci": "45380:3"
+},
+{
+"name": "D&C Red 22 Al Lake",
+"ci": "45380:3"
+},
+{
+"name": "D&C Red 27",
+"ci": "45410:1"
+},
+{
+"name": "D&C Red 27 Al Lake",
+"ci": "45410:2"
+},
+{
+"name": "D&C Red 28 Al Lake",
+"ci": "45410:2"
+},
+{
+"name": "D&C Red 30",
+"ci": "73360"
+},
+{
+"name": "D&C Red 30 Al Lake",
+"ci": "73360:1"
+},
+{
+"name": "D&C Red 30 Talc Lake",
+"ci": "73360:1"
+},
+{
+"name": "D&C Red 33 Al Lake",
+"ci": "17200:1"
+},
+{
+"name": "D&C Red 34 Ca Salt",
+"ci": "15880:1"
+},
+{
+"name": "D&C Red 34 Ca Lake",
+"ci": "15880:1"
+},
+{
+"name": "D&C Red 36",
+"ci": "12085"
+},
+{
+"name": "FD&C Red 40 Al Lake",
+"ci": "16035:1"
+},
+{
+"name": "FD&C Yellow 5 Al Lake",
+"ci": "19140:1"
+},
+{
+"name": "FD&C Yellow 6 Al Lake",
+"ci": "15985:1"
+},
+{
+"name": "D&C Yellow 10 Al Lake",
+"ci": "47005:1"
+},
+{
+"name": "FD&C Blue 1 Al Lake",
+"ci": "42090:2"
+}
+]
+},
+{
+"title": "Inorganic Pigments",
+"items": [
+{
+"name": "Red Iron Oxide",
+"ci": "77491"
+},
+{
+"name": "Yellow Iron Oxide",
+"ci": "77492"
+},
+{
+"name": "Black Iron Oxide",
+"ci": "77499"
+},
+{
+"name": "Brown Iron Oxide",
+"ci": "77491, 77492, 77499"
+},
+{
+"name": "Ultramarine Blue",
+"ci": "77007"
+},
+{
+"name": "Ultramarine Pink",
+"ci": "77007"
+},
+{
+"name": "Ultramarine Violet",
+"ci": "77007"
+},
+{
+"name": "Manganese Violet",
+"ci": "77742"
+},
+{
+"name": "Chromium Oxide Green",
+"ci": "77288"
+},
+{
+"name": "Chromium Hydroxide Green",
+"ci": "77289"
+},
+{
+"name": "Ferric Ammonium Ferrocyanide/ Iron Blue",
+"ci": "77510"
+},
+{
+"name": "Titanium Dioxide",
+"ci": "77891"
+},
+{
+"name": "Lavanya Chaandni RT",
+"ci": "77891"
+},
+{
+"name": "D&C Black 2",
+"ci": "77266"
+}
+]
+},
+{
+"title": "Dispersions",
+"items": [
+{
+"name": "D&C Black 2 Dispersion",
+"ci": "77266"
+}
+]
+},
+{
+"title": "Other Lakes",
+"items": [
+{
+"name": "Quinoline Yellow Lake",
+"ci": "47005:1"
+},
+{
+"name": "Black PN Lake",
+"ci": "28440:1"
+},
+{
+"name": "Patent Blue V lake",
+"ci": "42051:1"
+},
+{
+"name": "Erythrosine Lake",
+"ci": "45430:1"
+},
+{
+"name": "Acid Red 52 Lake",
+"ci": "45100"
+}
+]
+},
+{
+"title": "Pigments & Zirconium Lakes",
+"items": [
+{
+"name": "D&C Red 7 Ca Salt",
+"ci": "15850:1"
+},
+{
+"name": "D&C Red 30",
+"ci": "73360"
+},
+{
+"name": "D&C Red 34 Ca Salt",
+"ci": "15880:1"
+},
+{
+"name": "D&C Red 36",
+"ci": "12085"
+},
+{
+"name": "Ferric Ammonium Ferrocyanide/Iron Blue",
+"ci": "77510"
+},
+{
+"name": "Pigment Yellow 1",
+"ci": "11680"
+},
+{
+"name": "Pigment Red 5",
+"ci": "12490"
+},
+{
+"name": "Pigment Green 7",
+"ci": "74260"
+},
+{
+"name": "Pigment Blue 15",
+"ci": "74160"
+},
+{
+"name": "D&C Yellow 5 Zr Lake",
+"ci": "19140:1"
+},
+{
+"name": "D&C Yellow 6 Zr Lake",
+"ci": "15985:2"
+},
+{
+"name": "D&C Red 27 Zr Lake",
+"ci": "45410:2"
+},
+{
+"name": "D&C Blue 1 Zr Lake",
+"ci": "42090:3"
+},
+{
+"name": "D&C Red 40 Zr Lake",
+"ci": "16035:2"
+},
+{
+"name": "Quinoline Yellow Zr Lake",
+"ci": "47005:2"
+}
+]
+}
+]
+}
+],
+"personal-home": [
+{
+"tab": "Personal & Home Care",
+"groups": [
+{
+"title": "Water Soluble Dyes",
+"items": [
+{
+"name": "Lavanya Limelight",
+"ci": "18965"
+},
+{
+"name": "Lavanya Genyel",
+"ci": "74180"
+},
+{
+"name": "Lavanya Aurea",
+"ci": "61585"
+},
+{
+"name": "Lavanya Major",
+"ci": "20470"
+},
+{
+"name": "Orange G",
+"ci": "16230"
+},
+{
+"name": "D&C Green 8",
+"ci": "59040"
+},
+{
+"name": "D&C Yellow 10",
+"ci": "47005"
+},
+{
+"name": "Quinoline Yellow WS",
+"ci": "47005"
+},
+{
+"name": "Ext. D&C Yellow 7",
+"ci": "10316"
+},
+{
+"name": "FD&C Yellow 5",
+"ci": "19140"
+},
+{
+"name": "D&C Yellow 8",
+"ci": "45350"
+},
+{
+"name": "FD&C Yellow 6",
+"ci": "15985"
+},
+{
+"name": "D&C Orange 4",
+"ci": "15510"
+},
+{
+"name": "Ponceau 4R",
+"ci": "16255"
+},
+{
+"name": "FD&C Red 4",
+"ci": "14700"
+},
+{
+"name": "FD&C Red 40",
+"ci": "16035"
+},
+{
+"name": "Red 2G",
+"ci": "18050"
+},
+{
+"name": "FD&C Red 3",
+"ci": "45430"
+},
+{
+"name": "D&C Red 22",
+"ci": "45380"
+},
+{
+"name": "D&C Red 28",
+"ci": "45410"
+},
+{
+"name": "Carmoisine",
+"ci": "14720"
+},
+{
+"name": "D&C Red 33",
+"ci": "17200"
+},
+{
+"name": "Amaranth",
+"ci": "16185"
+},
+{
+"name": "D&C Green 5",
+"ci": "61570"
+},
+{
+"name": "FD&C Green 3",
+"ci": "42053"
+},
+{
+"name": "Ext. D&C Violet 2",
+"ci": "60730"
+},
+{
+"name": "Acid Red 52",
+"ci": "45100"
+},
+{
+"name": "FD&C Blue 1",
+"ci": "42090"
+},
+{
+"name": "Patent Blue V",
+"ci": "42051"
+},
+{
+"name": "Patent Blue VRS",
+"ci": "42045"
+},
+{
+"name": "FD&C Blue 2",
+"ci": "73015"
+},
+{
+"name": "Black PN",
+"ci": "28440"
+}
+]
+},
+{
+"title": "Solvent Soluble Dyes",
+"items": [
+{
+"name": "Lavanya Sunflower",
+"ci": "12700"
+},
+{
+"name": "D&C Yellow 11",
+"ci": "47000"
+},
+{
+"name": "D&C Red 17",
+"ci": "26100"
+},
+{
+"name": "D&C Red 27",
+"ci": "45410:1"
+},
+{
+"name": "D&C Green 6",
+"ci": "61565"
+},
+{
+"name": "D&C Violet 2",
+"ci": "60725"
+}
+]
+},
+{
+"title": "Pigments",
+"items": [
+{
+"name": "Pigment Yellow 1",
+"ci": "11680"
+},
+{
+"name": "Pigment Red 5",
+"ci": "12490"
+},
+{
+"name": "Pigment Green 7",
+"ci": "74260"
+},
+{
+"name": "Pigment Blue 15",
+"ci": "74160"
+},
+{
+"name": "Lavanya Belmont BG",
+"ci": "74160"
+},
+{
+"name": "D&C Red 6",
+"ci": "15850"
+},
+{
+"name": "D&C Red 36",
+"ci": "12085"
+},
+{
+"name": "D&C Red 7",
+"ci": "15850:1"
+},
+{
+"name": "D&C Red 30",
+"ci": "73360"
+},
+{
+"name": "D&C Red 34",
+"ci": "15880:1"
+}
+]
+},
+{
+"title": "Aqueous Pigment Dispersions",
+"items": [
+{
+"name": "Lavanya Revolutum Dispersion",
+"ci": "11680"
+},
+{
+"name": "Lavanya Bright Orange Dispersion",
+"ci": "11680 + 45100"
+},
+{
+"name": "Lavanya Zuni Dispersion",
+"ci": "12490"
+},
+{
+"name": "Lavanya Roseum Dispersion",
+"ci": "73360"
+},
+{
+"name": "Lavanya Glory Dispersion",
+"ci": "15880:1"
+},
+{
+"name": "Lavanya Decorum Dispersion",
+"ci": "74260"
+},
+{
+"name": "Lavanya Aasmani Dispersion",
+"ci": "77007"
+},
+{
+"name": "Lavanya Belmont Dispersion",
+"ci": "74160"
+},
+{
+"name": "Lavanya Belmont BG Dispersion",
+"ci": "74160"
+},
+{
+"name": "Lavanya Kokila Dispersion",
+"ci": "77266"
+},
+{
+"name": "Lavanya Abir Dispersion",
+"ci": "77266"
+}
+]
+},
+{
+"title": "Other Dyes",
+"items": [
+{
+"name": "Rose Pink",
+"ci": "42520"
+}
+]
+}
+]
+}
+],
+"lip-paste": [
+{
+"tab": "Lip Care",
+"groups": [
+{
+"title": "Ready-Mix Pastes",
+"items": [
+{
+"name": "D&C Red 7 Ca Lake Paste",
+"ci": "15850:1"
+},
+{
+"name": "D&C Red 27 Lake Paste",
+"ci": "45410:2"
+},
+{
+"name": "Neelilip Yellow Paste CO-003",
+"ci": "19140:1"
+},
+{
+"name": "Titanium Dioxide Paste",
+"ci": "77891"
+},
+{
+"name": "Black Iron Oxide Paste",
+"ci": "77499"
+},
+{
+"name": "Neelilip Blue Paste CO-006",
+"ci": "42090:2"
+},
+{
+"name": "Neelilip Carlotta Paste CO-007",
+"ci": "45380:3"
+},
+{
+"name": "Neelilip Orange Paste CO-008",
+"ci": "15985:1"
+},
+{
+"name": "Neelilip Flamingo Paste CO-009",
+"ci": "15950:2"
+},
+{
+"name": "Neelilip Cathay Paste CO- 013",
+"ci": "12085"
+},
+{
+"name": "Neelilip Glory Paste CO-014",
+"ci": "15880:1"
+},
+{
+"name": "Neelilip Sooraj Paste CO-015",
+"ci": "77492"
+},
+{
+"name": "Neelilip Laal Paste CO-016",
+"ci": "77491"
+},
+{
+"name": "Neelilip Kokila Paste CO-017",
+"ci": "77266"
+},
+{
+"name": "Neelilip Dark Brown Paste CO-021",
+"ci": "77499+77492+77491+77891"
+},
+{
+"name": "Neelilip Brown Medium Paste CO-022",
+"ci": "77499+77492+77491"
+}
+]
+}
+]
+}
+],
+"pearlescent": [
+{
+"tab": "Pearlescent",
+"groups": [
+{
+"title": "Pearlescent Pigments",
+"items": [
+{
+"name": "NFDC Mica",
+"ci": null
+},
+{
+"name": "Lavanya Golden Satin",
+"ci": null
+},
+{
+"name": "Lavanya Golden Pearl",
+"ci": null
+},
+{
+"name": "Lavanya Sunny Gold",
+"ci": null
+},
+{
+"name": "Lavanya Gold Shining",
+"ci": null
+},
+{
+"name": "Lavanya Silver Fine Pearl",
+"ci": null
+},
+{
+"name": "Lavanya Silver Satin",
+"ci": null
+},
+{
+"name": "Lavanya Silver Pearl",
+"ci": null
+},
+{
+"name": "Lavanya Gray Satin",
+"ci": null
+},
+{
+"name": "Lavanya Silver Gray Sparkle",
+"ci": null
+},
+{
+"name": "Lavanya Silver Sparkle",
+"ci": null
+},
+{
+"name": "Lavanya Copper Satin",
+"ci": null
+},
+{
+"name": "Lavanya Royal Red Satin",
+"ci": null
+},
+{
+"name": "Lavanya Interference Royal Gold",
+"ci": null
+},
+{
+"name": "Lavanya Interference Satin Gold",
+"ci": null
+},
+{
+"name": "Lavanya Interference Green",
+"ci": null
+},
+{
+"name": "Lavanya Interference Pink",
+"ci": null
+},
+{
+"name": "Lavanya Interference Blue",
+"ci": null
+}
+]
+}
+]
+}
+]
+}
