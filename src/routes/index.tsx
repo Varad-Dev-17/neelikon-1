@@ -12,6 +12,10 @@ if (typeof window !== "undefined") {
 import hero from "@/assets/hero-pigment.jpg";
 import lab from "@/assets/lab.png";
 import globe from "@/assets/globe.png";
+import app1 from "@/assets/applications/1.png";
+import app2 from "@/assets/applications/2.png";
+import app3 from "@/assets/applications/3.png";
+import app4 from "@/assets/applications/4.png";
 import { ABOUT_IMG, CERT_LABELS, CERT_LOGOS, NEWS } from "@/lib/content";
 import { EASE, MaskImage, Reveal, SafeImg } from "@/components/site/Reveal";
 import { ScrollFilm } from "@/components/site/ScrollFilm";
@@ -193,7 +197,7 @@ const APPLICATION_CATEGORIES = [
     title: "Food & Beverage",
     description: "Colour solutions for food and beverage applications.",
     slug: "natural-food",
-    img: "https://neelikon.com/wp-content/uploads/2025/09/Natural-Food-Colourants.png",
+    img: app1,
   },
   {
     num: "02",
@@ -201,7 +205,7 @@ const APPLICATION_CATEGORIES = [
     title: "Pharmaceutical Colourants",
     description: "Colourants for pharmaceutical applications, including capsules and tablets.",
     slug: "pharma",
-    img: "https://neelikon.com/wp-content/uploads/2025/09/Pharmaceutical-Colourants.png",
+    img: app2,
   },
   {
     num: "03",
@@ -209,7 +213,7 @@ const APPLICATION_CATEGORIES = [
     title: "Cosmetics & Personal Care",
     description: "Colour solutions for cosmetics and personal care products.",
     slug: "cosmetic",
-    img: "https://neelikon.com/wp-content/uploads/2025/09/Cosmetic-Pigments.png",
+    img: app3,
   },
   {
     num: "04",
@@ -217,7 +221,7 @@ const APPLICATION_CATEGORIES = [
     title: "Specialty & Industrial Dyes",
     description: "Specialty colour solutions for industrial applications.",
     slug: "fluorescent",
-    img: "https://neelikon.com/wp-content/uploads/2025/09/Fluorescent-and-Solvent-Dyes.png",
+    img: app4,
   },
 ];
 
@@ -225,7 +229,9 @@ function Industries() {
   const reduce = useReducedMotion();
   const containerRef = useRef<HTMLDivElement>(null);
   const pinRef = useRef<HTMLDivElement>(null);
-  const progressBarRef = useRef<HTMLDivElement>(null);
+  const showcaseRowRef = useRef<HTMLDivElement>(null);
+  const imageStageWrapperRef = useRef<HTMLDivElement>(null);
+  const textStageWrapperRef = useRef<HTMLDivElement>(null);
   const textPanelsRef = useRef<(HTMLDivElement | null)[]>([]);
   const imageLayersRef = useRef<(HTMLDivElement | null)[]>([]);
   const imageInnersRef = useRef<(HTMLDivElement | null)[]>([]);
@@ -242,7 +248,10 @@ function Industries() {
 
     const ctx = gsap.context(() => {
       const pinEl = pinRef.current;
-      if (!pinEl) return;
+      const rowEl = showcaseRowRef.current;
+      const imgWrapper = imageStageWrapperRef.current;
+      const textWrapper = textStageWrapperRef.current;
+      if (!pinEl || !rowEl || !imgWrapper || !textWrapper) return;
 
       const textPanels = textPanelsRef.current;
       const imageLayers = imageLayersRef.current;
@@ -266,6 +275,17 @@ function Industries() {
         return;
       }
 
+      // Responsive shift calculation for the alternating left-right glide
+      const getShift = () => {
+        const rowW = rowEl.offsetWidth;
+        const imgW = imgWrapper.offsetWidth;
+        const textW = textWrapper.offsetWidth;
+        return {
+          imgShift: Math.max(0, rowW - imgW),
+          textShift: -Math.max(0, rowW - textW),
+        };
+      };
+
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: pinEl,
@@ -287,17 +307,25 @@ function Industries() {
         },
       });
 
-      // Continuous subtle green progress line
-      if (progressBarRef.current) {
-        tl.to(
-          progressBarRef.current,
-          { scaleX: 1, ease: "none", duration: 7.8 },
-          0
-        );
-      }
+      // -------------------------------------------------------------
+      // 01 Food & Beverage (Time 0 to 1.2): Image on LEFT, Text on RIGHT
+      // -------------------------------------------------------------
 
-      // Initial restful dwell period for Category 0 (Food & Beverage)
-      // Transition 0 -> 1 begins at time 1.2 and completes at 2.2
+      // -------------------------------------------------------------
+      // Transition 0 -> 1 (Time 1.2 to 2.2):
+      // Image glides LEFT -> RIGHT, Text glides RIGHT -> LEFT
+      // -------------------------------------------------------------
+      tl.to(
+        imgWrapper,
+        { x: () => getShift().imgShift, ease: "power2.inOut", duration: 1.0 },
+        1.2
+      );
+      tl.to(
+        textWrapper,
+        { x: () => getShift().textShift, ease: "power2.inOut", duration: 1.0 },
+        1.2
+      );
+
       tl.to(
         p0,
         { opacity: 0, y: -24, pointerEvents: "none", ease: "power2.inOut", duration: 0.8 },
@@ -327,8 +355,25 @@ function Industries() {
         1.2
       );
 
-      // Category 1 dwells at rest from 2.2 to 3.4
-      // Transition 1 -> 2 begins at time 3.4 and completes at 4.4
+      // -------------------------------------------------------------
+      // 02 Pharmaceutical (Time 2.2 to 3.4): Image on RIGHT, Text on LEFT
+      // -------------------------------------------------------------
+
+      // -------------------------------------------------------------
+      // Transition 1 -> 2 (Time 3.4 to 4.4):
+      // Image glides RIGHT -> LEFT, Text glides LEFT -> RIGHT
+      // -------------------------------------------------------------
+      tl.to(
+        imgWrapper,
+        { x: 0, ease: "power2.inOut", duration: 1.0 },
+        3.4
+      );
+      tl.to(
+        textWrapper,
+        { x: 0, ease: "power2.inOut", duration: 1.0 },
+        3.4
+      );
+
       tl.to(
         p1,
         { opacity: 0, y: -24, pointerEvents: "none", ease: "power2.inOut", duration: 0.8 },
@@ -358,8 +403,25 @@ function Industries() {
         3.4
       );
 
-      // Category 2 dwells at rest from 4.4 to 5.6
-      // Transition 2 -> 3 begins at time 5.6 and completes at 6.6
+      // -------------------------------------------------------------
+      // 03 Cosmetics (Time 4.4 to 5.6): Image on LEFT, Text on RIGHT
+      // -------------------------------------------------------------
+
+      // -------------------------------------------------------------
+      // Transition 2 -> 3 (Time 5.6 to 6.6):
+      // Image glides LEFT -> RIGHT, Text glides RIGHT -> LEFT
+      // -------------------------------------------------------------
+      tl.to(
+        imgWrapper,
+        { x: () => getShift().imgShift, ease: "power2.inOut", duration: 1.0 },
+        5.6
+      );
+      tl.to(
+        textWrapper,
+        { x: () => getShift().textShift, ease: "power2.inOut", duration: 1.0 },
+        5.6
+      );
+
       tl.to(
         p2,
         { opacity: 0, y: -24, pointerEvents: "none", ease: "power2.inOut", duration: 0.8 },
@@ -389,7 +451,10 @@ function Industries() {
         5.6
       );
 
-      // Final restful dwell period so category 4 stays comfortably viewable before unpinning
+      // -------------------------------------------------------------
+      // 04 Specialty (Time 6.6 to 7.8): Image on RIGHT, Text on LEFT
+      // Restful dwell before releasing cleanly into Science
+      // -------------------------------------------------------------
       tl.to({}, { duration: 1.2 }, 6.6);
     }, containerRef);
 
@@ -525,87 +590,16 @@ function Industries() {
                 </div>
               </div>
 
-              {/* Main Showcase Grid: Left Stacked Details + Right Cinematic Image Stage */}
-              <div className="grid grid-cols-12 gap-8 lg:gap-14 items-center my-auto py-4">
-                {/* Left Column: 4 Synchronized Content Panels */}
-                <div className="col-span-5 relative pr-4 lg:pr-8 min-h-[320px] flex flex-col justify-center">
-                  {APPLICATION_CATEGORIES.map((cat, i) => (
-                    <div
-                      key={cat.title}
-                      ref={(el) => {
-                        textPanelsRef.current[i] = el;
-                      }}
-                      className={`w-full will-change-transform ${
-                        i === 0 ? "relative" : "absolute inset-0 pointer-events-none"
-                      }`}
-                      style={{
-                        opacity: i === 0 ? 1 : 0,
-                        transform: i === 0 ? "translateY(0px)" : "translateY(30px)",
-                      }}
-                    >
-                      <div className="flex items-center gap-3">
-                        <span className="text-base font-mono font-bold text-[#17664F]">
-                          {cat.num}
-                        </span>
-                        <div className="h-px w-12 bg-[#D7E2DC]" />
-                        <span className="text-xs font-mono font-semibold uppercase tracking-wider text-[#66756F]">
-                          APPLICATION {i + 1} OF 4
-                        </span>
-                      </div>
-
-                      {/* Clipped Headline Reveal */}
-                      <div className="overflow-hidden mt-5">
-                        <h3
-                          className="text-4xl lg:text-[52px] font-normal leading-[1.06] tracking-tight text-[#17231F]"
-                          style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
-                        >
-                          {cat.title}
-                        </h3>
-                      </div>
-
-                      <p
-                        className="mt-5 text-[16px] lg:text-[18px] leading-relaxed text-[#66756F] max-w-md"
-                        style={{ fontFamily: "'DM Sans', sans-serif" }}
-                      >
-                        {cat.description}
-                      </p>
-
-                      <div className="mt-8 flex items-center gap-4">
-                        <Link
-                          to="/products/$slug"
-                          params={{ slug: cat.slug }}
-                          className="inline-flex items-center gap-2.5 rounded-full bg-[#17664F] px-6 py-3 text-[13px] font-semibold text-white transition-all hover:bg-[#12523F] active:scale-98 shadow-sm"
-                        >
-                          <span>Explore {cat.shortName}</span>
-                          <ArrowRight className="h-4 w-4" />
-                        </Link>
-                      </div>
-                    </div>
-                  ))}
-
-                  {/* Understated Segmented Progress Bar */}
-                  <div className="mt-12 pt-6 border-t border-[#E5EBE8] flex items-center gap-3">
-                    {APPLICATION_CATEGORIES.map((_, i) => (
-                      <div
-                        key={i}
-                        className="h-1 flex-1 rounded-full bg-[#E5EBE8] overflow-hidden transition-colors"
-                      >
-                        <div
-                          className={`h-full bg-[#17664F] transition-all duration-300 ${
-                            i === active
-                              ? "w-full"
-                              : i < active
-                              ? "w-full opacity-60"
-                              : "w-0"
-                          }`}
-                        />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Right Column: Stacked Photographic Stage with Clip-Path Reveal */}
-                <div className="col-span-7">
+              {/* Main Showcase Stage: Dynamic Alternating Left-Right-Left-Right Movement */}
+              <div
+                ref={showcaseRowRef}
+                className="relative w-full flex items-center justify-between my-auto py-4 min-h-[480px]"
+              >
+                {/* Image Stage Wrapper (starts on LEFT, moves to RIGHT for 02, LEFT for 03, RIGHT for 04) */}
+                <div
+                  ref={imageStageWrapperRef}
+                  className="w-[57%] will-change-transform z-10"
+                >
                   <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden border border-[#D7E2DC]/80 shadow-md bg-[#F8FAF9]">
                     {APPLICATION_CATEGORIES.map((cat, i) => (
                       <div
@@ -641,22 +635,66 @@ function Industries() {
                     ))}
                   </div>
                 </div>
-              </div>
 
-              {/* Bottom Subtle Bar with Scroll Progress Line */}
-              <div className="relative flex items-center justify-between text-xs font-mono text-[#66756F] border-t border-[#E5EBE8] pt-3">
-                {/* Thin dynamic green accent line responding continuously to scroll progress */}
-                <div className="absolute top-0 left-0 right-0 h-[2px] bg-[#E5EBE8] overflow-hidden">
-                  <div
-                    ref={progressBarRef}
-                    className="h-full bg-[#17664F] origin-left scale-x-0"
-                  />
+                {/* Text Content Wrapper (starts on RIGHT, moves to LEFT for 02, RIGHT for 03, LEFT for 04) */}
+                <div
+                  ref={textStageWrapperRef}
+                  className="w-[39%] relative min-h-[340px] flex flex-col justify-center will-change-transform z-10"
+                >
+                  {APPLICATION_CATEGORIES.map((cat, i) => (
+                    <div
+                      key={cat.title}
+                      ref={(el) => {
+                        textPanelsRef.current[i] = el;
+                      }}
+                      className={`w-full will-change-transform ${
+                        i === 0 ? "relative" : "absolute inset-0 pointer-events-none"
+                      }`}
+                      style={{
+                        opacity: i === 0 ? 1 : 0,
+                        transform: i === 0 ? "translateY(0px)" : "translateY(30px)",
+                      }}
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className="text-base font-mono font-bold text-[#17664F]">
+                          {cat.num}
+                        </span>
+                        <div className="h-px w-12 bg-[#D7E2DC]" />
+                        <span className="text-xs font-mono font-semibold uppercase tracking-wider text-[#66756F]">
+                          APPLICATION {i + 1} OF 4
+                        </span>
+                      </div>
+
+                      {/* Clipped Headline Reveal */}
+                      <div className="overflow-hidden mt-5">
+                        <h3
+                          className="text-4xl lg:text-[50px] font-normal leading-[1.06] tracking-tight text-[#17231F]"
+                          style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
+                        >
+                          {cat.title}
+                        </h3>
+                      </div>
+
+                      <p
+                        className="mt-5 text-[16px] lg:text-[18px] leading-relaxed text-[#66756F] max-w-md"
+                        style={{ fontFamily: "'DM Sans', sans-serif" }}
+                      >
+                        {cat.description}
+                      </p>
+
+                      <div className="mt-8 flex items-center gap-4">
+                        <Link
+                          to="/products/$slug"
+                          params={{ slug: cat.slug }}
+                          className="inline-flex items-center gap-2.5 rounded-full bg-[#17664F] px-6 py-3 text-[13px] font-semibold text-white transition-all hover:bg-[#12523F] active:scale-98 shadow-sm"
+                        >
+                          <span>Explore {cat.shortName}</span>
+                          <ArrowRight className="h-4 w-4" />
+                        </Link>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-
-                <span className="tracking-wider uppercase">Scroll to explore colour science</span>
-                <span className="font-semibold text-[#17664F] tabular-nums">
-                  0{active + 1} — 04
-                </span>
               </div>
             </div>
           </div>
