@@ -30,7 +30,7 @@ const CHAPTERS = [
 function About() {
   return (
     <main>
-      <section className="bg-ink pb-20 pt-40 text-paper">
+      <section className="bg-ink pb-20 pt-16 md:pt-20 text-paper">
         <div className="container-x">
           <Reveal>
             <p className="eyebrow text-sky">About Neelikon · Est. 1983 · Mumbai</p>
@@ -82,10 +82,10 @@ function About() {
         </div>
       </section>
 
-      <section className="navy-field section-y text-paper">
+      <section className="bg-[#DFF0E5] section-y text-[#17231F]">
         <div className="container-x flex flex-col items-start justify-between gap-8 md:flex-row md:items-end">
-          <h2 className="display max-w-3xl fs-section">Let's create what's next in colour.</h2>
-          <a href="/#contact" className="inline-flex items-center gap-2 rounded-full bg-flame btn text-ink">Discuss Your Requirements <ArrowRight className="h-4 w-4" /></a>
+          <h2 className="display max-w-3xl fs-section text-[#17231F]">Let's create what's next in colour.</h2>
+          <a href="/#contact" className="inline-flex items-center gap-2 rounded-full bg-primary btn text-primary-foreground transition-transform hover:-translate-y-0.5 hover:bg-[#12523f]">Discuss Your Requirements <ArrowRight className="h-4 w-4" /></a>
         </div>
       </section>
     </main>

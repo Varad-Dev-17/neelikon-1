@@ -1,11 +1,13 @@
-@import "tailwindcss" source(none);
-@source "../src";
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Manrope:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap");
+@import "tailwindcss";
 @import "tw-animate-css";
+@source "../src";
 
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-serif: "Instrument Serif", ui-serif, Georgia, serif;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -32,6 +34,9 @@
   --color-ring: var(--ring);
   --color-ink: var(--ink);
   --color-paper: var(--paper);
+  --color-heading: var(--heading);
+  --color-body: var(--body);
+  --color-cta: var(--cta);
   --color-sky: var(--sky);
   --color-navy: var(--navy);
   --color-flame: var(--flame);
@@ -40,69 +45,167 @@
 
 :root {
   --radius: 0.5rem;
-  --ink: oklch(0.2 0.006 250);
-  --paper: oklch(1 0 0);
-  --sky: oklch(0.69 0.11 233);
-  --navy: oklch(0.32 0.18 275);
-  --flame: oklch(0.77 0.17 60);
-  --leaf: oklch(0.55 0.17 140);
 
-  --background: var(--paper);
-  --foreground: var(--ink);
-  --card: oklch(0.975 0.004 240);
-  --card-foreground: var(--ink);
-  --popover: var(--paper);
-  --popover-foreground: var(--ink);
-  --primary: var(--navy);
-  --primary-foreground: var(--paper);
-  --secondary: oklch(0.975 0.004 240);
-  --secondary-foreground: var(--ink);
-  --muted: oklch(0.975 0.004 240);
-  --muted-foreground: oklch(0.48 0.012 250);
-  --accent: var(--flame);
-  --accent-foreground: var(--ink);
+  /* Font Families */
+  --font-sans: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  /* User Specified Theme Tokens */
+  --paper: #ffffff;
+  --background: #ffffff;
+
+  --heading: #17231f;
+  --ink: #17231f;
+  --foreground: #17231f;
+
+  --body: #66756f;
+  --muted-foreground: #66756f;
+
+  --primary: #17664f;
+  --primary-foreground: #ffffff;
+  --navy: #17664f;
+
+  --cta: #dff0e5;
+  --cta-foreground: #17231f;
+
+  --card: #f8faf9;
+  --card-foreground: #17231f;
+  --popover: #ffffff;
+  --popover-foreground: #17231f;
+  --secondary: #dff0e5;
+  --secondary-foreground: #17231f;
+  --muted: #eef5f1;
+  --accent: #17664f;
+  --accent-foreground: #ffffff;
   --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: var(--paper);
-  --border: oklch(0.91 0.006 250);
-  --input: oklch(0.88 0.006 250);
-  --ring: var(--sky);
+  --destructive-foreground: #ffffff;
+  --border: #d7e2dc;
+  --input: #d7e2dc;
+  --ring: #17664f;
 
-  --gradient-spectrum: linear-gradient(90deg, var(--sky), var(--navy), var(--flame), var(--leaf));
-  --gradient-film: linear-gradient(180deg, oklch(0.2 0.006 250 / 0.35) 0%, oklch(0.2 0.006 250 / 0) 30%, oklch(0.2 0.006 250 / 0.15) 55%, oklch(0.2 0.006 250 / 0.8) 100%);
-  --gradient-navy: radial-gradient(120% 80% at 80% 0%, oklch(0.42 0.2 275), var(--navy) 45%, oklch(0.18 0.08 275));
+  /* Natural vivid pigment spectrum */
+  --sky: #268066;
+  --flame: #17664f;
+  --leaf: #17664f;
+
+  --gradient-spectrum: linear-gradient(90deg, #17664f, #2a9d79, #e6a13b, #d44d43);
+  --gradient-film: linear-gradient(
+    180deg,
+    rgba(23, 35, 31, 0.35) 0%,
+    rgba(23, 35, 31, 0) 30%,
+    rgba(23, 35, 31, 0.15) 55%,
+    rgba(23, 35, 31, 0.8) 100%
+  );
+  --gradient-navy: linear-gradient(180deg, #dff0e5 0%, #d8ede0 100%);
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-@keyframes trace { 0% { background-position: -60% 0; } 60%, 100% { background-position: 160% 0; } }
+@keyframes trace {
+  0% {
+    background-position: -60% 0;
+  }
+  60%,
+  100% {
+    background-position: 160% 0;
+  }
+}
 
 @layer base {
-  * { border-color: var(--color-border); }
-  html { scroll-behavior: smooth; }
+  * {
+    border-color: var(--color-border);
+  }
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     background-color: var(--color-background);
-    color: var(--color-foreground);
+    color: var(--body);
     font-family: var(--font-sans);
-    font-size: 1rem;
-    line-height: 1.6;
+    font-size: 14px;
+    line-height: 1.8;
     -webkit-font-smoothing: antialiased;
   }
-  :focus-visible { outline: 2px solid var(--sky); outline-offset: 3px; }
+  p {
+    font-size: 14px;
+    line-height: 1.8;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+    color: var(--heading);
+  }
+  h1 {
+    font-size: clamp(40px, 6vw, 77px);
+    font-weight: 500;
+    line-height: 1.1;
+  }
+  h2 {
+    font-size: clamp(28px, 4vw, 43px);
+    font-weight: 500;
+    line-height: 1.25;
+  }
+  h3 {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+  h4 {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+  .nav-link,
+  nav a {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+  }
+  button,
+  .btn {
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 600;
+  }
+  input,
+  select,
+  textarea {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 400;
+  }
+  label {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 500;
+  }
+  :focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+  }
   @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
+    html {
+      scroll-behavior: auto;
+    }
   }
 }
 
 @utility eyebrow {
-  font-size: 0.75rem;
+  font-family: var(--font-sans);
+  font-size: 10px;
   line-height: 1.4;
-  letter-spacing: 0.16em;
+  letter-spacing: 2px;
   text-transform: uppercase;
-  font-weight: 700;
+  font-weight: 600;
 }
 @utility display {
-  font-weight: 800;
-  letter-spacing: -0.035em;
-  line-height: 0.98;
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
   text-wrap: balance;
 }
 @utility serif-accent {
@@ -111,38 +214,138 @@
   font-style: italic;
   letter-spacing: -0.02em;
 }
-@utility spectrum-bar { background-image: var(--gradient-spectrum); }
-@utility film-shade { background-image: var(--gradient-film); }
-@utility navy-field { background-image: var(--gradient-navy); }
+@utility spectrum-bar {
+  background-image: var(--gradient-spectrum);
+}
+@utility film-shade {
+  background-image: var(--gradient-film);
+}
+@utility navy-field {
+  background-color: var(--cta);
+  color: var(--cta-foreground);
+}
+@utility cta-section {
+  background-color: var(--cta);
+  color: var(--cta-foreground);
+}
 @utility container-x {
   width: 100%;
-  max-width: 82rem;
+  max-width: 100%;
   margin-inline: auto;
   padding-inline: 1.25rem;
-  @media (min-width: 768px) { padding-inline: 2.5rem; }
+  @media (min-width: 640px) {
+    padding-inline: 2rem;
+  }
+  @media (min-width: 1024px) {
+    padding-inline: 3.5rem;
+  }
+  @media (min-width: 1440px) {
+    padding-inline: 4.5rem;
+  }
+  @media (min-width: 1920px) {
+    padding-inline: 6rem;
+  }
 }
 
 /* Type scale */
-@utility fs-hero { font-size: clamp(3.25rem, 8.6vw, 6.25rem); }
-@utility fs-section { font-size: clamp(2.5rem, 5.2vw, 4rem); }
-@utility fs-sub { font-size: clamp(1.75rem, 2.6vw, 2.25rem); line-height: 1.08; }
-@utility fs-stat { font-size: clamp(1.75rem, 3vw, 2.5rem); line-height: 1; letter-spacing: -0.03em; font-weight: 800; }
+@utility fs-hero {
+  font-size: clamp(40px, 6vw, 77px);
+  font-weight: 500;
+  line-height: 1.1;
+}
+@utility fs-section {
+  font-size: clamp(28px, 4vw, 43px);
+  font-weight: 500;
+  line-height: 1.25;
+}
+@utility fs-sub {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+@utility fs-stat {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 3vw, 34px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+}
+@utility brand-logo-text {
+  font-family: var(--font-display);
+  font-size: 33px;
+  font-weight: 800;
+  line-height: 1;
+}
+@utility brand-tagline {
+  font-family: var(--font-sans);
+  font-size: 7px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 2.4px;
+}
+@utility text-footer {
+  font-size: 11px;
+  line-height: 1.75;
+  font-weight: 400;
+}
 /* Section rhythm (8px grid) */
-@utility section-y { padding-block: clamp(5rem, 10vw, 8.5rem); }
-@utility measure { max-width: 36rem; }
+@utility section-y {
+  padding-block: clamp(5rem, 10vw, 8.5rem);
+}
+@utility measure {
+  max-width: 36rem;
+}
 /* Buttons */
 @utility btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
-  min-height: 3rem; padding-inline: 1.5rem; border-radius: 9999px;
-  font-size: 0.9375rem; font-weight: 600; letter-spacing: -0.005em;
-  transition: transform 0.25s var(--ease-out), background-color 0.25s, color 0.25s, border-color 0.25s;
-  &:hover { transform: translateY(-1px); }
-  &:active { transform: scale(0.98); }
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding-inline: 1.5rem;
+  border-radius: 9999px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  transition:
+    transform 0.25s var(--ease-out),
+    background-color 0.25s,
+    color 0.25s,
+    border-color 0.25s;
+  &:hover {
+    transform: translateY(-1px);
+  }
+  &:active {
+    transform: scale(0.98);
+  }
+}
+@utility btn-primary {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  &:hover {
+    background-color: #12523f;
+  }
+}
+/* Natural, vivid pigment rendering */
+@utility pigment-img {
+  filter: saturate(1.12) contrast(1.03);
 }
 /* Signature spectrum motif */
 @utility spectrum-trace {
-  background-image: linear-gradient(90deg, transparent, var(--sky), var(--flame), var(--leaf), transparent);
-  background-size: 50% 100%; background-repeat: no-repeat;
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    var(--sky),
+    var(--flame),
+    var(--leaf),
+    transparent
+  );
+  background-size: 50% 100%;
+  background-repeat: no-repeat;
   animation: trace 6s var(--ease-out) infinite;
-  @media (prefers-reduced-motion: reduce) { animation: none; background-size: 100% 100%; }
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+    background-size: 100% 100%;
+  }
 }

@@ -4,7 +4,6 @@ import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { INFRA } from "@/lib/content";
 import { EASE, MaskImage, Reveal, SafeImg } from "@/components/site/Reveal";
-import { FinalCta } from "@/components/site/FinalCta";
 
 const LEAD = INFRA[1]!.imgs[0]!;
 
@@ -45,10 +44,10 @@ function Infra() {
   let idx = 0;
   return (
     <main>
-      <section className="relative min-h-[85vh] overflow-hidden bg-ink text-paper">
+      <section className="relative min-h-[calc(85vh-104px)] overflow-hidden bg-ink text-paper">
         <SafeImg src={LEAD} alt="Neelikon manufacturing plant" eager className="absolute inset-0 h-full w-full object-cover opacity-80" />
         <div className="film-shade absolute inset-0" />
-        <div className="container-x relative flex min-h-[85vh] flex-col justify-end pb-16 pt-32">
+        <div className="container-x relative flex min-h-[calc(85vh-104px)] flex-col justify-end pb-16 pt-16 md:pt-20">
           <p className="eyebrow text-sky">Infrastructure</p>
           <h1 className="display mt-4 max-w-4xl fs-section">The backbone of <span className="serif-accent text-flame">Neelikon.</span></h1>
           <p className="mt-6 max-w-xl text-lg text-paper/85">Choosing a supplier goes beyond a polished website. We invite distributors and customers — current, new and prospective — to visit our facilities in Raigad, Maharashtra and Bharuch, Gujarat.</p>
@@ -90,7 +89,6 @@ function Infra() {
           </motion.div>
         )}
       </AnimatePresence>
-      <FinalCta />
     </main>
   );
 }

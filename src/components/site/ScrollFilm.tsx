@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import hero from "@/assets/hero-pigment.jpg";
 import lab from "@/assets/lab.jpg";
-import globe from "@/assets/globe.jpg";
+import globe from "@/assets/globe.png";
 import { INFRA } from "@/lib/content";
 import { EASE, SafeImg } from "./Reveal";
 

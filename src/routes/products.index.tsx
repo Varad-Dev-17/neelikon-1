@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ProductUniverse } from "@/components/site/ProductUniverse";
-import { FinalCta } from "@/components/site/FinalCta";
 
 export const Route = createFileRoute("/products/")({
   head: () => ({
@@ -14,9 +13,8 @@ export const Route = createFileRoute("/products/")({
     ],
   }),
   component: () => (
-    <main className="pt-16">
+    <main className="pt-8 md:pt-12">
       <ProductUniverse heading="h1" />
-      <FinalCta />
     </main>
   ),
 });

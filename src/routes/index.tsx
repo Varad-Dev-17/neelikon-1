@@ -1,16 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
-import { ArrowDown, ArrowRight, Mail, MapPin, Phone } from "lucide-react";
+import { ArrowDown, ArrowLeft, ArrowRight, Mail, MapPin, Phone } from "lucide-react";
 import { useRef } from "react";
 import hero from "@/assets/hero-pigment.jpg";
 import lab from "@/assets/lab.jpg";
-import globe from "@/assets/globe.jpg";
+import globe from "@/assets/globe.png";
 import { ABOUT_IMG, CERT_LABELS, CERT_LOGOS, CONTACT, NEWS } from "@/lib/content";
 import { EASE, MaskImage, Reveal, SafeImg } from "@/components/site/Reveal";
 import { ScrollFilm } from "@/components/site/ScrollFilm";
 import { ProductUniverse } from "@/components/site/ProductUniverse";
 import { SpectrumDivider } from "@/components/site/SpectrumDivider";
-import { FinalCta } from "@/components/site/FinalCta";
 import { EnquiryForm } from "@/components/site/EnquiryForm";
 
 export const Route = createFileRoute("/")({
@@ -42,7 +41,6 @@ function Home() {
       <Testimonial />
       <div className="bg-card"><SpectrumDivider /></div>
       <Insights />
-      <FinalCta />
       <Contact />
     </main>
   );
@@ -55,56 +53,57 @@ function Hero() {
   const y = useTransform(scrollYProgress, [0, 1], ["0%", reduce ? "0%" : "18%"]);
   const lines = ["Colour,", "Engineered."];
   return (
-    <section ref={ref} className="relative min-h-[100dvh] overflow-hidden bg-ink text-paper">
-      <motion.div style={{ y }} className="absolute inset-0 md:left-[38%]">
+    <section ref={ref} className="relative min-h-[calc(100dvh-104px)] overflow-hidden bg-white text-foreground">
+      <motion.div style={{ y }} className="pointer-events-none absolute inset-0 md:left-[28%] lg:left-[34%]">
         <motion.img
           src={hero}
-          alt="Blue, orange and green pigment clouds swirling through water"
-          width={1600}
-          height={1200}
-          initial={reduce ? false : { clipPath: "inset(0 0 0 100%)", scale: 1.15 }}
+          alt="Natural vivid pigment colours explosion"
+          width={1920}
+          height={1080}
+          initial={reduce ? false : { clipPath: "inset(0 0 0 100%)", scale: 1.05 }}
           animate={{ clipPath: "inset(0 0 0 0%)", scale: 1 }}
           transition={{ duration: 1.4, ease: EASE }}
-          className="h-full w-full object-cover"
+          className="h-full w-full object-cover object-right pigment-img"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/50 to-transparent md:from-ink/90 md:via-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/85 to-transparent w-full md:w-3/5" />
+        <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-white to-transparent" />
       </motion.div>
-      <div className="container-x relative flex min-h-[100dvh] flex-col justify-end pb-16 pt-32">
-        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="eyebrow text-sky">
+      <div className="container-x relative flex min-h-[calc(100dvh-104px)] flex-col justify-end pb-16 pt-16 md:pt-20">
+        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="eyebrow text-primary font-bold">
           Colour science. Global expertise.
         </motion.p>
-        <h1 className="display fs-hero mt-6 max-w-[12ch]">
+        <h1 className="display fs-hero mt-6 max-w-[12ch] text-[#17231F]">
           {lines.map((l, i) => (
             <span key={l} className="block overflow-hidden pb-[0.06em]">
-              <motion.span className="block" initial={reduce ? false : { y: "105%" }} animate={{ y: 0 }} transition={{ duration: 0.9, delay: 0.25 + i * 0.12, ease: EASE }}>
+              <motion.span className="block text-[#17231F]" initial={reduce ? false : { y: "105%" }} animate={{ y: 0 }} transition={{ duration: 0.9, delay: 0.25 + i * 0.12, ease: EASE }}>
                 {l}
               </motion.span>
             </span>
           ))}
           <span className="block overflow-hidden">
-            <motion.span className="serif-accent block text-[0.55em] text-flame" initial={reduce ? false : { y: "105%" }} animate={{ y: 0 }} transition={{ duration: 0.9, delay: 0.5, ease: EASE }}>
+            <motion.span className="serif-accent block text-[0.55em] text-primary" initial={reduce ? false : { y: "105%" }} animate={{ y: 0 }} transition={{ duration: 0.9, delay: 0.5, ease: EASE }}>
               For a World in Motion.
             </motion.span>
           </span>
         </h1>
         <motion.div initial={reduce ? false : { opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8, duration: 0.7, ease: EASE }} className="mt-10 grid gap-10 md:grid-cols-12 md:items-end">
           <div className="md:col-span-5">
-            <p className="measure text-lg leading-relaxed text-paper/85">High-purity colourants backed by decades of expertise, rigorous quality standards, and a global network serving industries around the world.</p>
+            <p className="measure text-[14px] leading-[1.8] text-[#66756F]">High-purity colourants backed by decades of expertise, rigorous quality standards, and a global network serving industries around the world.</p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <a href="/products" className="group inline-flex items-center gap-2 rounded-full bg-paper btn text-ink transition-transform hover:-translate-y-0.5 active:scale-95">
+              <a href="/products" className="group inline-flex items-center gap-2 rounded-full bg-primary btn min-h-10 px-5 text-[12px] font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5 hover:bg-[#12523f] active:scale-95 shadow-xs">
                 Explore Our Colours <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </a>
-              <a href="#film" className="inline-flex items-center rounded-full border border-paper/40 btn transition-colors hover:bg-paper/10">Discover Neelikon</a>
+              <a href="#film" className="inline-flex items-center rounded-full border border-primary/30 btn min-h-10 px-5 text-[12px] font-semibold text-primary transition-colors hover:bg-primary/10">Discover Neelikon</a>
             </div>
           </div>
-          <dl className="grid grid-cols-3 gap-6 border-t border-paper/20 pt-6 md:col-span-6 md:col-start-7">
+          <dl className="grid grid-cols-3 gap-6 rounded-2xl border border-[#D7E2DC] bg-white/80 p-6 backdrop-blur-md shadow-xs md:col-span-6 md:col-start-7">
             {[["1983", "Established"], ["100+", "Countries served"], ["4", "Core industries"]].map(([a, b]) => (
-              <div key={a}><dt className="sr-only">{b}</dt><dd className="fs-stat">{a}</dd><dd className="mt-2 text-sm leading-snug text-paper/75">{b}</dd></div>
+              <div key={a}><dt className="sr-only">{b}</dt><dd className="fs-stat text-[#17231F]">{a}</dd><dd className="mt-1 text-[11px] leading-snug text-[#66756F]">{b}</dd></div>
             ))}
           </dl>
         </motion.div>
-        <a href="#film" aria-label="Scroll to story" className="absolute bottom-6 right-6 hidden items-center gap-2 text-xs text-paper/60 md:flex">
-          Scroll <ArrowDown className="h-4 w-4 motion-safe:animate-bounce" />
+        <a href="#film" aria-label="Scroll to story" className="absolute bottom-6 right-6 hidden items-center gap-2 text-xs text-[#66756F] md:flex hover:text-primary transition-colors">
+          Scroll <ArrowDown className="h-4 w-4 motion-safe:animate-bounce text-primary" />
         </a>
       </div>
     </section>
@@ -276,20 +275,86 @@ function Insights() {
 
 function Contact() {
   return (
-    <section id="contact" className="navy-field scroll-mt-16 section-y text-paper">
-      <div className="container-x grid gap-16 lg:grid-cols-12">
-        <Reveal className="lg:col-span-5">
-          <p className="eyebrow text-flame">Enquiries</p>
-          <h2 className="display mt-4 fs-section">Let's create something <span className="serif-accent text-sky">exceptional.</span></h2>
-          <p className="mt-6 text-lg text-paper/75">Connect with our team to discuss your application, product requirements, and opportunities to work together.</p>
-          <ul className="mt-10 space-y-4 text-paper/85">
-            <li className="flex gap-3"><Mail className="h-5 w-5 shrink-0 text-flame" /><a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></li>
-            <li className="flex gap-3"><Phone className="h-5 w-5 shrink-0 text-flame" /><a href={CONTACT.phoneHref}>{CONTACT.phone}</a></li>
-            <li className="flex gap-3"><MapPin className="h-5 w-5 shrink-0 text-flame" /><span>{CONTACT.address}</span></li>
-          </ul>
-          <a href="/products" className="mt-10 inline-flex rounded-full border border-paper/40 btn">Explore Our Products</a>
-        </Reveal>
-        <div className="lg:col-span-6 lg:col-start-7"><EnquiryForm /></div>
+    <section id="contact" className="scroll-mt-16 bg-white py-16 md:py-24 text-[#17231F]">
+      <div className="container-x">
+        <Link
+          to="/"
+          className="inline-flex items-center gap-2 text-[12px] font-medium text-[#66756F] transition-colors hover:text-[#17231F]"
+        >
+          <ArrowLeft className="h-3.5 w-3.5" />
+          <span>Back to home</span>
+        </Link>
+
+        <p className="mt-8 text-[10px] font-bold uppercase tracking-[2px] text-[#17664F]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+          CONTACT US
+        </p>
+
+        <h2
+          className="mt-4 text-[36px] sm:text-[46px] lg:text-[54px] font-medium leading-[1.12] tracking-tight text-[#17231F]"
+          style={{ fontFamily: "'Manrope', sans-serif" }}
+        >
+          Great possibilities begin with a<br />conversation.
+        </h2>
+
+        <p className="mt-4 max-w-2xl text-[14px] sm:text-[15px] leading-relaxed text-[#66756F]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+          Tell us what you have in mind. Our team can help you find the right colour solution for your application.
+        </p>
+
+        <div className="mt-14 grid gap-12 lg:grid-cols-12 lg:gap-16">
+          <div className="lg:col-span-5">
+            <h3 className="text-[22px] font-medium text-[#17231F]" style={{ fontFamily: "'Manrope', sans-serif" }}>
+              Connect with Neelikon
+            </h3>
+
+            <div className="mt-8 space-y-0">
+              <div className="flex items-start gap-3.5">
+                <Mail className="h-5 w-5 shrink-0 text-[#17664F] mt-0.5" />
+                <div>
+                  <p className="text-[13px] font-semibold text-[#17231F]">General enquiries</p>
+                  <a href={`mailto:${CONTACT.email}`} className="mt-1 block text-sm text-[#66756F] transition-colors hover:text-[#17664F]">
+                    {CONTACT.email}
+                  </a>
+                </div>
+              </div>
+
+              <div className="my-6 border-b border-[#E5EBE8]" />
+
+              <div className="flex items-start gap-3.5">
+                <Phone className="h-5 w-5 shrink-0 text-[#17664F] mt-0.5" />
+                <div>
+                  <p className="text-[13px] font-semibold text-[#17231F]">Call our team</p>
+                  <a href="tel:+912246221415" className="mt-1 block text-sm text-[#66756F] transition-colors hover:text-[#17664F]">
+                    +91 22 4622 1415
+                  </a>
+                  <p className="mt-1 text-sm text-[#66756F]">
+                    Export sales: +91 22 6662 6874
+                  </p>
+                </div>
+              </div>
+
+              <div className="my-6 border-b border-[#E5EBE8]" />
+
+              <div className="flex items-start gap-3.5">
+                <MapPin className="h-5 w-5 shrink-0 text-[#17664F] mt-0.5" />
+                <div>
+                  <p className="text-[13px] font-semibold text-[#17231F]">Head office</p>
+                  <address className="mt-1 text-sm not-italic leading-relaxed text-[#66756F]">
+                    D-08, Everest Building, 5th Floor,<br />
+                    Pt. Madan Mohan Malaviya Marg,<br />
+                    Tardeo Circle, Mumbai 400034,<br />
+                    Maharashtra, India.
+                  </address>
+                </div>
+              </div>
+
+              <div className="mt-6 border-b border-[#E5EBE8]" />
+            </div>
+          </div>
+
+          <div className="lg:col-span-7">
+            <EnquiryForm />
+          </div>
+        </div>
       </div>
     </section>
   );

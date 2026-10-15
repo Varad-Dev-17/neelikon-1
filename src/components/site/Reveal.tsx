@@ -39,5 +39,5 @@ export function SafeImg({ src, alt, className, eager }: { src: string; alt: stri
     return (
       <div role="img" aria-label={alt} className={`spectrum-bar opacity-80 ${className ?? ""}`} />
     );
-  return <img src={src} alt={alt} loading={eager ? "eager" : "lazy"} decoding="async" onError={() => setFailed(true)} className={className} />;
+  return <img src={src} alt={alt} loading={eager ? "eager" : "lazy"} decoding="async" onError={() => setFailed(true)} className={`pigment-img ${className ?? ""}`} />;
 }

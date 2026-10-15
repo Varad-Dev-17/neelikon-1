@@ -11,7 +11,12 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as FormulationRouteImport } from './routes/formulation'
+import { Route as IndustriesRouteImport } from './routes/industries'
 import { Route as InfrastructureRouteImport } from './routes/infrastructure'
+import { Route as InnovationRouteImport } from './routes/innovation'
+import { Route as QualityRouteImport } from './routes/quality'
 import { Route as ProductsIndexRouteImport } from './routes/products.index'
 import { Route as ProductsSlugRouteImport } from './routes/products.$slug'
 
@@ -25,9 +30,34 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FormulationRoute = FormulationRouteImport.update({
+  id: '/formulation',
+  path: '/formulation',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IndustriesRoute = IndustriesRouteImport.update({
+  id: '/industries',
+  path: '/industries',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const InfrastructureRoute = InfrastructureRouteImport.update({
   id: '/infrastructure',
   path: '/infrastructure',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InnovationRoute = InnovationRouteImport.update({
+  id: '/innovation',
+  path: '/innovation',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QualityRoute = QualityRouteImport.update({
+  id: '/quality',
+  path: '/quality',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProductsIndexRoute = ProductsIndexRouteImport.update({
@@ -44,14 +74,24 @@ const ProductsSlugRoute = ProductsSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/contact': typeof ContactRoute
+  '/formulation': typeof FormulationRoute
+  '/industries': typeof IndustriesRoute
   '/infrastructure': typeof InfrastructureRoute
+  '/innovation': typeof InnovationRoute
+  '/quality': typeof QualityRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/products/': typeof ProductsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/contact': typeof ContactRoute
+  '/formulation': typeof FormulationRoute
+  '/industries': typeof IndustriesRoute
   '/infrastructure': typeof InfrastructureRoute
+  '/innovation': typeof InnovationRoute
+  '/quality': typeof QualityRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/products': typeof ProductsIndexRoute
 }
@@ -59,21 +99,50 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/contact': typeof ContactRoute
+  '/formulation': typeof FormulationRoute
+  '/industries': typeof IndustriesRoute
   '/infrastructure': typeof InfrastructureRoute
+  '/innovation': typeof InnovationRoute
+  '/quality': typeof QualityRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/products/': typeof ProductsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/about' | '/infrastructure' | '/products/$slug' | '/products/'
+    | '/'
+    | '/about'
+    | '/contact'
+    | '/formulation'
+    | '/industries'
+    | '/infrastructure'
+    | '/innovation'
+    | '/quality'
+    | '/products/$slug'
+    | '/products/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/infrastructure' | '/products/$slug' | '/products'
+  to:
+    | '/'
+    | '/about'
+    | '/contact'
+    | '/formulation'
+    | '/industries'
+    | '/infrastructure'
+    | '/innovation'
+    | '/quality'
+    | '/products/$slug'
+    | '/products'
   id:
     | '__root__'
     | '/'
     | '/about'
+    | '/contact'
+    | '/formulation'
+    | '/industries'
     | '/infrastructure'
+    | '/innovation'
+    | '/quality'
     | '/products/$slug'
     | '/products/'
   fileRoutesById: FileRoutesById
@@ -81,7 +150,12 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  ContactRoute: typeof ContactRoute
+  FormulationRoute: typeof FormulationRoute
+  IndustriesRoute: typeof IndustriesRoute
   InfrastructureRoute: typeof InfrastructureRoute
+  InnovationRoute: typeof InnovationRoute
+  QualityRoute: typeof QualityRoute
   ProductsSlugRoute: typeof ProductsSlugRoute
   ProductsIndexRoute: typeof ProductsIndexRoute
 }
@@ -102,11 +176,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/formulation': {
+      id: '/formulation'
+      path: '/formulation'
+      fullPath: '/formulation'
+      preLoaderRoute: typeof FormulationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/industries': {
+      id: '/industries'
+      path: '/industries'
+      fullPath: '/industries'
+      preLoaderRoute: typeof IndustriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/infrastructure': {
       id: '/infrastructure'
       path: '/infrastructure'
       fullPath: '/infrastructure'
       preLoaderRoute: typeof InfrastructureRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/innovation': {
+      id: '/innovation'
+      path: '/innovation'
+      fullPath: '/innovation'
+      preLoaderRoute: typeof InnovationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/quality': {
+      id: '/quality'
+      path: '/quality'
+      fullPath: '/quality'
+      preLoaderRoute: typeof QualityRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/products/': {
@@ -129,7 +238,12 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  ContactRoute: ContactRoute,
+  FormulationRoute: FormulationRoute,
+  IndustriesRoute: IndustriesRoute,
   InfrastructureRoute: InfrastructureRoute,
+  InnovationRoute: InnovationRoute,
+  QualityRoute: QualityRoute,
   ProductsSlugRoute: ProductsSlugRoute,
   ProductsIndexRoute: ProductsIndexRoute,
 }

@@ -64,7 +64,7 @@ function ProductPage() {
 
   return (
     <main>
-      <section className="bg-card pb-20 pt-32 md:pt-40">
+      <section className="bg-card pb-20 pt-12 md:pt-16">
         <div className="container-x">
           <nav aria-label="Breadcrumb">
             <ol className="flex flex-wrap items-center gap-1 text-sm text-muted-foreground">
@@ -81,7 +81,7 @@ function ProductPage() {
               <h1 className="display mt-4 fs-section">{p.name}</h1>
               <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">{p.intro ?? p.blurb}</p>
               <div className="mt-8 flex flex-wrap gap-3">
-                <button onClick={() => ask(p.name, "sample")} className="inline-flex items-center gap-2 rounded-full bg-navy btn text-paper transition-transform hover:-translate-y-0.5 active:scale-95"><FlaskConical className="h-4 w-4" /> Request a Sample</button>
+                <button onClick={() => ask(p.name, "sample")} className="inline-flex items-center gap-2 rounded-full bg-primary btn text-primary-foreground transition-transform hover:-translate-y-0.5 hover:bg-[#12523f] active:scale-95"><FlaskConical className="h-4 w-4" /> Request a Sample</button>
                 <button onClick={() => ask(p.name, "enquiry")} className="rounded-full border border-foreground/20 btn transition-colors hover:bg-background">Enquire About This Range</button>
               </div>
             </Reveal>
@@ -111,7 +111,7 @@ function ProductPage() {
           {total === 0 ? (
             <div className="mt-12 grid gap-8 border-l-4 border-sky bg-card p-8 md:grid-cols-12 md:p-12">
               <p className="text-lg md:col-span-8">A detailed product list for this family isn't published yet. Tell us your application and our team will share grades, specifications and documentation.</p>
-              <div className="md:col-span-4 md:text-right"><button onClick={() => ask(p.name, "enquiry")} className="inline-flex items-center gap-2 rounded-full bg-navy btn text-paper">Ask Our Team <ArrowRight className="h-4 w-4" /></button></div>
+              <div className="md:col-span-4 md:text-right"><button onClick={() => ask(p.name, "enquiry")} className="inline-flex items-center gap-2 rounded-full bg-primary btn text-primary-foreground transition-transform hover:-translate-y-0.5 hover:bg-[#12523f]">Ask Our Team <ArrowRight className="h-4 w-4" /></button></div>
             </div>
           ) : (
             <>
@@ -167,13 +167,13 @@ function ProductPage() {
         </div>
       </section>
 
-      <section id="enquire" className="navy-field scroll-mt-16 section-y text-paper">
+      <section id="enquire" className="scroll-mt-16 bg-[#DFF0E5] section-y text-[#17231F]">
         <div className="container-x grid gap-14 lg:grid-cols-12">
           <div className="lg:col-span-5">
-            <p className="eyebrow text-flame">{req.intent === "sample" ? "Sample request" : req.intent === "documents" ? "Documentation request" : "Product enquiry"}</p>
-            <h2 className="display mt-4 fs-section">Let's create something <span className="serif-accent text-sky">exceptional.</span></h2>
-            <p className="mt-6 text-lg text-paper/80">Selected: <strong className="text-paper">{req.product}</strong></p>
-            <p className="mt-4 text-paper/70">Or reach us directly at <a href={`mailto:${CONTACT.email}`} className="underline">{CONTACT.email}</a> · <a href={CONTACT.phoneHref} className="underline">{CONTACT.phone}</a></p>
+            <p className="eyebrow text-primary">{req.intent === "sample" ? "Sample request" : req.intent === "documents" ? "Documentation request" : "Product enquiry"}</p>
+            <h2 className="display mt-4 fs-section text-[#17231F]">Let's create something <span className="serif-accent text-primary">exceptional.</span></h2>
+            <p className="mt-6 text-lg text-[#66756F]">Selected: <strong className="text-[#17231F]">{req.product}</strong></p>
+            <p className="mt-4 text-[#66756F]">Or reach us directly at <a href={`mailto:${CONTACT.email}`} className="text-[#17231F] underline">{CONTACT.email}</a> · <a href={CONTACT.phoneHref} className="text-[#17231F] underline">{CONTACT.phone}</a></p>
           </div>
           <div className="lg:col-span-6 lg:col-start-7"><EnquiryForm product={req.product} intent={req.intent} /></div>
         </div>
