@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from "motion/react";
-import { ArrowDown, ArrowLeft, ArrowRight, Calendar, FileText, FlaskConical, Globe, MapPin, Trophy } from "lucide-react";
+import { ArrowDown, ArrowLeft, ArrowRight, Calendar, FileText, FlaskConical, Globe, Mail, MapPin, Phone, Trophy } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -16,11 +16,12 @@ import app1 from "@/assets/applications/1.png";
 import app2 from "@/assets/applications/2.png";
 import app3 from "@/assets/applications/3.png";
 import app4 from "@/assets/applications/4.png";
-import { ABOUT_IMG, CERT_LABELS, CERT_LOGOS, GLOBAL_CERT_CARDS, GLOBAL_CERT_PILLS, NEWS } from "@/lib/content";
+import { ABOUT_IMG, CERT_LABELS, CERT_LOGOS, CONTACT, GLOBAL_CERT_CARDS, GLOBAL_CERT_PILLS, NEWS } from "@/lib/content";
 import { EASE, MaskImage, Reveal, SafeImg } from "@/components/site/Reveal";
 import { ScrollFilm } from "@/components/site/ScrollFilm";
 import { ProductUniverse } from "@/components/site/ProductUniverse";
 import { SpectrumDivider } from "@/components/site/SpectrumDivider";
+import { EnquiryForm } from "@/components/site/EnquiryForm";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -107,6 +108,7 @@ function Home() {
       <div className="bg-card"><SpectrumDivider /></div>
       <Insights />
       <Testimonial />
+      <ContactSection />
     </main>
   );
 }
@@ -1163,6 +1165,102 @@ function Testimonial() {
             Pioneers of the Colour and Dye Industry, Neelikon is a well-established name that has continued providing the best quality products and efficient technical support to its customers for decades. We are happy to be associated with them and look forward to continuing to do so in the long future.
           </blockquote>
           <p className="eyebrow mt-10 text-muted-foreground">Distributor – Food – India</p>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+function ContactSection() {
+  return (
+    <section id="contact" className="bg-white py-20 lg:py-24 text-[#17231F] border-t border-[#E5EBE8]">
+      <div className="container-x">
+        <Reveal>
+          <p
+            className="text-[10px] font-bold uppercase tracking-[2px] text-[#17664F]"
+            style={{ fontFamily: "'DM Sans', sans-serif" }}
+          >
+            CONTACT US
+          </p>
+
+          <h2
+            className="mt-4 text-[38px] sm:text-[48px] lg:text-[56px] font-medium leading-[1.12] tracking-tight text-[#17231F]"
+            style={{ fontFamily: "'Manrope', sans-serif" }}
+          >
+            Great possibilities begin with a<br />conversation.
+          </h2>
+
+          <p
+            className="mt-4 max-w-2xl text-[14px] sm:text-[15px] leading-relaxed text-[#66756F]"
+            style={{ fontFamily: "'DM Sans', sans-serif" }}
+          >
+            Tell us what you have in mind. Our team can help you find the right colour solution for your application.
+          </p>
+
+          <div className="mt-14 grid gap-12 lg:grid-cols-12 lg:gap-16">
+            <div className="lg:col-span-5">
+              <h3
+                className="text-[22px] font-medium text-[#17231F]"
+                style={{ fontFamily: "'Manrope', sans-serif" }}
+              >
+                Connect with Neelikon
+              </h3>
+
+              <div className="mt-8 space-y-0">
+                <div className="flex items-start gap-3.5">
+                  <Mail className="h-5 w-5 shrink-0 text-[#17664F] mt-0.5" />
+                  <div>
+                    <p className="text-[13px] font-semibold text-[#17231F]">General enquiries</p>
+                    <a
+                      href={`mailto:${CONTACT.email}`}
+                      className="mt-1 block text-sm text-[#66756F] transition-colors hover:text-[#17664F]"
+                    >
+                      {CONTACT.email}
+                    </a>
+                  </div>
+                </div>
+
+                <div className="my-6 border-b border-[#E5EBE8]" />
+
+                <div className="flex items-start gap-3.5">
+                  <Phone className="h-5 w-5 shrink-0 text-[#17664F] mt-0.5" />
+                  <div>
+                    <p className="text-[13px] font-semibold text-[#17231F]">Call our team</p>
+                    <a
+                      href="tel:+912246221415"
+                      className="mt-1 block text-sm text-[#66756F] transition-colors hover:text-[#17664F]"
+                    >
+                      +91 22 4622 1415
+                    </a>
+                    <p className="mt-1 text-sm text-[#66756F]">
+                      Export sales: +91 22 6662 6874
+                    </p>
+                  </div>
+                </div>
+
+                <div className="my-6 border-b border-[#E5EBE8]" />
+
+                <div className="flex items-start gap-3.5">
+                  <MapPin className="h-5 w-5 shrink-0 text-[#17664F] mt-0.5" />
+                  <div>
+                    <p className="text-[13px] font-semibold text-[#17231F]">Head office</p>
+                    <address className="mt-1 text-sm not-italic leading-relaxed text-[#66756F]">
+                      D-08, Everest Building, 5th Floor,<br />
+                      Pt. Madan Mohan Malaviya Marg,<br />
+                      Tardeo Circle, Mumbai 400034,<br />
+                      Maharashtra, India.
+                    </address>
+                  </div>
+                </div>
+
+                <div className="mt-6 border-b border-[#E5EBE8]" />
+              </div>
+            </div>
+
+            <div className="lg:col-span-7">
+              <EnquiryForm />
+            </div>
+          </div>
         </Reveal>
       </div>
     </section>
