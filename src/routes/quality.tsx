@@ -1,7 +1,8 @@
+import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, ArrowUpRight, Award, CheckCircle2, FileText, Globe2, ShieldCheck } from "lucide-react";
-import { CERT_LABELS, CERT_LOGOS } from "@/lib/content";
-import { Reveal, SafeImg } from "@/components/site/Reveal";
+import { CERT_LABELS, GLOBAL_CERT_CARDS, GLOBAL_CERT_PILLS } from "@/lib/content";
+import { Reveal } from "@/components/site/Reveal";
 
 export const Route = createFileRoute("/quality")({
   head: () => ({
@@ -56,6 +57,13 @@ const CERT_DETAILS = [
 ];
 
 function QualityPage() {
+  const [activeFilter, setActiveFilter] = useState("All");
+
+  const isMatch = (tags: string[]) => {
+    if (activeFilter === "All") return true;
+    return tags.some((t) => t.toLowerCase() === activeFilter.toLowerCase());
+  };
+
   return (
     <main className="bg-white text-[#17231F]">
       {/* Hero Header */}
@@ -121,46 +129,96 @@ function QualityPage() {
         </div>
       </section>
 
-      {/* Certification Logos & Detailed Scopes */}
-      <section className="border-y border-[#D7E2DC] bg-[#F8FAF9] py-20 md:py-28">
+      {/* Certifications & Memberships Showcase matching Image */}
+      <section className="border-y border-[#D7E2DC] bg-white py-16 md:py-24">
         <div className="container-x">
           <Reveal>
-            <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
-              <div>
-                <p className="eyebrow text-primary">Accreditations</p>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4">
+              <div className="flex items-center gap-4 flex-1">
                 <h2
-                  className="mt-3 text-[32px] sm:text-[42px] font-medium text-[#17231F]"
-                  style={{ fontFamily: "'Manrope', sans-serif" }}
+                  className="font-serif text-[28px] sm:text-[36px] font-medium text-[#0F223D]"
+                  style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
                 >
-                  Certifications & Registrations
+                  Certifications &amp; Memberships
                 </h2>
+                <div className="h-px flex-1 bg-[#85C4B7] hidden sm:block" />
               </div>
-              <p className="max-w-md text-sm text-[#66756F]">
-                Audited regularly by independent registrars and regulatory authorities worldwide.
-              </p>
+            </div>
+
+            {/* Filter Pills */}
+            <div className="flex flex-wrap gap-2 pt-1">
+              {GLOBAL_CERT_PILLS.map((pill) => {
+                const active = activeFilter === pill;
+                return (
+                  <button
+                    key={pill}
+                    type="button"
+                    onClick={() => setActiveFilter(active ? "All" : pill)}
+                    className={`rounded-full px-4 py-1.5 text-xs font-medium transition-all cursor-pointer ${active
+                        ? "bg-[#0B7D6C] text-white shadow-2xs font-semibold"
+                        : "border border-[#CCE3DE] bg-white text-[#2B3F38] hover:border-[#0B7D6C] hover:text-[#0B7D6C]"
+                      }`}
+                  >
+                    {pill}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* All 15 Certification Cards Grid */}
+            <div className="mt-8 space-y-3">
+              {/* Row 1: 8 cards */}
+              <div className="grid grid-cols-4 sm:grid-cols-8 gap-2 sm:gap-2.5">
+                {GLOBAL_CERT_CARDS.filter((c) => c.row === 1).map((card) => {
+                  const matched = isMatch(card.tags);
+                  return (
+                    <div
+                      key={card.id}
+                      className={`group relative flex items-center justify-center transition-all duration-200 ${matched
+                          ? "opacity-100 hover:scale-105"
+                          : "opacity-30 grayscale hover:grayscale-0 hover:opacity-80"
+                        }`}
+                    >
+                      <img
+                        src={card.img}
+                        alt={card.alt}
+                        className="w-full h-auto object-contain transition-shadow duration-200 hover:shadow-xs"
+                        loading="lazy"
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Row 2: 7 cards */}
+              <div className="grid grid-cols-3 sm:grid-cols-7 gap-2 sm:gap-2.5">
+                {GLOBAL_CERT_CARDS.filter((c) => c.row === 2).map((card) => {
+                  const matched = isMatch(card.tags);
+                  return (
+                    <div
+                      key={card.id}
+                      className={`group relative flex items-center justify-center transition-all duration-200 ${matched
+                          ? "opacity-100 hover:scale-105"
+                          : "opacity-30 grayscale hover:grayscale-0 hover:opacity-80"
+                        }`}
+                    >
+                      <img
+                        src={card.img}
+                        alt={card.alt}
+                        className="w-full h-auto object-contain transition-shadow duration-200 hover:shadow-xs"
+                        loading="lazy"
+                      />
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </Reveal>
-
-          {/* Logo badges */}
-          <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
-            {CERT_LOGOS.map((logo, i) => (
-              <div
-                key={i}
-                className="flex h-24 items-center justify-center rounded-xl border border-[#D7E2DC] bg-white p-4 shadow-2xs transition-transform hover:scale-102"
-              >
-                <SafeImg
-                  src={logo}
-                  alt={`Neelikon certification logo ${i + 1}`}
-                  className="max-h-full w-auto object-contain"
-                />
-              </div>
-            ))}
-          </div>
 
           {/* Detailed Certification Breakdown */}
           <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {CERT_DETAILS.map((cert, idx) => (
-              <div key={idx} className="rounded-xl border border-[#D7E2DC] bg-white p-5 shadow-2xs">
+              <div key={idx} className="rounded-xl border border-[#D7E2DC] bg-[#F8FAF9] p-5 shadow-2xs">
                 <h4 className="text-[14px] font-bold text-[#17231F]" style={{ fontFamily: "'Manrope', sans-serif" }}>
                   {cert.name}
                 </h4>

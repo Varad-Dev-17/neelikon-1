@@ -311,28 +311,31 @@ export function ScrollFilm() {
               </AnimatePresence>
             </div>
 
-            {/* Chapter Stepper Tracker with Frosted Backing Plate */}
+            {/* Chapter Stepper Tracker */}
             <ol
-              className="hidden space-y-1 rounded-2xl border border-white/10 bg-black/40 p-2 backdrop-blur-md md:col-span-4 md:block md:w-fit md:ml-auto"
+              className="hidden space-y-2 md:col-span-4 md:block md:w-fit md:ml-auto"
               aria-label="Chapters"
             >
               {CHAPTERS.map((c, i) => (
                 <li
                   key={c.n}
-                  className={`flex items-center gap-3 rounded-xl px-3.5 py-2 text-sm font-medium transition-all duration-300 ${
+                  className={`flex items-center gap-3.5 px-2 py-1.5 text-sm transition-all duration-300 ${
                     i === active
-                      ? "border border-white/20 bg-white/15 font-semibold text-white shadow-sm"
+                      ? "font-semibold text-white"
                       : "text-white/60 hover:text-white/90"
                   }`}
                 >
                   <span
                     className={`font-mono text-xs font-semibold ${
-                      i === active ? "text-[#4ef2bb]" : "text-white/45"
+                      i === active ? "text-[#4ef2bb] drop-shadow-[0_0_8px_rgba(78,242,187,0.5)]" : "text-white/50"
                     }`}
                   >
                     {c.n}
                   </span>
-                  <span className="drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">{c.t}</span>
+                  <span className="drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">{c.t}</span>
+                  {i === active && (
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#4ef2bb] shadow-[0_0_8px_#4ef2bb]" />
+                  )}
                 </li>
               ))}
             </ol>

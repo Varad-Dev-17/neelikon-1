@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from "motion/react";
-import { ArrowDown, ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowDown, ArrowLeft, ArrowRight, Calendar, FileText, FlaskConical, Globe, MapPin, Trophy } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -16,7 +16,7 @@ import app1 from "@/assets/applications/1.png";
 import app2 from "@/assets/applications/2.png";
 import app3 from "@/assets/applications/3.png";
 import app4 from "@/assets/applications/4.png";
-import { ABOUT_IMG, CERT_LABELS, CERT_LOGOS, NEWS } from "@/lib/content";
+import { ABOUT_IMG, CERT_LABELS, CERT_LOGOS, GLOBAL_CERT_CARDS, GLOBAL_CERT_PILLS, NEWS } from "@/lib/content";
 import { EASE, MaskImage, Reveal, SafeImg } from "@/components/site/Reveal";
 import { ScrollFilm } from "@/components/site/ScrollFilm";
 import { ProductUniverse } from "@/components/site/ProductUniverse";
@@ -99,7 +99,7 @@ function Home() {
       <ScrollFilm />
       <Hero />
       <SpectrumDivider />
-      <ProductUniverse />
+      <ProductUniverse showOnlyOnePerGroup={true} />
       <Industries />
       <Science />
       <Global />
@@ -151,21 +151,15 @@ function Hero() {
             </motion.span>
           </span>
         </h1>
-        <motion.div initial={reduce ? false : { opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8, duration: 0.7, ease: EASE }} className="mt-10 grid gap-10 md:grid-cols-12 md:items-end">
-          <div className="md:col-span-5">
-            <p className="measure text-[14px] leading-[1.8] text-[#66756F]">High-purity colourants backed by decades of expertise, rigorous quality standards, and a global network serving industries around the world.</p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <a href="/products" className="group inline-flex items-center gap-2 rounded-full bg-primary btn min-h-10 px-5 text-[12px] font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5 hover:bg-[#12523f] active:scale-95 shadow-xs">
-                Explore Our Colours <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </a>
-              <a href="/about" className="inline-flex items-center rounded-full border border-primary/30 btn min-h-10 px-5 text-[12px] font-semibold text-primary transition-colors hover:bg-primary/10">About Neelikon</a>
-            </div>
-          </div>
-          <dl className="grid grid-cols-3 gap-6 rounded-2xl border border-[#D7E2DC] bg-white/80 p-6 backdrop-blur-md shadow-xs md:col-span-6 md:col-start-7">
-            {[["1983", "Established"], ["100+", "Countries served"], ["4", "Core industries"]].map(([a, b]) => (
-              <div key={a}><dt className="sr-only">{b}</dt><dd className="fs-stat text-[#17231F]">{a}</dd><dd className="mt-1 text-[11px] leading-snug text-[#66756F]">{b}</dd></div>
-            ))}
-          </dl>
+        <motion.div
+          initial={reduce ? false : { opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8, duration: 0.7, ease: EASE }}
+          className="mt-8 max-w-xl"
+        >
+          <p className="text-[14px] sm:text-[15px] leading-[1.8] text-[#66756F]">
+            High-purity colourants backed by decades of expertise, rigorous quality standards, and a global network serving industries around the world.
+          </p>
         </motion.div>
         <a href="#products" aria-label="Scroll to products" className="absolute bottom-6 right-6 hidden items-center gap-2 text-xs text-[#66756F] md:flex hover:text-primary transition-colors">
           Scroll <ArrowDown className="h-4 w-4 motion-safe:animate-bounce text-primary" />
@@ -592,9 +586,8 @@ function Industries() {
                       ref={(el) => {
                         textPanelsRef.current[i] = el;
                       }}
-                      className={`w-full will-change-transform ${
-                        i === 0 ? "relative" : "absolute inset-0 pointer-events-none"
-                      }`}
+                      className={`w-full will-change-transform ${i === 0 ? "relative" : "absolute inset-0 pointer-events-none"
+                        }`}
                       style={{
                         opacity: i === 0 ? 1 : 0,
                         transform: i === 0 ? "translateY(0px)" : "translateY(30px)",
@@ -762,130 +755,194 @@ function Global() {
   );
 }
 
-function Quality() {
-  const pillsRow1 = ["ISO 9001", "ISO 14001", "ISO 45001", "FSSC 22000", "GMP", "REACH", "Halal"];
-  const pillsRow2 = ["Kosher", "Sedex", "EcoVadis", "US-FDA", "NABL"];
+const TOP_GLOBAL_HIGHLIGHTS = [
+  {
+    img: "/global and certifivates/01_one_world_one_quality.png",
+    title: "One World,\nOne Quality",
+    desc: "Globalized quality with zero compromises.",
+  },
+  {
+    img: "/global and certifivates/02_revolutionary_rd_systems.png",
+    title: "Revolutionary\nR&D Systems",
+    desc: "Sophisticated laboratories for product development",
+  },
+  {
+    img: "/global and certifivates/03_ranked_top_3_worldwide.png",
+    title: "Ranked In Top 3\nWorldwide",
+    desc: "Global trailblazers over the years.",
+  },
+  {
+    img: "/global and certifivates/04_service_to_100_nations.png",
+    title: "Service to 100+\nNations",
+    desc: "Colouring the world since 1983.",
+  },
+];
 
-  const certCards = [
-    { num: "01", name: "ISO 9001", logo: CERT_LOGOS[0] ?? "" },
-    { num: "02", name: "ISO 14001", logo: CERT_LOGOS[1] ?? "" },
-    { num: "03", name: "ISO 45001", logo: CERT_LOGOS[2] ?? "" },
-    { num: "04", name: "NABL", logo: CERT_LOGOS[3] ?? "" },
-    { num: "05", name: "EcoVadis", logo: CERT_LOGOS[4] ?? "" },
-    { num: "06", name: "US-FDA", logo: CERT_LOGOS[5] ?? "" },
-  ];
+function Quality() {
+  const [activeFilter, setActiveFilter] = useState("All");
+
+  const isMatch = (tags: string[]) => {
+    if (activeFilter === "All") return true;
+    return tags.some((t) => t.toLowerCase() === activeFilter.toLowerCase());
+  };
 
   return (
-    <section id="quality" className="scroll-mt-20 bg-white text-[#17231F] py-20 lg:py-28">
+    <section id="quality" className="scroll-mt-20 bg-white text-[#17231F] py-16 sm:py-20 lg:py-24">
       <div className="container-x">
-        {/* Top-Right Header: TRUSTED GLOBALLY ──── 01 */}
-        <div className="flex items-center justify-end gap-4 mb-10">
-          <span className="text-[11px] sm:text-[13px] font-mono font-bold tracking-[2.5px] text-[#17664F] uppercase">
-            TRUSTED GLOBALLY
-          </span>
-          <div className="h-px w-16 bg-[#D7E2DC]" />
-          <span className="text-[14px] sm:text-[15px] font-mono font-bold text-[#17231F]">
-            01
-          </span>
+        {/* Top 4 Highlights Strip matching Image 1: Icon + Text with vertical dividers */}
+        <div className="mb-14 sm:mb-20">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-0 lg:divide-x lg:divide-[#E5EBE8] items-center">
+            {TOP_GLOBAL_HIGHLIGHTS.map((item, idx) => (
+              <div
+                key={idx}
+                className="flex items-center gap-4 lg:gap-5 lg:px-6 first:lg:pl-0 last:lg:pr-0"
+              >
+                <img
+                  src={item.img}
+                  alt={item.title.replace("\n", " ")}
+                  className="h-16 w-16 sm:h-20 sm:w-20 shrink-0 object-contain transition-transform duration-200 hover:scale-105"
+                  loading="lazy"
+                />
+                <div className="flex flex-col justify-center">
+                  <h4
+                    className="font-bold text-[16px] sm:text-[18px] text-[#0B4D8C] leading-[1.25] whitespace-pre-line"
+                    style={{ fontFamily: "'Manrope', -apple-system, sans-serif" }}
+                  >
+                    {item.title}
+                  </h4>
+                  <p className="text-[12px] sm:text-[13px] text-[#64748B] leading-snug mt-1">
+                    {item.desc}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
-        <div className="grid gap-12 lg:grid-cols-12 lg:gap-16 items-start">
-          {/* Left Column: Vertical Index Line + Heading & Copy */}
-          <Reveal className="lg:col-span-5">
-            <div className="flex items-start gap-6 sm:gap-7">
-              {/* Far Left 01 + Vertical Line */}
-              <div className="flex flex-col items-center shrink-0 pt-1">
-                <span className="text-[13px] font-mono font-bold text-[#17664F] mb-3">
-                  01
-                </span>
-                <div className="w-px h-64 sm:h-80 bg-[#D7E2DC]" />
-              </div>
-
-              {/* Title & Copy */}
-              <div className="flex-1">
-                <div className="flex items-center gap-3.5">
-                  <p className="eyebrow text-[#17664F] font-bold tracking-[2.5px] text-[11px] sm:text-[12px]">
-                    Quality credentials
-                  </p>
-                  <div className="h-px w-16 bg-[#D7E2DC]" />
-                </div>
-
-                <h2
-                  className="mt-5 text-[44px] sm:text-[56px] md:text-[66px] lg:text-[76px] xl:text-[84px] font-normal leading-[1.04] tracking-tight text-[#17231F]"
-                  style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
-                >
-                  Quality, verified.
-                  <br />
-                  <span className="italic text-[#17664F]">
-                    At every stage.
-                  </span>
-                </h2>
-
-                <p
-                  className="mt-7 max-w-md text-[16px] sm:text-[18px] leading-relaxed text-[#66756F]"
-                  style={{ fontFamily: "'DM Sans', sans-serif" }}
-                >
-                  Certifications and memberships as published by Neelikon.
+        {/* Main 2-Column Section */}
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-12 items-start">
+          {/* Left Column: Eyebrow, Heading, Description */}
+          <div className="lg:col-span-4 lg:border-r lg:border-[#E5EBE8] lg:pr-8">
+            <Reveal>
+              <div className="flex items-center gap-3">
+                <p className="eyebrow text-[#5F6E68] text-[11px] font-semibold tracking-widest uppercase">
+                  QUALITY CREDENTIALS
                 </p>
+                <div className="h-px w-14 bg-[#75B8AA]" />
               </div>
-            </div>
-          </Reveal>
 
-          {/* Right Column: Pills & 6 Certification Cards */}
-          <div className="lg:col-span-7">
-            {/* Pills Rows */}
-            <div className="space-y-3">
-              <div className="flex flex-wrap gap-2.5 sm:gap-3">
-                {pillsRow1.map((c) => (
-                  <span
-                    key={c}
-                    className="rounded-full border border-[#D7E2DC] bg-white px-5 py-2 text-[13px] sm:text-[15px] font-medium text-[#17231F] shadow-2xs transition-all hover:border-[#17664F] hover:text-[#17664F]"
+              <h2
+                className="mt-5 text-[44px] sm:text-[54px] lg:text-[60px] font-normal leading-[1.04] tracking-tight text-[#0F223D]"
+                style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
+              >
+                Quality, verified.
+                <br />
+                <span className="serif-accent text-[#0B7D6C] italic">
+                  At every stage.
+                </span>
+              </h2>
+
+              <p
+                className="mt-6 text-[14px] sm:text-[15px] leading-relaxed text-[#66756F] max-w-sm"
+                style={{ fontFamily: "'DM Sans', sans-serif" }}
+              >
+                Certifications and memberships that reflect our commitment to global standards.
+              </p>
+            </Reveal>
+          </div>
+
+          {/* Right Column: Header, Filter Pills, and Cards */}
+          <div className="lg:col-span-8">
+            <Reveal delay={0.1}>
+              {/* Header: Certifications & Memberships + View All Link */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4">
+                <div className="flex items-center gap-4 flex-1">
+                  <h3
+                    className="font-serif text-[24px] sm:text-[28px] font-medium text-[#0F223D]"
+                    style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
                   >
-                    {c}
-                  </span>
-                ))}
-              </div>
-              <div className="flex flex-wrap gap-2.5 sm:gap-3">
-                {pillsRow2.map((c) => (
-                  <span
-                    key={c}
-                    className="rounded-full border border-[#D7E2DC] bg-white px-5 py-2 text-[13px] sm:text-[15px] font-medium text-[#17231F] shadow-2xs transition-all hover:border-[#17664F] hover:text-[#17664F]"
-                  >
-                    {c}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* 6 Certification Cards Grid */}
-            <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {certCards.map((card) => (
-                <div
-                  key={card.num}
-                  className="flex flex-col justify-between rounded-none border border-[#D7E2DC] bg-white p-5 min-h-[165px] sm:min-h-[175px] transition-all duration-200 hover:border-[#17664F]/60 hover:shadow-xs"
-                >
-                  {/* Card Header */}
-                  <div className="flex items-center gap-3">
-                    <span className="text-[13px] sm:text-[14px] font-semibold text-[#17664F]">
-                      {card.num}
-                    </span>
-                    <div className="h-3.5 w-px bg-[#D7E2DC]" />
-                    <span className="text-[12px] sm:text-[13px] font-semibold uppercase tracking-wider text-[#17231F]">
-                      {card.name}
-                    </span>
-                  </div>
-
-                  {/* Logo Centered */}
-                  <div className="my-auto flex h-16 sm:h-20 items-center justify-center pt-3">
-                    <SafeImg
-                      src={card.logo}
-                      alt={`${card.name} certification logo`}
-                      className="max-h-full w-auto object-contain"
-                    />
-                  </div>
+                    Certifications &amp; Memberships
+                  </h3>
+                  <div className="h-px flex-1 bg-[#85C4B7] hidden sm:block" />
                 </div>
-              ))}
-            </div>
+                <Link
+                  to="/quality"
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#0B7D6C] hover:text-[#085A4E] transition-colors shrink-0"
+                >
+                  <span>View All Certifications</span>
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+              </div>
+
+              {/* Filter Pills */}
+              <div className="flex flex-wrap gap-2 pt-1">
+                {GLOBAL_CERT_PILLS.map((pill) => {
+                  const active = activeFilter === pill;
+                  return (
+                    <button
+                      key={pill}
+                      type="button"
+                      onClick={() => setActiveFilter(active ? "All" : pill)}
+                      className={`rounded-full px-4 py-1.5 text-xs font-medium transition-all cursor-pointer ${active
+                          ? "bg-[#0B7D6C] text-white shadow-2xs font-semibold"
+                          : "border border-[#CCE3DE] bg-white text-[#2B3F38] hover:border-[#0B7D6C] hover:text-[#0B7D6C]"
+                        }`}
+                    >
+                      {pill}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Certification Cards Grid: All 15 cards displayed across two rows */}
+              <div className="mt-7 space-y-3">
+                {/* Row 1: 8 cards */}
+                <div className="grid grid-cols-4 sm:grid-cols-8 gap-2 sm:gap-2.5">
+                  {GLOBAL_CERT_CARDS.filter((c) => c.row === 1).map((card) => {
+                    const matched = isMatch(card.tags);
+                    return (
+                      <div
+                        key={card.id}
+                        className={`group relative flex items-center justify-center transition-all duration-200 ${matched
+                            ? "opacity-100 hover:scale-105"
+                            : "opacity-30 grayscale hover:grayscale-0 hover:opacity-80"
+                          }`}
+                      >
+                        <img
+                          src={card.img}
+                          alt={card.alt}
+                          className="w-full h-auto object-contain transition-shadow duration-200 hover:shadow-xs"
+                          loading="lazy"
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Row 2: 7 cards */}
+                <div className="grid grid-cols-3 sm:grid-cols-7 gap-2 sm:gap-2.5">
+                  {GLOBAL_CERT_CARDS.filter((c) => c.row === 2).map((card) => {
+                    const matched = isMatch(card.tags);
+                    return (
+                      <div
+                        key={card.id}
+                        className={`group relative flex items-center justify-center transition-all duration-200 ${matched
+                            ? "opacity-100 hover:scale-105"
+                            : "opacity-30 grayscale hover:grayscale-0 hover:opacity-80"
+                          }`}
+                      >
+                        <img
+                          src={card.img}
+                          alt={card.alt}
+                          className="w-full h-auto object-contain transition-shadow duration-200 hover:shadow-xs"
+                          loading="lazy"
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </Reveal>
           </div>
         </div>
       </div>
@@ -894,185 +951,203 @@ function Quality() {
 }
 
 function Insights() {
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  const newsItems = [
+  const awards = [
     {
-      num: "01",
-      title: "Export Award Recognition",
-      description: "Honoured at the CHEMEXCIL Presentation of Export Awards.",
-      img: NEWS[0] ?? "",
-      accent: "left",
+      id: "chemexcil",
+      title: "CHEMEXCIL Presentation of Export Awards",
+      img: "/awards/01_export_award_ceremony.jpg",
     },
     {
-      num: "02",
-      title: "Exporters' Excellence",
-      description: "Recognised for outstanding performance in international trade.",
-      img: NEWS[1] ?? "",
-      accent: "right",
+      id: "exporters",
+      title: "D&B Indian Exporters' Excellence Awards",
+      img: "/awards/02_exporters_award_group.jpg",
     },
     {
-      num: "03",
-      title: "Community Initiative",
-      description: "Supporting education and child development for a brighter future.",
-      img: NEWS[2] ?? "",
-      accent: "none",
+      id: "rise-shine",
+      title: "Inauguration of Rise & Shine Child Development Centre",
+      img: "/awards/03_rise_and_shine_event.jpg",
     },
     {
-      num: "04",
-      title: "Industry Collaboration",
-      description: "Participation in key industry events and knowledge initiatives.",
-      img: NEWS[3] ?? "",
-      accent: "right",
+      id: "lecture",
+      title: "Industry Collaboration & Award Lecture",
+      img: "/awards/04_award_presentation_event.jpg",
     },
-  ];
+  ] as const;
 
   return (
-    <section id="insights" className="scroll-mt-20 bg-white section-y relative overflow-hidden">
-      <div className="container-x">
-        {/* Top Header */}
-        <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-          <Reveal>
-            <div className="mb-3 h-[2px] w-8 bg-[#17664F]" />
-            <p className="eyebrow text-[#17664F] font-semibold tracking-[2px]">News & events</p>
-            <h2
-              className="mt-3 text-[36px] sm:text-[46px] lg:text-[54px] font-normal tracking-tight text-[#17231F]"
-              style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
-            >
-              Moments from <span className="italic text-[#17664F]">Neelikon.</span>
-            </h2>
-          </Reveal>
+    <section id="insights" className="scroll-mt-20 bg-white py-20 sm:py-28 relative overflow-hidden">
+      {/* Background Soft Radiance matching Neelikon Brand */}
+      <div className="pointer-events-none absolute -left-40 top-1/4 h-[550px] w-[550px] rounded-full bg-[#EAF3EF]/70 blur-3xl" />
+      <div className="pointer-events-none absolute -right-32 top-1/2 h-[450px] w-[450px] rounded-full bg-[#EAF3EF]/40 blur-3xl" />
 
-          <Reveal delay={0.1}>
-            <div className="flex flex-col sm:flex-row sm:items-center gap-6 lg:gap-8">
-              <p
-                className="max-w-[280px] text-[14px] leading-relaxed text-[#66756F]"
-                style={{ fontFamily: "'DM Sans', sans-serif" }}
-              >
-                Events, recognitions and initiatives that reflect our journey, our people and our purpose.
-              </p>
-              <a
-                href="https://neelikon.com/"
-                target="_blank"
-                rel="noreferrer"
-                className="group inline-flex items-center gap-3 shrink-0"
-              >
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#17664F] text-white transition-all group-hover:scale-105 group-hover:bg-[#12523F] shadow-xs">
-                  <ArrowRight className="h-4 w-4" />
-                </div>
-                <span className="text-[13px] sm:text-[14px] font-medium text-[#17231F] group-hover:text-[#17664F] transition-colors">
-                  All news on neelikon.com
-                </span>
-              </a>
-            </div>
-          </Reveal>
-        </div>
+      <div className="container-x relative">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 xl:gap-20 items-center">
+          {/* Left Column: Asymmetric Award Collage with Flowing Lines & Brand Orbs */}
+          <div className="lg:col-span-6 xl:col-span-6 relative flex justify-center">
+            <Reveal>
+              <div className="relative w-full max-w-[390px] sm:max-w-[430px] lg:max-w-[450px] xl:max-w-[470px] mx-auto py-2">
+                {/* Flowing SVG Line connecting the composition */}
+                <svg
+                  className="pointer-events-none absolute -inset-4 sm:-inset-6 h-[calc(100%+2rem)] sm:h-[calc(100%+3rem)] w-[calc(100%+2rem)] sm:w-[calc(100%+3rem)] z-0"
+                  viewBox="0 0 600 560"
+                  fill="none"
+                >
+                  <defs>
+                    <linearGradient id="brandCurveGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#17664F" stopOpacity="0.45" />
+                      <stop offset="50%" stopColor="#0086B3" stopOpacity="0.3" />
+                      <stop offset="100%" stopColor="#17664F" stopOpacity="0.4" />
+                    </linearGradient>
+                  </defs>
+                  {/* Outer sweeping curved paths */}
+                  <path
+                    d="M 30,120 C 10,240 60,420 180,480 C 300,540 440,510 540,420 C 600,360 580,180 500,80 C 420,-20 200,-10 60,80"
+                    stroke="url(#brandCurveGrad)"
+                    strokeWidth="1.2"
+                    strokeDasharray="4 4"
+                    fill="none"
+                  />
+                  <path
+                    d="M 520,30 C 580,140 620,380 460,490 C 340,570 120,530 60,460"
+                    stroke="#17664F"
+                    strokeOpacity="0.2"
+                    strokeWidth="1"
+                    fill="none"
+                  />
+                </svg>
 
-        {/* Cards Row with Decorative Line */}
-        <div className="relative mt-14 sm:mt-16">
-          {/* Delicate decorative connecting line with green node */}
-          <svg
-            className="pointer-events-none absolute -top-8 left-1/4 right-8 h-28 w-3/4 text-[#17664F]/25 hidden lg:block"
-            fill="none"
-            viewBox="0 0 900 120"
-            preserveAspectRatio="none"
-          >
-            <path d="M 0,90 Q 260,-20 540,65 T 900,20" stroke="currentColor" strokeWidth="1" fill="none" />
-            <circle cx="230" cy="28" r="4.5" fill="#17664F" />
-          </svg>
+                {/* Floating Brand Emerald Spherical Orbs */}
+                <div className="absolute top-8 -left-2 sm:-left-3 h-3 w-3 sm:h-3.5 sm:w-3.5 rounded-full bg-gradient-to-br from-[#2BB68D] via-[#17664F] to-[#0E4233] shadow-[0_2px_8px_rgba(23,102,79,0.35)] ring-2 ring-white z-30" />
+                <div className="absolute -top-2 left-[46%] h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full bg-gradient-to-br from-[#2BB68D] via-[#17664F] to-[#0E4233] shadow-[0_2px_8px_rgba(23,102,79,0.35)] ring-2 ring-white z-30" />
+                <div className="absolute top-[40%] -left-3 sm:-left-4 h-3.5 w-3.5 sm:h-4 sm:w-4 rounded-full bg-gradient-to-br from-[#2BB68D] via-[#17664F] to-[#0E4233] shadow-[0_2px_8px_rgba(23,102,79,0.35)] ring-2 ring-white z-30" />
+                <div className="absolute bottom-[28%] left-[1%] h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full bg-gradient-to-br from-[#2BB68D] via-[#17664F] to-[#0E4233] shadow-[0_2px_8px_rgba(23,102,79,0.35)] ring-2 ring-white z-30" />
+                <div className="absolute -bottom-1 left-[36%] h-3 w-3 sm:h-3.5 sm:w-3.5 rounded-full bg-gradient-to-br from-[#2BB68D] via-[#17664F] to-[#0E4233] shadow-[0_2px_8px_rgba(23,102,79,0.35)] ring-2 ring-white z-30" />
+                <div className="absolute bottom-4 -right-1 sm:-right-2 h-3 w-3 sm:h-3.5 sm:w-3.5 rounded-full bg-gradient-to-br from-[#2BB68D] via-[#17664F] to-[#0E4233] shadow-[0_2px_8px_rgba(23,102,79,0.35)] ring-2 ring-white z-30" />
+                <div className="absolute top-[16%] -right-2 h-2.5 w-2.5 rounded-full bg-gradient-to-br from-[#2BB68D] via-[#17664F] to-[#0E4233] shadow-[0_2px_8px_rgba(23,102,79,0.35)] ring-2 ring-white z-30" />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-7">
-            {newsItems.map((item, i) => (
-              <div key={item.num} className="relative group flex flex-col">
-                {/* Offset graphic green backdrop shape */}
-                {item.accent === "left" && (
-                  <div className="absolute -left-2.5 -top-2.5 h-full w-full rounded-2xl bg-[#17664F] -z-10 transition-transform duration-300 group-hover:-translate-x-1" />
-                )}
-                {item.accent === "right" && (
-                  <div className="absolute -right-2.5 -top-2.5 h-full w-full rounded-2xl bg-[#17664F] -z-10 transition-transform duration-300 group-hover:translate-x-1" />
-                )}
-
-                {/* Main Photo Card */}
-                <div className="relative overflow-hidden rounded-xl bg-white border border-[#D7E2DC]/50 shadow-xs">
+                {/* Photo 1: Big Top Card (CHEMEXCIL Export Awards) */}
+                <div className="relative z-10 w-[92%] ml-auto overflow-hidden rounded-[20px] sm:rounded-[24px] border-[3px] border-white bg-white shadow-[0_12px_32px_rgba(23,35,31,0.1)]">
                   <SafeImg
-                    src={item.img}
-                    alt={item.title}
-                    className="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    src={awards[0].img}
+                    alt={awards[0].title}
+                    className="aspect-[16/10] w-full object-cover object-top transition-transform duration-700 hover:scale-[1.03]"
                   />
                 </div>
 
-                {/* Details below photo */}
-                <div className="mt-5 flex items-start gap-3.5">
-                  <span className="text-[13px] font-semibold text-[#17664F] pt-0.5 min-w-[20px]">
-                    {item.num}
-                  </span>
-                  <div className="h-4 w-px bg-[#D7E2DC] shrink-0 mt-1" />
-                  <div className="flex-1">
-                    <h3
-                      className="text-[17px] sm:text-[18px] font-serif text-[#17231F] leading-snug"
-                      style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
-                    >
-                      {item.title}
-                    </h3>
-                    <p
-                      className="mt-1.5 text-[12px] sm:text-[13px] leading-relaxed text-[#66756F]"
-                      style={{ fontFamily: "'DM Sans', sans-serif" }}
-                    >
-                      {item.description}
-                    </p>
+                {/* Bottom Row Cluster */}
+                <div className="relative z-20 flex items-start justify-between -mt-6 sm:-mt-8">
+                  {/* Left Column in Cluster: Card 2 & Overlapping Card 4 */}
+                  <div className="w-[50%] relative">
+                    {/* Photo 2: D&B Exporters' Award */}
+                    <div className="overflow-hidden rounded-[15px] sm:rounded-[18px] border-[3px] border-white bg-white shadow-[0_10px_26px_rgba(23,35,31,0.1)]">
+                      <SafeImg
+                        src={awards[1].img}
+                        alt={awards[1].title}
+                        className="aspect-[4/3] w-full object-cover transition-transform duration-700 hover:scale-[1.03]"
+                      />
+                    </div>
+
+                    {/* Photo 4: Award Lecture / Presentation (Overlapping below Card 2) */}
+                    <div className="relative -mt-10 sm:-mt-14 ml-7 sm:ml-9 w-[88%] overflow-hidden rounded-[15px] sm:rounded-[18px] border-[3px] border-white bg-white shadow-[0_14px_34px_rgba(23,35,31,0.16)] z-30">
+                      <SafeImg
+                        src={awards[3].img}
+                        alt={awards[3].title}
+                        className="aspect-[4/3] w-full object-cover transition-transform duration-700 hover:scale-[1.03]"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Right Column in Cluster: Photo 3 (Rise & Shine Event) */}
+                  <div className="w-[46%] ml-auto mt-2 sm:mt-4 overflow-hidden rounded-[15px] sm:rounded-[18px] border-[3px] border-white bg-white shadow-[0_10px_26px_rgba(23,35,31,0.1)]">
+                    <SafeImg
+                      src={awards[2].img}
+                      alt={awards[2].title}
+                      className="aspect-[4/3] w-full object-cover transition-transform duration-700 hover:scale-[1.03]"
+                    />
                   </div>
                 </div>
               </div>
-            ))}
+            </Reveal>
+          </div>
+
+          {/* Right Column: Editorial News & Events Content */}
+          <div className="lg:col-span-6 xl:col-span-6">
+            <Reveal delay={0.15}>
+              {/* Eyebrow with Neelikon brand dash */}
+              <div className="flex items-center gap-3">
+                <div className="h-[2px] w-9 bg-[#17664F]" />
+                <p className="text-[11.5px] sm:text-[12px] font-bold tracking-[2.5px] uppercase text-[#17664F]">
+                  NEELIKON &nbsp;/&nbsp; NEWS &amp; EVENTS
+                </p>
+              </div>
+
+              {/* Serif Heading */}
+              <h2
+                className="mt-4 sm:mt-5 text-[42px] sm:text-[52px] lg:text-[58px] font-normal leading-[1.05] tracking-tight text-[#17231F]"
+                style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
+              >
+                Latest News and
+                <br />
+                <span className="italic text-[#17664F]">Upcoming Events</span>
+                <span className="text-[#17664F]">.</span>
+              </h2>
+
+              {/* Description Paragraph */}
+              <p
+                className="mt-5 text-[14px] sm:text-[15px] leading-relaxed text-[#66756F] max-w-xl"
+                style={{ fontFamily: "'DM Sans', sans-serif" }}
+              >
+                At Neelikon, we&apos;re highly proactive and are always getting things done. You can keep up with our most recent press releases and events to get a glance into our consistent effort for excellence. Stay tuned to this section to learn the most recent activities, research breakthroughs, industry news and other upcoming events.
+              </p>
+
+              {/* 3 Icon Feature Badges in Neelikon Brand Mint/Emerald */}
+              <div className="mt-8 flex flex-wrap sm:flex-nowrap items-center gap-6 sm:gap-7">
+                {/* Press Releases */}
+                <div className="flex items-center gap-3 shrink-0">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#EAF3EF] text-[#17664F] shadow-2xs">
+                    <FileText className="h-5 w-5" />
+                  </div>
+                  <div className="text-[13px] font-bold leading-tight text-[#17231F]">
+                    Press<br />Releases
+                  </div>
+                </div>
+
+                {/* Events & Participation */}
+                <div className="flex items-center gap-3 shrink-0">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#EAF3EF] text-[#17664F] shadow-2xs">
+                    <Calendar className="h-5 w-5" />
+                  </div>
+                  <div className="text-[13px] font-bold leading-tight text-[#17231F]">
+                    Events &amp;<br />Participation
+                  </div>
+                </div>
+
+                {/* Awards & Recognitions */}
+                <div className="flex items-center gap-3 shrink-0">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#EAF3EF] text-[#17664F] shadow-2xs">
+                    <Trophy className="h-5 w-5" />
+                  </div>
+                  <div className="text-[13px] font-bold leading-tight text-[#17231F]">
+                    Awards &amp;<br />Recognitions
+                  </div>
+                </div>
+              </div>
+
+              {/* Call-to-action button in Neelikon Emerald */}
+              <div className="mt-9">
+                <a
+                  href="https://neelikon.com/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-3 rounded-full bg-[#17664F] hover:bg-[#12523F] px-8 py-3.5 text-[14px] font-semibold text-white shadow-[0_8px_22px_rgba(23,102,79,0.25)] transition-all hover:scale-[1.02] active:scale-95"
+                >
+                  Explore News &amp; Events
+                  <ArrowRight className="h-4 w-4" />
+                </a>
+              </div>
+            </Reveal>
           </div>
         </div>
-
-        {/* Bottom Slider & Timeline Navigation (commented out for now) */}
-        {/*
-        <div className="mt-14 pt-6 flex items-center justify-between border-t border-[#E5EBE8]">
-          <div className="flex items-center gap-2.5 shrink-0">
-            <button
-              type="button"
-              onClick={() => setActiveIndex((prev) => (prev > 0 ? prev - 1 : newsItems.length - 1))}
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-[#E8ECE9] text-[#17231F] transition-all hover:bg-[#D7E2DC] active:scale-95 cursor-pointer"
-              aria-label="Previous slide"
-            >
-              <ArrowLeft className="h-4 w-4" />
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveIndex((prev) => (prev < newsItems.length - 1 ? prev + 1 : 0))}
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-[#17664F] text-white transition-all hover:bg-[#12523F] active:scale-95 cursor-pointer shadow-xs"
-              aria-label="Next slide"
-            >
-              <ArrowRight className="h-4 w-4" />
-            </button>
-          </div>
-
-          <div className="relative mx-8 hidden sm:flex flex-1 items-center">
-            <div className="h-px w-full bg-[#D7E2DC]" />
-            <div className="absolute inset-x-0 flex items-center justify-between px-2">
-              {newsItems.map((_, i) => (
-                <button
-                  key={i}
-                  type="button"
-                  onClick={() => setActiveIndex(i)}
-                  className={`transition-all cursor-pointer ${
-                    i === activeIndex
-                      ? "h-3.5 w-3.5 rounded-full bg-[#17664F] ring-4 ring-[#E8ECE9]"
-                      : "h-2.5 w-2.5 rounded-full border border-[#B8C8C0] bg-white hover:border-[#17664F]"
-                  }`}
-                  aria-label={`Go to slide ${i + 1}`}
-                />
-              ))}
-            </div>
-          </div>
-
-          <div className="shrink-0 text-xs font-mono font-medium tracking-widest text-[#66756F]">
-            {String(activeIndex + 1).padStart(2, "0")} — {String(newsItems.length).padStart(2, "0")}
-          </div>
-        </div>
-        */}
       </div>
     </section>
   );
