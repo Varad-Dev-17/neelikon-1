@@ -42,15 +42,15 @@ function Home() {
   useEffect(() => {
     if (typeof window === "undefined" || reduce) return;
 
-    // Slow, luxurious, cinematic smooth scroll for the home page storytelling experience
+    // Smooth, responsive cinematic scroll for storytelling experience
     const lenis = new Lenis({
-      duration: 2.2, // Extended duration creates a slow, graceful glide
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Smooth exponential deceleration
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: "vertical",
       gestureOrientation: "vertical",
       smoothWheel: true,
-      wheelMultiplier: 0.65, // Slower wheel response for a deliberate, slow, cinematic feel
-      touchMultiplier: 1.4,
+      wheelMultiplier: 1.0,
+      touchMultiplier: 1.2,
       infinite: false,
     });
 
@@ -98,7 +98,6 @@ function Home() {
     <main className="-mt-[104px]">
       <ScrollFilm />
       <Hero />
-      <Everywhere />
       <SpectrumDivider />
       <ProductUniverse />
       <Industries />
@@ -168,23 +167,9 @@ function Hero() {
             ))}
           </dl>
         </motion.div>
-        <a href="#everywhere" aria-label="Scroll to next section" className="absolute bottom-6 right-6 hidden items-center gap-2 text-xs text-[#66756F] md:flex hover:text-primary transition-colors">
+        <a href="#products" aria-label="Scroll to products" className="absolute bottom-6 right-6 hidden items-center gap-2 text-xs text-[#66756F] md:flex hover:text-primary transition-colors">
           Scroll <ArrowDown className="h-4 w-4 motion-safe:animate-bounce text-primary" />
         </a>
-      </div>
-    </section>
-  );
-}
-
-function Everywhere() {
-  return (
-    <section id="everywhere" className="bg-background section-y">
-      <div className="container-x grid gap-12 md:grid-cols-12 md:items-center">
-        <Reveal className="md:col-span-7">
-          <h2 className="display fs-section">Colour is everywhere. <span className="serif-accent text-navy">Our expertise helps make it extraordinary.</span></h2>
-          <p className="mt-8 max-w-xl text-lg text-muted-foreground">Neelikon brings specialised colourant manufacturing, research, and quality-focused processes to industries that shape everyday life.</p>
-        </Reveal>
-        <MaskImage src={ABOUT_IMG.oneWorld} alt="One World, One Quality — Neelikon colours" className="aspect-[4/5] bg-card md:col-span-5" />
       </div>
     </section>
   );
@@ -290,9 +275,9 @@ function Industries() {
         scrollTrigger: {
           trigger: pinEl,
           start: "top top",
-          end: "+=5600",
+          end: "+=2200",
           pin: true,
-          scrub: 1.4,
+          scrub: 0.8,
           anticipatePin: 1,
           invalidateOnRefresh: true,
           onUpdate: (self) => {
@@ -461,21 +446,6 @@ function Industries() {
     return () => ctx.revert();
   }, [reduce]);
 
-  const scrollToCategory = (index: number) => {
-    const triggers = ScrollTrigger.getAll();
-    const currentST = triggers.find((t) => t.trigger === pinRef.current);
-    if (!currentST) return;
-    const progressMap = [0.08, 0.36, 0.64, 0.92];
-    const targetProgress = progressMap[index] ?? 0;
-    const targetScroll = currentST.start + targetProgress * (currentST.end - currentST.start);
-    const win = window as unknown as { __lenis?: Lenis };
-    if (win.__lenis) {
-      win.__lenis.scrollTo(targetScroll, { duration: 2.2 });
-    } else {
-      window.scrollTo({ top: targetScroll, behavior: "smooth" });
-    }
-  };
-
   return (
     <section id="industries" ref={containerRef} className="scroll-mt-20 bg-white text-[#17231F]">
       {/* Mobile & Reduced Motion Fallback: Natural Vertical Flow */}
@@ -564,30 +534,6 @@ function Industries() {
                     Four worlds. <span className="italic text-[#17664F]">One standard.</span>
                   </h2>
                 </div>
-
-                <div className="flex items-center gap-6">
-                  <p className="hidden xl:block text-xs text-[#66756F] max-w-xs text-right leading-relaxed">
-                    Colour science designed for the products people use every day.
-                  </p>
-
-                  {/* 4 Interactive Category Step Pills */}
-                  <div className="flex items-center gap-2">
-                    {APPLICATION_CATEGORIES.map((cat, i) => (
-                      <button
-                        key={cat.title}
-                        type="button"
-                        onClick={() => scrollToCategory(i)}
-                        className={`cursor-pointer px-3.5 py-1.5 rounded-full text-xs font-mono transition-all duration-300 ${
-                          i === active
-                            ? "bg-[#17664F] text-white font-semibold shadow-xs scale-102"
-                            : "bg-[#F4F7F5] text-[#66756F] hover:text-[#17231F] hover:bg-[#E5EBE8]"
-                        }`}
-                      >
-                        {cat.num} {cat.shortName}
-                      </button>
-                    ))}
-                  </div>
-                </div>
               </div>
 
               {/* Main Showcase Stage: Dynamic Alternating Left-Right-Left-Right Movement */}
@@ -598,9 +544,9 @@ function Industries() {
                 {/* Image Stage Wrapper (starts on LEFT, moves to RIGHT for 02, LEFT for 03, RIGHT for 04) */}
                 <div
                   ref={imageStageWrapperRef}
-                  className="w-[57%] will-change-transform z-10"
+                  className="w-[48%] lg:w-[46%] max-w-[540px] will-change-transform z-10"
                 >
-                  <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden border border-[#D7E2DC]/80 shadow-md bg-[#F8FAF9]">
+                  <div className="relative aspect-[16/10] max-h-[360px] lg:max-h-[390px] w-full rounded-2xl overflow-hidden border border-[#D7E2DC]/80 shadow-md bg-[#F8FAF9]">
                     {APPLICATION_CATEGORIES.map((cat, i) => (
                       <div
                         key={cat.title}
@@ -639,7 +585,7 @@ function Industries() {
                 {/* Text Content Wrapper (starts on RIGHT, moves to LEFT for 02, RIGHT for 03, LEFT for 04) */}
                 <div
                   ref={textStageWrapperRef}
-                  className="w-[39%] relative min-h-[340px] flex flex-col justify-center will-change-transform z-10"
+                  className="w-[46%] lg:w-[48%] relative min-h-[300px] flex flex-col justify-center will-change-transform z-10"
                 >
                   {APPLICATION_CATEGORIES.map((cat, i) => (
                     <div
@@ -655,20 +601,20 @@ function Industries() {
                         transform: i === 0 ? "translateY(0px)" : "translateY(30px)",
                       }}
                     >
-                      <div className="flex items-center gap-3">
-                        <span className="text-base font-mono font-bold text-[#17664F]">
+                      <div className="flex items-center gap-3.5">
+                        <span className="text-lg font-mono font-bold text-[#17664F]">
                           {cat.num}
                         </span>
-                        <div className="h-px w-12 bg-[#D7E2DC]" />
-                        <span className="text-xs font-mono font-semibold uppercase tracking-wider text-[#66756F]">
+                        <div className="h-px w-14 bg-[#D7E2DC]" />
+                        <span className="text-xs lg:text-sm font-mono font-semibold uppercase tracking-wider text-[#66756F]">
                           APPLICATION {i + 1} OF 4
                         </span>
                       </div>
 
                       {/* Clipped Headline Reveal */}
-                      <div className="overflow-hidden mt-5">
+                      <div className="overflow-hidden mt-6">
                         <h3
-                          className="text-4xl lg:text-[50px] font-normal leading-[1.06] tracking-tight text-[#17231F]"
+                          className="text-5xl lg:text-[64px] xl:text-[72px] font-normal leading-[1.02] tracking-tight text-[#17231F]"
                           style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
                         >
                           {cat.title}
@@ -676,20 +622,20 @@ function Industries() {
                       </div>
 
                       <p
-                        className="mt-5 text-[16px] lg:text-[18px] leading-relaxed text-[#66756F] max-w-md"
+                        className="mt-6 text-[18px] lg:text-[21px] leading-[1.6] text-[#66756F] max-w-lg"
                         style={{ fontFamily: "'DM Sans', sans-serif" }}
                       >
                         {cat.description}
                       </p>
 
-                      <div className="mt-8 flex items-center gap-4">
+                      <div className="mt-9 flex items-center gap-4">
                         <Link
                           to="/products/$slug"
                           params={{ slug: cat.slug }}
-                          className="inline-flex items-center gap-2.5 rounded-full bg-[#17664F] px-6 py-3 text-[13px] font-semibold text-white transition-all hover:bg-[#12523F] active:scale-98 shadow-sm"
+                          className="inline-flex items-center gap-3 rounded-full bg-[#17664F] px-7 py-3.5 text-[15px] font-semibold text-white transition-all hover:bg-[#12523F] active:scale-98 shadow-md hover:shadow-lg"
                         >
                           <span>Explore {cat.shortName}</span>
-                          <ArrowRight className="h-4 w-4" />
+                          <ArrowRight className="h-4.5 w-4.5 transition-transform group-hover:translate-x-1" />
                         </Link>
                       </div>
                     </div>

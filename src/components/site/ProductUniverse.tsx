@@ -12,7 +12,6 @@ const TONE: Record<Group, string> = { Food: "bg-leaf", Pharma: "bg-sky", Cosmeti
 export function ProductUniverse({ heading = "h2" }: { heading?: "h1" | "h2" }) {
   const [f, setF] = useState<(typeof FILTERS)[number]>("All");
   const list = PRODUCTS.filter((p) => f === "All" || p.group === f);
-  const [lead, ...rest] = list;
   const H = heading;
 
   return (
@@ -33,51 +32,36 @@ export function ProductUniverse({ heading = "h2" }: { heading?: "h1" | "h2" }) {
           </div>
         </div>
 
-        {lead && (
-          <AnimatePresence mode="wait">
-            <motion.div key={f} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.45, ease: EASE }}>
-              <Link to="/products/$slug" params={{ slug: lead.slug }} className="group mt-14 grid overflow-hidden bg-card md:grid-cols-12">
-                <div className="aspect-[4/3] overflow-hidden md:col-span-5 md:aspect-auto md:h-[28rem]">
-                  <SafeImg src={lead.img} alt={lead.name} className="h-[135%] w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]" />
-                </div>
-                <div className="flex flex-col justify-between gap-8 p-8 md:col-span-7 md:p-14">
-                  <div>
-                    <p className="eyebrow flex items-center gap-2 text-muted-foreground"><span className={`h-2 w-2 rounded-full ${TONE[lead.group]}`} />Featured · {lead.group}</p>
-                    <h3 className="display mt-4 fs-sub">{lead.name}</h3>
-                    <p className="mt-5 text-lg text-muted-foreground">{lead.blurb}</p>
-                  </div>
-                  <span className="inline-flex items-center gap-2 font-bold text-navy">{CATALOG[lead.slug] ? "Browse the product range" : "View product family"} <ArrowUpRight className="h-5 w-5 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" /></span>
-                </div>
-              </Link>
-              <ul className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 lg:gap-6">
-                {rest.map((p) => (
-                  <li key={p.slug}>
-                    <Link to="/products/$slug" params={{ slug: p.slug }} className="group flex h-full flex-col">
-                      <div className="overflow-hidden aspect-[4/3] rounded-2xl bg-card border border-[#D7E2DC]/60 shadow-2xs">
-                        <SafeImg src={p.img} alt={p.name} className="h-[135%] w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]" />
+        <AnimatePresence mode="wait">
+          <motion.div key={f} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.45, ease: EASE }}>
+            <ul className="mt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 lg:gap-6">
+              {list.map((p) => (
+                <li key={p.slug}>
+                  <Link to="/products/$slug" params={{ slug: p.slug }} className="group flex h-full flex-col">
+                    <div className="overflow-hidden aspect-[4/3] rounded-2xl bg-card border border-[#D7E2DC]/60 shadow-2xs">
+                      <SafeImg src={p.img} alt={p.name} className="h-[135%] w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]" />
+                    </div>
+                    <div className="flex flex-1 items-start justify-between gap-3 pt-3.5">
+                      <div className="min-w-0">
+                        <p className="eyebrow flex items-center gap-1.5 text-muted-foreground text-[10px] tracking-wider uppercase">
+                          <span className={`h-1.5 w-1.5 rounded-full ${TONE[p.group]}`} />
+                          {p.group}
+                        </p>
+                        <h3 className="mt-1.5 text-[16px] lg:text-[17px] font-bold leading-snug text-[#17231F] group-hover:text-primary transition-colors">
+                          {p.name}
+                        </h3>
+                        <p className="mt-1 text-xs lg:text-[13px] leading-relaxed text-[#66756F] line-clamp-2">
+                          {p.blurb}
+                        </p>
                       </div>
-                      <div className="flex flex-1 items-start justify-between gap-3 pt-3.5">
-                        <div className="min-w-0">
-                          <p className="eyebrow flex items-center gap-1.5 text-muted-foreground text-[10px] tracking-wider uppercase">
-                            <span className={`h-1.5 w-1.5 rounded-full ${TONE[p.group]}`} />
-                            {p.group}
-                          </p>
-                          <h3 className="mt-1.5 text-[16px] lg:text-[17px] font-bold leading-snug text-[#17231F] group-hover:text-primary transition-colors">
-                            {p.name}
-                          </h3>
-                          <p className="mt-1 text-xs lg:text-[13px] leading-relaxed text-[#66756F] line-clamp-2">
-                            {p.blurb}
-                          </p>
-                        </div>
-                        <ArrowUpRight className="h-4 w-4 shrink-0 text-[#66756F] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary mt-1" aria-hidden />
-                      </div>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          </AnimatePresence>
-        )}
+                      <ArrowUpRight className="h-4 w-4 shrink-0 text-[#66756F] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary mt-1" aria-hidden />
+                    </div>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+        </AnimatePresence>
       </div>
     </section>
   );

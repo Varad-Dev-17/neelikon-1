@@ -222,7 +222,7 @@ export function ScrollFilm() {
       id="film"
       ref={containerRef}
       aria-label="Neelikon story — scroll to play"
-      className="relative h-[420vh] bg-ink text-paper md:h-[600vh]"
+      className="relative h-[260vh] bg-ink text-paper md:h-[320vh]"
     >
       <h2 className="sr-only">Every colour has a story. Every particle has a purpose.</h2>
 
