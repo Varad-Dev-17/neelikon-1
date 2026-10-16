@@ -313,14 +313,14 @@ function Industries() {
 
       tl.to(
         p0,
-        { opacity: 0, y: -24, pointerEvents: "none", ease: "power2.inOut", duration: 0.8 },
+        { opacity: 0, y: -20, pointerEvents: "none", ease: "power2.in", duration: 0.4 },
         1.2
       );
       tl.fromTo(
         p1,
-        { opacity: 0, y: 30, pointerEvents: "none" },
-        { opacity: 1, y: 0, pointerEvents: "auto", ease: "power2.out", duration: 0.8 },
-        1.35
+        { opacity: 0, y: 24, pointerEvents: "none" },
+        { opacity: 1, y: 0, pointerEvents: "auto", ease: "power2.out", duration: 0.6 },
+        1.5
       );
       tl.fromTo(
         l1,
@@ -361,14 +361,14 @@ function Industries() {
 
       tl.to(
         p1,
-        { opacity: 0, y: -24, pointerEvents: "none", ease: "power2.inOut", duration: 0.8 },
+        { opacity: 0, y: -20, pointerEvents: "none", ease: "power2.in", duration: 0.4 },
         3.4
       );
       tl.fromTo(
         p2,
-        { opacity: 0, y: 30, pointerEvents: "none" },
-        { opacity: 1, y: 0, pointerEvents: "auto", ease: "power2.out", duration: 0.8 },
-        3.55
+        { opacity: 0, y: 24, pointerEvents: "none" },
+        { opacity: 1, y: 0, pointerEvents: "auto", ease: "power2.out", duration: 0.6 },
+        3.7
       );
       tl.fromTo(
         l2,
@@ -409,14 +409,14 @@ function Industries() {
 
       tl.to(
         p2,
-        { opacity: 0, y: -24, pointerEvents: "none", ease: "power2.inOut", duration: 0.8 },
+        { opacity: 0, y: -20, pointerEvents: "none", ease: "power2.in", duration: 0.4 },
         5.6
       );
       tl.fromTo(
         p3,
-        { opacity: 0, y: 30, pointerEvents: "none" },
-        { opacity: 1, y: 0, pointerEvents: "auto", ease: "power2.out", duration: 0.8 },
-        5.75
+        { opacity: 0, y: 24, pointerEvents: "none" },
+        { opacity: 1, y: 0, pointerEvents: "auto", ease: "power2.out", duration: 0.6 },
+        5.9
       );
       tl.fromTo(
         l3,
@@ -516,24 +516,23 @@ function Industries() {
       {/* Desktop Pinned Scroll-Driven Cinematic Showcase */}
       {!reduce && (
         <div ref={pinRef} className="relative hidden md:block">
-          <div className="h-[100dvh] flex flex-col justify-between py-6 lg:py-8 overflow-hidden bg-white">
+          <div className="h-[100dvh] flex flex-col justify-between pt-[144px] pb-6 overflow-hidden bg-white">
             <div className="container-x flex-1 flex flex-col justify-between">
               {/* Header Bar */}
-              <div className="flex items-center justify-between border-b border-[#E5EBE8] pb-5">
-                <div>
-                  <div className="flex items-center gap-3">
-                    <p className="eyebrow text-[#17664F] font-semibold tracking-[2px]">
-                      APPLICATIONS / COLOUR SCIENCE
-                    </p>
-                    <div className="h-px w-10 bg-[#D7E2DC]" />
-                  </div>
-                  <h2
-                    className="mt-1 text-2xl lg:text-3xl font-normal tracking-tight text-[#17231F]"
-                    style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
-                  >
-                    Four worlds. <span className="italic text-[#17664F]">One standard.</span>
-                  </h2>
+              <div className="flex flex-col items-center justify-center text-center pb-2">
+                <div className="flex items-center justify-center gap-3.5">
+                  <div className="h-px w-10 bg-[#D7E2DC]" />
+                  <p className="eyebrow text-[#17664F] font-semibold tracking-[3px] text-xs lg:text-sm">
+                    APPLICATIONS / COLOUR SCIENCE
+                  </p>
+                  <div className="h-px w-10 bg-[#D7E2DC]" />
                 </div>
+                <h2
+                  className="mt-2 text-5xl lg:text-[58px] xl:text-[66px] font-normal tracking-tight text-[#17231F] leading-[1.05]"
+                  style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
+                >
+                  Four worlds. <span className="italic text-[#17664F]">One standard.</span>
+                </h2>
               </div>
 
               {/* Main Showcase Stage: Dynamic Alternating Left-Right-Left-Right Movement */}
@@ -601,12 +600,12 @@ function Industries() {
                         transform: i === 0 ? "translateY(0px)" : "translateY(30px)",
                       }}
                     >
-                      <div className="flex items-center gap-3.5">
-                        <span className="text-lg font-mono font-bold text-[#17664F]">
+                      <div className="flex items-center gap-3">
+                        <span className="text-[15px] font-mono font-bold text-[#17664F]">
                           {cat.num}
                         </span>
-                        <div className="h-px w-14 bg-[#D7E2DC]" />
-                        <span className="text-xs lg:text-sm font-mono font-semibold uppercase tracking-wider text-[#66756F]">
+                        <div className="h-px w-10 bg-[#D7E2DC]" />
+                        <span className="text-[11px] lg:text-xs font-mono font-semibold uppercase tracking-wider text-[#66756F]">
                           APPLICATION {i + 1} OF 4
                         </span>
                       </div>
