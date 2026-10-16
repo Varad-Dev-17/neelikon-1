@@ -1,6 +1,6 @@
 const U = "https://neelikon.com/wp-content/uploads";
 
-export const LOGO = `${U}/2025/04/Neelikon-Colours-Glob-Logo-With-.png`;
+export const LOGO = "/logo/logo.png";
 
 export const CONTACT = {
   email: "info@neelikon.com",

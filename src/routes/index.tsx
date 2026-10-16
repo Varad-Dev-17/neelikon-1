@@ -95,9 +95,9 @@ function Home() {
   }, [reduce]);
 
   return (
-    <main>
-      <Hero />
+    <main className="-mt-[104px]">
       <ScrollFilm />
+      <Hero />
       <Everywhere />
       <SpectrumDivider />
       <ProductUniverse />
@@ -159,7 +159,7 @@ function Hero() {
               <a href="/products" className="group inline-flex items-center gap-2 rounded-full bg-primary btn min-h-10 px-5 text-[12px] font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5 hover:bg-[#12523f] active:scale-95 shadow-xs">
                 Explore Our Colours <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </a>
-              <a href="#film" className="inline-flex items-center rounded-full border border-primary/30 btn min-h-10 px-5 text-[12px] font-semibold text-primary transition-colors hover:bg-primary/10">Discover Neelikon</a>
+              <a href="/about" className="inline-flex items-center rounded-full border border-primary/30 btn min-h-10 px-5 text-[12px] font-semibold text-primary transition-colors hover:bg-primary/10">About Neelikon</a>
             </div>
           </div>
           <dl className="grid grid-cols-3 gap-6 rounded-2xl border border-[#D7E2DC] bg-white/80 p-6 backdrop-blur-md shadow-xs md:col-span-6 md:col-start-7">
@@ -168,7 +168,7 @@ function Hero() {
             ))}
           </dl>
         </motion.div>
-        <a href="#film" aria-label="Scroll to story" className="absolute bottom-6 right-6 hidden items-center gap-2 text-xs text-[#66756F] md:flex hover:text-primary transition-colors">
+        <a href="#everywhere" aria-label="Scroll to next section" className="absolute bottom-6 right-6 hidden items-center gap-2 text-xs text-[#66756F] md:flex hover:text-primary transition-colors">
           Scroll <ArrowDown className="h-4 w-4 motion-safe:animate-bounce text-primary" />
         </a>
       </div>
@@ -178,7 +178,7 @@ function Hero() {
 
 function Everywhere() {
   return (
-    <section className="bg-background section-y">
+    <section id="everywhere" className="bg-background section-y">
       <div className="container-x grid gap-12 md:grid-cols-12 md:items-center">
         <Reveal className="md:col-span-7">
           <h2 className="display fs-section">Colour is everywhere. <span className="serif-accent text-navy">Our expertise helps make it extraordinary.</span></h2>
