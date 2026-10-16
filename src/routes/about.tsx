@@ -320,14 +320,14 @@ function About() {
                 key={c.eyebrow}
                 className="grid items-center gap-10 lg:grid-cols-12 lg:gap-16 relative"
               >
-                {/* Image block */}
+                {/* Image block - sharp clean edges matching expected design */}
                 <div
                   className={`lg:col-span-7 ${
                     isImageLeft ? "order-1" : "order-1 lg:order-2"
                   }`}
                 >
                   <Reveal>
-                    <div className="overflow-hidden rounded-2xl sm:rounded-3xl shadow-xs bg-[#F5F8F6]">
+                    <div className="overflow-hidden rounded-none shadow-xs">
                       <img
                         src={c.img}
                         alt={c.alt}
@@ -373,6 +373,9 @@ function About() {
                     >
                       {c.description}
                     </p>
+
+                    {/* Green accent line under description matching expected design */}
+                    <div className="mt-7 h-[2px] w-12 bg-[#17664F]" />
                   </Reveal>
                 </div>
               </article>

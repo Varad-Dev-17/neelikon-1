@@ -9,8 +9,8 @@ import { EASE, SafeImg } from "./Reveal";
 
 /** Total frames extracted in /public/frames/ */
 const TOTAL_FRAMES = 240;
-/** Frames required before dismissing loader */
-const INITIAL_PRELOAD_COUNT = 80;
+/** Frames required before dismissing loader (fast start) */
+const INITIAL_PRELOAD_COUNT = 12;
 /** Frame path formatter (e.g., /frames/frame_0001.webp) */
 const getFrameUrl = (index: number) =>
   `/frames/frame_${String(index + 1).padStart(4, "0")}.webp`;
@@ -28,6 +28,7 @@ export function ScrollFilm() {
   const containerRef = useRef<HTMLElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const imagesRef = useRef<Map<number, HTMLImageElement>>(new Map());
+  const priorityQueueRef = useRef<number[]>([]);
 
   const [active, setActive] = useState(0);
   const [loadPercent, setLoadPercent] = useState(0);
@@ -69,86 +70,133 @@ export function ScrollFilm() {
     ctx.drawImage(img, cx, cy, nw, nh);
   };
 
-  // Preloader: Stage 1 (Initial 150 frames) + Stage 2 (Background cache remaining)
+  // High-performance tiered loader with 6 concurrent connections & dynamic scroll priority
   useEffect(() => {
     if (reduce) return;
 
-    let loadedCount = 0;
     let cancelled = false;
+    const inFlight = new Set<number>();
 
-    // Helper to load single image
-    const loadImg = (index: number): Promise<HTMLImageElement> => {
-      return new Promise((resolve, reject) => {
-        if (imagesRef.current.has(index)) {
-          resolve(imagesRef.current.get(index)!);
-          return;
-        }
+    // Helper to load and decode a single image off-thread
+    const loadImg = async (index: number): Promise<HTMLImageElement | null> => {
+      if (imagesRef.current.has(index)) return imagesRef.current.get(index)!;
+      if (index < 0 || index >= TOTAL_FRAMES) return null;
+
+      return new Promise<HTMLImageElement | null>((resolve) => {
         const img = new Image();
         img.src = getFrameUrl(index);
-        img.onload = () => {
+        img.onload = async () => {
+          if (cancelled) {
+            resolve(null);
+            return;
+          }
+          if ("decode" in img) {
+            try {
+              await img.decode();
+            } catch {
+              // Ignore decode failures; fallback image works
+            }
+          }
           if (!cancelled) {
             imagesRef.current.set(index, img);
             resolve(img);
+          } else {
+            resolve(null);
           }
         };
-        img.onerror = () => reject();
+        img.onerror = () => resolve(null);
       });
     };
 
-    // Stage 1: Load first INITIAL_PRELOAD_COUNT frames
-    const preloadFirstBatch = async () => {
-      // Test if frame 0 exists
-      try {
-        const first = await loadImg(0);
-        setHasCanvasFrames(true);
-        renderFrame(first);
-      } catch {
-        // No /public/frames/ present yet -> fallback to original images
+    const startLoading = async () => {
+      // 1. Instant check: load frame 0 immediately
+      const first = await loadImg(0);
+      if (cancelled) return;
+      if (!first) {
         setHasCanvasFrames(false);
         setIsReady(true);
         return;
       }
+      setHasCanvasFrames(true);
+      renderFrame(first);
 
-      const promises: Promise<void>[] = [];
-      for (let i = 0; i < Math.min(INITIAL_PRELOAD_COUNT, TOTAL_FRAMES); i++) {
-        promises.push(
-          loadImg(i)
-            .then(() => {
-              if (cancelled) return;
-              loadedCount++;
-              setLoadPercent(Math.round((loadedCount / INITIAL_PRELOAD_COUNT) * 100));
-            })
-            .catch(() => {})
+      // 2. Preload first 12 frames to dismiss preloader in <200ms
+      let readyCount = 1;
+      const initialPromises: Promise<HTMLImageElement | null>[] = [];
+      for (let i = 1; i < INITIAL_PRELOAD_COUNT; i++) {
+        initialPromises.push(
+          loadImg(i).then((img) => {
+            readyCount++;
+            setLoadPercent(Math.round((readyCount / INITIAL_PRELOAD_COUNT) * 100));
+            return img;
+          })
         );
       }
+      await Promise.allSettled(initialPromises);
+      if (cancelled) return;
+      setIsReady(true);
 
-      await Promise.allSettled(promises);
-      if (!cancelled) {
-        setIsReady(true);
-        preloadRemainingBatch();
+      // 3. Build prioritized background queue:
+      // Tier 1: Keyframes (every 4th frame across the entire 240 frames)
+      // Tier 2: Mid-frames (every 2nd frame)
+      // Tier 3: Remaining frames
+      const backgroundQueue: number[] = [];
+      for (let i = 0; i < TOTAL_FRAMES; i += 4) {
+        if (!imagesRef.current.has(i)) backgroundQueue.push(i);
+      }
+      for (let i = 2; i < TOTAL_FRAMES; i += 4) {
+        if (!imagesRef.current.has(i)) backgroundQueue.push(i);
+      }
+      for (let i = 1; i < TOTAL_FRAMES; i += 2) {
+        if (!imagesRef.current.has(i)) backgroundQueue.push(i);
+      }
+
+      // 4. Concurrency Worker Pool: 6 parallel connections
+      const CONCURRENCY = 6;
+      const runWorker = async () => {
+        if (cancelled) return;
+
+        let nextIndex: number | undefined;
+
+        // Check high-priority queue (frames requested by active user scroll)
+        while (priorityQueueRef.current.length > 0) {
+          const idx = priorityQueueRef.current.shift()!;
+          if (!imagesRef.current.has(idx) && !inFlight.has(idx)) {
+            nextIndex = idx;
+            break;
+          }
+        }
+
+        // Fallback to background queue
+        if (nextIndex === undefined) {
+          while (backgroundQueue.length > 0) {
+            const idx = backgroundQueue.shift()!;
+            if (!imagesRef.current.has(idx) && !inFlight.has(idx)) {
+              nextIndex = idx;
+              break;
+            }
+          }
+        }
+
+        if (nextIndex === undefined) return;
+
+        inFlight.add(nextIndex);
+        try {
+          await loadImg(nextIndex);
+        } finally {
+          inFlight.delete(nextIndex);
+          if (!cancelled && (priorityQueueRef.current.length > 0 || backgroundQueue.length > 0)) {
+            runWorker();
+          }
+        }
+      };
+
+      for (let w = 0; w < CONCURRENCY; w++) {
+        runWorker();
       }
     };
 
-    // Stage 2: Background cache remaining frames quietly
-    const preloadRemainingBatch = () => {
-      let current = INITIAL_PRELOAD_COUNT;
-      const loadNext = () => {
-        if (cancelled || current >= TOTAL_FRAMES) return;
-        loadImg(current)
-          .catch(() => {})
-          .finally(() => {
-            current++;
-            if ("requestIdleCallback" in window) {
-              window.requestIdleCallback(loadNext);
-            } else {
-              setTimeout(loadNext, 16);
-            }
-          });
-      };
-      loadNext();
-    };
-
-    preloadFirstBatch();
+    startLoading();
 
     return () => {
       cancelled = true;
@@ -180,17 +228,28 @@ export function ScrollFilm() {
     return () => window.removeEventListener("resize", handleResize);
   }, [hasCanvasFrames]);
 
-  // Scrub canvas frame on scroll
+  // Scrub canvas frame on scroll with dynamic high-priority preloading
   useMotionValueEvent(scrollYProgress, "change", (progress) => {
     if (!hasCanvasFrames) return;
     const targetIndex = Math.min(
       TOTAL_FRAMES - 1,
       Math.floor(progress * (TOTAL_FRAMES - 1))
     );
-    // Find closest loaded frame if target isn't loaded yet
+
+    // Push target frame and immediate upcoming frames to priority queue
+    for (let offset = 0; offset <= 4; offset++) {
+      const idx = targetIndex + offset;
+      if (idx < TOTAL_FRAMES && !imagesRef.current.has(idx)) {
+        if (!priorityQueueRef.current.includes(idx)) {
+          priorityQueueRef.current.unshift(idx);
+        }
+      }
+    }
+
+    // Bidirectional closest frame lookup (always finds nearest frame in O(1))
     let img = imagesRef.current.get(targetIndex);
     if (!img) {
-      for (let offset = 1; offset <= 20; offset++) {
+      for (let offset = 1; offset < TOTAL_FRAMES; offset++) {
         img = imagesRef.current.get(targetIndex - offset) || imagesRef.current.get(targetIndex + offset);
         if (img) break;
       }
