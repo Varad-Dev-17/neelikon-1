@@ -94,11 +94,11 @@ export function Header() {
     <header
       className="sticky top-0 z-50 w-full transition-all duration-500 ease-out"
       style={{
-        backgroundColor: isDark ? "transparent" : "rgba(255, 255, 255, 0.95)",
-        backdropFilter: isDark ? "none" : "blur(12px)",
-        WebkitBackdropFilter: isDark ? "none" : "blur(12px)",
-        borderBottom: isDark ? "none" : "1px solid rgba(0, 0, 0, 0.08)",
-        boxShadow: isDark ? "none" : "0 4px 20px -8px rgba(0, 0, 0, 0.07)",
+        backgroundColor: isDark ? "transparent" : "rgba(255, 255, 255, 0.78)",
+        backdropFilter: isDark ? "none" : "blur(16px) saturate(160%)",
+        WebkitBackdropFilter: isDark ? "none" : "blur(16px) saturate(160%)",
+        borderBottom: isDark ? "none" : "1px solid rgba(0, 0, 0, 0.05)",
+        boxShadow: isDark ? "none" : "0 4px 24px -6px rgba(0, 0, 0, 0.05)",
       }}
     >
       <div className="container-x flex h-[104px] items-center justify-between w-full transition-all">
