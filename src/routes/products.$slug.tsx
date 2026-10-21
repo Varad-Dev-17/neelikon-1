@@ -86,7 +86,7 @@ function ProductPage() {
               </div>
             </Reveal>
             <div className="aspect-[4/3] overflow-hidden bg-background md:col-span-6">
-              <SafeImg src={p.img} alt={p.name} eager className="h-[135%] w-full object-cover object-top" />
+              <SafeImg src={p.img} alt={p.name} eager className="h-full w-full object-cover object-center" />
             </div>
           </div>
         </div>
@@ -187,7 +187,7 @@ function ProductPage() {
               {others.map((o) => (
                 <li key={o.slug}>
                   <Link to="/products/$slug" params={{ slug: o.slug }} className="group block">
-                    <div className="aspect-[4/3] overflow-hidden bg-card"><SafeImg src={o.img} alt={o.name} className="h-[135%] w-full object-cover object-top transition-transform duration-700 group-hover:scale-105" /></div>
+                    <div className="aspect-[4/3] overflow-hidden bg-card"><SafeImg src={o.img} alt={o.name} className="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-105" /></div>
                     <p className="mt-4 flex items-center justify-between font-bold">{o.name}<ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" /></p>
                   </Link>
                 </li>
