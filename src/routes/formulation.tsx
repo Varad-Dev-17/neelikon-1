@@ -153,9 +153,20 @@ function FormulationPage() {
 
   return (
     <main className="bg-white text-[#17231F]">
-      {/* 1. Top Navigation & Hero */}
-      <section className="pt-10 pb-12 md:pt-14 md:pb-16 border-b border-[#E5EBE8]">
-        <div className="container-x">
+      {/* 1. Top Navigation & Hero with Cosmetic Lab Background Image (Full Page Height) */}
+      <section className="relative min-h-[calc(100vh-80px)] lg:min-h-[calc(100vh-96px)] flex flex-col justify-center overflow-hidden bg-white border-b border-[#E5EBE8]">
+        {/* Background Image: Cosmetic formulation lab scene */}
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <img
+            src="/formulation/hero.png"
+            alt="Cosmetic formulation lab with pigment powder, dropper, and skincare cream"
+            className="h-full w-full object-cover object-right md:object-[right_center]"
+          />
+          {/* Reduced soft white gradient overlay on the left: leaves and lab items remain crisp and vibrant */}
+          <div className="absolute inset-y-0 left-0 w-full sm:w-3/5 lg:w-[48%] bg-gradient-to-r from-white via-white/60 to-transparent" />
+        </div>
+
+        <div className="container-x relative z-10 py-16 md:py-20 lg:py-24 flex-1 flex flex-col justify-center">
           <Link
             to="/"
             className="inline-flex items-center gap-2 text-[12px] font-medium text-[#66756F] transition-colors hover:text-[#17231F]"
@@ -165,21 +176,22 @@ function FormulationPage() {
           </Link>
 
           <p
-            className="mt-8 text-[10px] font-bold uppercase tracking-[2px] text-[#17664F]"
+            className="mt-8 text-[11px] font-bold uppercase tracking-[2px] text-[#17664F]"
             style={{ fontFamily: "'DM Sans', sans-serif" }}
           >
             FORMULATION LAB & TECHNICAL GUIDE
           </p>
 
           <h1
-            className="mt-4 text-[38px] sm:text-[50px] lg:text-[62px] font-medium leading-[1.12] tracking-tight text-[#17231F]"
+            className="mt-4 text-[38px] sm:text-[48px] lg:text-[58px] font-medium leading-[1.12] tracking-tight text-[#17231F] max-w-2xl"
             style={{ fontFamily: "'Manrope', sans-serif" }}
           >
-            Formulations crafted for real-<br />world cosmetic success.
+            Formulations crafted for<br />
+            real-world <span className="text-[#17664F]">cosmetic success.</span>
           </h1>
 
           <p
-            className="mt-4 max-w-3xl text-[14px] sm:text-[15px] leading-relaxed text-[#66756F]"
+            className="mt-5 max-w-xl text-[14px] sm:text-[15px] leading-relaxed text-[#66756F]"
             style={{ fontFamily: "'DM Sans', sans-serif" }}
           >
             Browse tested formulations featuring high-purity Neelikon pigments and lakes, complete with downloadable technical dossiers and ingredient specifications.
