@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { ArrowUpRight, CheckCircle2, ChevronDown } from "lucide-react";
+import { ArrowRight, CheckCircle2, ChevronDown } from "lucide-react";
 import { CONTACT } from "@/lib/content";
 
 /** Submission adapter: set to a form endpoint (POST JSON) to deliver enquiries directly. Empty = opens the visitor's email app. */
@@ -25,8 +25,6 @@ function validate(v: F) {
   const e: Partial<Record<keyof F, string>> = {};
   if (v.name.trim().length < 2) e.name = "Please enter your name.";
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.email.trim())) e.email = "Please enter a valid work email.";
-  if (v.company.trim().length < 2) e.company = "Please enter your company name.";
-  if (!v.industry.trim()) e.industry = "Please select your industry.";
   if (v.message.trim().length < 5) e.message = "Please tell us about your requirements.";
   return e;
 }
@@ -126,8 +124,8 @@ export function EnquiryForm({ product, intent }: { product?: string; intent?: "s
     <form noValidate onSubmit={submit} className="space-y-5">
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
-          <label htmlFor="f-name" className="mb-1.5 block text-[12px] font-normal text-[#17231F]">
-            Your name
+          <label htmlFor="f-name" className="mb-2 block text-[13px] font-semibold text-[#0F221B]">
+            Your name <span className="text-red-500">*</span>
           </label>
           <input
             id="f-name"
@@ -137,16 +135,16 @@ export function EnquiryForm({ product, intent }: { product?: string; intent?: "s
             value={v.name}
             onChange={set("name")}
             aria-invalid={!!err.name}
-            className={`w-full rounded-md border bg-white px-3.5 py-2.5 text-[13px] text-[#17231F] placeholder:text-[#9AA8A1] transition-colors focus:outline-none ${
-              err.name ? "border-red-500 focus:border-red-500" : "border-[#D7E2DC] focus:border-[#17664F]"
+            className={`w-full rounded-xl border bg-white px-4 py-3 text-[14px] text-[#0F221B] placeholder:text-[#9AA8A1] transition-all focus:outline-none ${
+              err.name ? "border-red-500 focus:border-red-500" : "border-[#D7E2DC] focus:border-[#17664F] focus:ring-1 focus:ring-[#17664F]"
             }`}
           />
           {err.name && <p className="mt-1 text-[11px] text-red-600">{err.name}</p>}
         </div>
 
         <div>
-          <label htmlFor="f-email" className="mb-1.5 block text-[12px] font-normal text-[#17231F]">
-            Work email
+          <label htmlFor="f-email" className="mb-2 block text-[13px] font-semibold text-[#0F221B]">
+            Work email <span className="text-red-500">*</span>
           </label>
           <input
             id="f-email"
@@ -156,8 +154,8 @@ export function EnquiryForm({ product, intent }: { product?: string; intent?: "s
             value={v.email}
             onChange={set("email")}
             aria-invalid={!!err.email}
-            className={`w-full rounded-md border bg-white px-3.5 py-2.5 text-[13px] text-[#17231F] placeholder:text-[#9AA8A1] transition-colors focus:outline-none ${
-              err.email ? "border-red-500 focus:border-red-500" : "border-[#D7E2DC] focus:border-[#17664F]"
+            className={`w-full rounded-xl border bg-white px-4 py-3 text-[14px] text-[#0F221B] placeholder:text-[#9AA8A1] transition-all focus:outline-none ${
+              err.email ? "border-red-500 focus:border-red-500" : "border-[#D7E2DC] focus:border-[#17664F] focus:ring-1 focus:ring-[#17664F]"
             }`}
           />
           {err.email && <p className="mt-1 text-[11px] text-red-600">{err.email}</p>}
@@ -165,7 +163,7 @@ export function EnquiryForm({ product, intent }: { product?: string; intent?: "s
       </div>
 
       <div>
-        <label htmlFor="f-company" className="mb-1.5 block text-[12px] font-normal text-[#17231F]">
+        <label htmlFor="f-company" className="mb-2 block text-[13px] font-semibold text-[#0F221B]">
           Company
         </label>
         <input
@@ -176,15 +174,15 @@ export function EnquiryForm({ product, intent }: { product?: string; intent?: "s
           value={v.company}
           onChange={set("company")}
           aria-invalid={!!err.company}
-          className={`w-full rounded-md border bg-white px-3.5 py-2.5 text-[13px] text-[#17231F] placeholder:text-[#9AA8A1] transition-colors focus:outline-none ${
-            err.company ? "border-red-500 focus:border-red-500" : "border-[#D7E2DC] focus:border-[#17664F]"
+          className={`w-full rounded-xl border bg-white px-4 py-3 text-[14px] text-[#0F221B] placeholder:text-[#9AA8A1] transition-all focus:outline-none ${
+            err.company ? "border-red-500 focus:border-red-500" : "border-[#D7E2DC] focus:border-[#17664F] focus:ring-1 focus:ring-[#17664F]"
           }`}
         />
         {err.company && <p className="mt-1 text-[11px] text-red-600">{err.company}</p>}
       </div>
 
       <div>
-        <label htmlFor="f-industry" className="mb-1.5 block text-[12px] font-normal text-[#17231F]">
+        <label htmlFor="f-industry" className="mb-2 block text-[13px] font-semibold text-[#0F221B]">
           Your industry
         </label>
         <div className="relative">
@@ -193,9 +191,9 @@ export function EnquiryForm({ product, intent }: { product?: string; intent?: "s
             value={v.industry}
             onChange={set("industry")}
             aria-invalid={!!err.industry}
-            className={`w-full appearance-none rounded-md border bg-white px-3.5 py-2.5 pr-10 text-[13px] transition-colors focus:outline-none cursor-pointer ${
-              !v.industry ? "text-[#9AA8A1]" : "text-[#17231F]"
-            } ${err.industry ? "border-red-500 focus:border-red-500" : "border-[#D7E2DC] focus:border-[#17664F]"}`}
+            className={`w-full appearance-none rounded-xl border bg-white px-4 py-3 pr-10 text-[14px] transition-all focus:outline-none cursor-pointer ${
+              !v.industry ? "text-[#9AA8A1]" : "text-[#0F221B]"
+            } ${err.industry ? "border-red-500 focus:border-red-500" : "border-[#D7E2DC] focus:border-[#17664F] focus:ring-1 focus:ring-[#17664F]"}`}
           >
             <option value="" disabled>
               Select an industry
@@ -206,14 +204,14 @@ export function EnquiryForm({ product, intent }: { product?: string; intent?: "s
             <option value="Specialty & Industrial Dyes">Specialty & Industrial Dyes</option>
             <option value="Other">Other</option>
           </select>
-          <ChevronDown className="pointer-events-none absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#17231F]" />
+          <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#0F221B]" />
         </div>
         {err.industry && <p className="mt-1 text-[11px] text-red-600">{err.industry}</p>}
       </div>
 
       <div>
-        <label htmlFor="f-message" className="mb-1.5 block text-[12px] font-normal text-[#17231F]">
-          How can we help?
+        <label htmlFor="f-message" className="mb-2 block text-[13px] font-semibold text-[#0F221B]">
+          How can we help? <span className="text-red-500">*</span>
         </label>
         <textarea
           id="f-message"
@@ -222,8 +220,8 @@ export function EnquiryForm({ product, intent }: { product?: string; intent?: "s
           value={v.message}
           onChange={set("message")}
           aria-invalid={!!err.message}
-          className={`w-full rounded-md border bg-white px-3.5 py-2.5 text-[13px] text-[#17231F] placeholder:text-[#9AA8A1] transition-colors focus:outline-none min-h-[120px] resize-y ${
-            err.message ? "border-red-500 focus:border-red-500" : "border-[#D7E2DC] focus:border-[#17664F]"
+          className={`w-full rounded-xl border bg-white px-4 py-3 text-[14px] text-[#0F221B] placeholder:text-[#9AA8A1] transition-all focus:outline-none min-h-[110px] resize-y ${
+            err.message ? "border-red-500 focus:border-red-500" : "border-[#D7E2DC] focus:border-[#17664F] focus:ring-1 focus:ring-[#17664F]"
           }`}
         />
         {err.message && <p className="mt-1 text-[11px] text-red-600">{err.message}</p>}
@@ -239,10 +237,10 @@ export function EnquiryForm({ product, intent }: { product?: string; intent?: "s
         <button
           type="submit"
           disabled={state === "sending"}
-          className="inline-flex items-center gap-1.5 rounded-full bg-[#17664F] px-6 py-3 text-[12px] font-semibold text-white transition-all hover:bg-[#12523f] active:scale-[0.98] disabled:opacity-60"
+          className="inline-flex items-center gap-2 rounded-full bg-[#17664F] px-8 py-3.5 text-[14px] font-medium text-white transition-all hover:bg-[#12523f] active:scale-[0.98] disabled:opacity-60 shadow-xs cursor-pointer"
         >
           <span>{state === "sending" ? "Preparing…" : "Prepare email enquiry"}</span>
-          <ArrowUpRight className="h-3.5 w-3.5" />
+          <ArrowRight className="h-4 w-4" />
         </button>
       </div>
     </form>

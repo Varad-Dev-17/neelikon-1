@@ -1173,78 +1173,101 @@ function Testimonial() {
 
 function ContactSection() {
   return (
-    <section id="contact" className="bg-white py-20 lg:py-24 text-[#17231F] border-t border-[#E5EBE8]">
+    <section id="contact" className="bg-white py-20 lg:py-24 text-[#0F221B] border-t border-[#E5EBE8]">
       <div className="container-x">
         <Reveal>
-          <p
-            className="text-[10px] font-bold uppercase tracking-[2px] text-[#17664F]"
-            style={{ fontFamily: "'DM Sans', sans-serif" }}
-          >
-            CONTACT US
-          </p>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-0">
+            {/* Left Column: Contact details */}
+            <div className="lg:pr-12 xl:pr-16 lg:border-r lg:border-[#E5EBE8]">
+              {/* Eyebrow */}
+              <div className="flex items-center gap-3">
+                <p
+                  className="text-[11px] font-bold uppercase tracking-[2px] text-[#17664F]"
+                  style={{ fontFamily: "'DM Sans', sans-serif" }}
+                >
+                  CONTACT US
+                </p>
+                <span className="h-[1.5px] w-6 bg-[#17664F]" aria-hidden />
+              </div>
 
-          <h2
-            className="mt-4 text-[38px] sm:text-[48px] lg:text-[56px] font-medium leading-[1.12] tracking-tight text-[#17231F]"
-            style={{ fontFamily: "'Manrope', sans-serif" }}
-          >
-            Great possibilities begin with a<br />conversation.
-          </h2>
-
-          <p
-            className="mt-4 max-w-2xl text-[14px] sm:text-[15px] leading-relaxed text-[#66756F]"
-            style={{ fontFamily: "'DM Sans', sans-serif" }}
-          >
-            Tell us what you have in mind. Our team can help you find the right colour solution for your application.
-          </p>
-
-          <div className="mt-14 grid gap-12 lg:grid-cols-12 lg:gap-16">
-            <div className="lg:col-span-5">
-              <h3
-                className="text-[22px] font-medium text-[#17231F]"
+              {/* Main Headline */}
+              <h2
+                className="mt-4 text-[42px] sm:text-[50px] lg:text-[56px] font-bold leading-[1.08] tracking-tight text-[#0F221B]"
                 style={{ fontFamily: "'Manrope', sans-serif" }}
               >
-                Connect with Neelikon
-              </h3>
+                Great possibilities<br />
+                begin with a<br />
+                <span className="text-[#17664F]">conversation.</span>
+              </h2>
 
-              <div className="mt-8 space-y-0">
-                <div className="flex items-start gap-3.5">
-                  <Mail className="h-5 w-5 shrink-0 text-[#17664F] mt-0.5" />
-                  <div>
-                    <p className="text-[13px] font-semibold text-[#17231F]">General enquiries</p>
+              {/* Subtitle */}
+              <p
+                className="mt-5 max-w-lg text-[14.5px] sm:text-[15px] leading-relaxed text-[#5F6E68]"
+                style={{ fontFamily: "'DM Sans', sans-serif" }}
+              >
+                Tell us what you have in mind. Our team can help you find the right colour solution for your application.
+              </p>
+
+              {/* Section title with divider */}
+              <div className="mt-12 flex items-center gap-4">
+                <h3
+                  className="text-[20px] sm:text-[22px] font-bold text-[#0F221B] whitespace-nowrap"
+                  style={{ fontFamily: "'Manrope', sans-serif" }}
+                >
+                  Connect with Neelikon
+                </h3>
+                <div className="h-px flex-1 bg-[#DCE4E0]" />
+              </div>
+
+              {/* Contact Rows */}
+              <div className="mt-7 space-y-0">
+                {/* Item 1: General enquiries */}
+                <div className="flex items-start gap-4">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#EAF4F0]">
+                    <Mail className="h-5 w-5 text-[#17664F]" strokeWidth={1.75} />
+                  </div>
+                  <div className="pt-0.5">
+                    <p className="text-[14px] sm:text-[15px] font-semibold text-[#0F221B]">General enquiries</p>
                     <a
                       href={`mailto:${CONTACT.email}`}
-                      className="mt-1 block text-sm text-[#66756F] transition-colors hover:text-[#17664F]"
+                      className="mt-1 block text-[13.5px] sm:text-[14px] text-[#5F6E68] transition-colors hover:text-[#17664F]"
                     >
                       {CONTACT.email}
                     </a>
                   </div>
                 </div>
 
-                <div className="my-6 border-b border-[#E5EBE8]" />
+                <div className="my-5 border-b border-[#E5EBE8]" />
 
-                <div className="flex items-start gap-3.5">
-                  <Phone className="h-5 w-5 shrink-0 text-[#17664F] mt-0.5" />
-                  <div>
-                    <p className="text-[13px] font-semibold text-[#17231F]">Call our team</p>
+                {/* Item 2: Call our team */}
+                <div className="flex items-start gap-4">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#EAF4F0]">
+                    <Phone className="h-5 w-5 text-[#17664F]" strokeWidth={1.75} />
+                  </div>
+                  <div className="pt-0.5">
+                    <p className="text-[14px] sm:text-[15px] font-semibold text-[#0F221B]">Call our team</p>
                     <a
                       href="tel:+912246221415"
-                      className="mt-1 block text-sm text-[#66756F] transition-colors hover:text-[#17664F]"
+                      className="mt-1 block text-[13.5px] sm:text-[14px] text-[#5F6E68] transition-colors hover:text-[#17664F]"
                     >
                       +91 22 4622 1415
                     </a>
-                    <p className="mt-1 text-sm text-[#66756F]">
+                    <p className="mt-0.5 text-[13.5px] sm:text-[14px] text-[#5F6E68]">
                       Export sales: +91 22 6662 6874
                     </p>
                   </div>
                 </div>
 
-                <div className="my-6 border-b border-[#E5EBE8]" />
+                <div className="my-5 border-b border-[#E5EBE8]" />
 
-                <div className="flex items-start gap-3.5">
-                  <MapPin className="h-5 w-5 shrink-0 text-[#17664F] mt-0.5" />
-                  <div>
-                    <p className="text-[13px] font-semibold text-[#17231F]">Head office</p>
-                    <address className="mt-1 text-sm not-italic leading-relaxed text-[#66756F]">
+                {/* Item 3: Head office */}
+                <div className="flex items-start gap-4">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#EAF4F0]">
+                    <MapPin className="h-5 w-5 text-[#17664F]" strokeWidth={1.75} />
+                  </div>
+                  <div className="pt-0.5">
+                    <p className="text-[14px] sm:text-[15px] font-semibold text-[#0F221B]">Head office</p>
+                    <address className="mt-1 text-[13.5px] sm:text-[14px] not-italic leading-relaxed text-[#5F6E68]">
                       D-08, Everest Building, 5th Floor,<br />
                       Pt. Madan Mohan Malaviya Marg,<br />
                       Tardeo Circle, Mumbai 400034,<br />
@@ -1252,12 +1275,28 @@ function ContactSection() {
                     </address>
                   </div>
                 </div>
-
-                <div className="mt-6 border-b border-[#E5EBE8]" />
               </div>
             </div>
 
-            <div className="lg:col-span-7">
+            {/* Right Column: Enquiry Form */}
+            <div className="lg:pl-12 xl:pl-16">
+              {/* Top green dash */}
+              <div className="w-8 h-[3px] bg-[#17664F] rounded-full mb-3" />
+
+              <h3
+                className="text-[26px] sm:text-[30px] lg:text-[32px] font-bold text-[#0F221B] tracking-tight"
+                style={{ fontFamily: "'Manrope', sans-serif" }}
+              >
+                Send us your enquiry
+              </h3>
+
+              <p
+                className="mt-2 mb-8 text-[14px] sm:text-[14.5px] leading-relaxed text-[#5F6E68]"
+                style={{ fontFamily: "'DM Sans', sans-serif" }}
+              >
+                Fill in the details below and our team will get back to you with the right colour solution for your application.
+              </p>
+
               <EnquiryForm />
             </div>
           </div>
